@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- <typeAlias type="edu.ssafy.mvc.dto.MemberDTO" alias="MemDTO" /> -->
+		<typeAlias type="com.ssafy.enjoy.member.dto.MemberDto" alias="memberDto"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="spring/mapper/MemberMapper.xml"/>
+		<!--<mapper resource="spring/mapper/fileSQLMapper.xml" /> -->
+	</mappers>
+</configuration>
