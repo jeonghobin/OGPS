@@ -20,30 +20,27 @@ public class MemberServiceMapperImpl implements MemberService {
 	
 	@Override
 	public void memberJoin(MemberDto mdto) throws Exception {
-//		Map<String , String> m = new HashMap();
-//		m.put("id",id);
-//		m.put("pw",pw);
-//		MemberDTO login = session.getMapper(MemberDAO.class).login(m);
+
 		session.getMapper(MemberRepository.class).memberJoin(mdto);
 
 	}
 
 	@Override
-	public boolean login(MemberDto mdto) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+	public MemberDto login(MemberDto mdto) throws Exception {
+		
+		return session.getMapper(MemberRepository.class).login(mdto);
 	}
 
 	@Override
-	public void memberUpdate(MemberDto mdto) throws Exception {
-		// TODO Auto-generated method stub
+	public int memberUpdate(MemberDto mdto) throws Exception {
+		return session.getMapper(MemberRepository.class).memberUpdate(mdto);
 
 	}
 
 	@Override
 	public void memberDelete(String id) throws Exception {
 		// TODO Auto-generated method stub
-
+		session.getMapper(MemberRepository.class).memberDelete(id);
 	}
 
 }

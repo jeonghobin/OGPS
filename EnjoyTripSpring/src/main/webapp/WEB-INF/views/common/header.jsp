@@ -48,7 +48,7 @@
 				</div>
 
 				<div class="modal-body">
-					<form class="login-form" method="POST" action="member/login">
+					<form class="login-form" method="POST" action="${root}/member/login">
 						<div class="row m-1 mb-3">
 							<div class="d-flex justify-content-start ps-0">
 								<i class="bi bi-patch-question me-1"></i> <label
@@ -120,13 +120,13 @@
 							<!-- 로그인 후 -->
 							<ul class="after-login navbar-nav mb-2 me-2 mb-lg-0"
 								style="display: flex">
-								<li class="nav-item"><a class="nav-link disabled">${userInfo.id}님
+								<li class="nav-item"><a class="nav-link disabled">${userInfo.user_id}님
 										반갑습니다.</a></li>
 								<li class="nav-item"><a id="logout" class="nav-link"
 									aria-current="page" href="${root}/member/logout">로그아웃</a></li>
 								<li class="dropdown"><a class="nav-link dropdown">마이페이지</a>
 									<div class="dropdown-content">
-										<a href="${root}/member/delete">회원탈퇴</a>
+										<a href="${root}/member/delete?id=${userInfo.user_id}">회원탈퇴</a>
 									<a aria-current="page" data-bs-toggle="modal"
 										data-bs-target="#signup-modal" href="#" >회원정보수정</a> 
 									</div></li>

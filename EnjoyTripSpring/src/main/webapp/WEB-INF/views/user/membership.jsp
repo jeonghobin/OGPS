@@ -105,14 +105,14 @@
 						</div>
 
 						<div class="modal-body">
-							<form class="info-form" method="POST" action="${root}/member/register">
+							<form class="info-form" method="POST" action="${root}/member/update">
 								<div class="row m-1 mb-3">
 									<div class="d-flex justify-content-start ps-0">
 										<i class="bi bi-patch-question me-1"></i> <label for="name"
 											class="form-label">이름</label>
 									</div>
 									<input type="text" class="form-control" id="name" name="name"
-										placeholder="이름" value="${owninfo.name}" />
+										placeholder="이름" value="${userInfo.user_name}" />
 								</div>
 								<div class="row m-1 mb-3">
 									<div class="d-flex justify-content-start ps-0">
@@ -120,7 +120,7 @@
 											class="form-label">아이디</label>
 									</div>
 									<input type="text" class="form-control" id="user-id"
-										name="user-id" placeholder="아이디" value="${owninfo.id}"
+										name="user-id" placeholder="아이디" value="${userInfo.user_id}"
 										readonly />
 								</div>
 								<div class="row m-1 mb-3">
@@ -129,7 +129,7 @@
 											for="password" class="form-label">비밀번호</label>
 									</div>
 									<input type="password" class="form-control" id="password"
-										placeholder="비밀번호" name="password" value="${owninfo.pw}" />
+										placeholder="비밀번호" name="password" value="${userInfo.user_password}" />
 								</div>
 								<div class="row m-1 mb-3">
 									<div class="d-flex justify-content-start ps-0">
@@ -138,7 +138,7 @@
 									</div>
 									<input type="password" class="form-control" id="password-check"
 										placeholder="비밀번호확인" name="password-check"
-										value="${owninfo.pw}" />
+										value="${userInfo.user_password}" />
 								</div>
 								<div class="row m-1 mb-3">
 									<div class="d-flex justify-content-start ps-0">
@@ -147,7 +147,7 @@
 									</div>
 									<div class="d-flex justify-content-start ps-0">
 										<input type="email" class="form-control" id="email"
-											value="${owninfo.email}" placeholder="이메일" name="email" /> <span
+											value="${userInfo.email_id}" placeholder="이메일" name="email" /> <span
 											class="ms-2 me-2">@</span> <select id="domain"
 											class="form-select" name="domain"
 											aria-label=".form-select domain">
