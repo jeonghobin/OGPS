@@ -92,7 +92,7 @@
 					<ul class="navbar-nav me-auto mb-lg-0">
 						<li class="nav-item d-flex">
 						<a class="nav-link"	aria-current="page" href="${root}/attraction/attraction.jsp">전국 관광지 정보</a> 
-						<a class="nav-link information-page" aria-current="page" href="${root}/board?action=information&pgno=1&key=&word=">공지사항</a>
+						<a class="nav-link information-page" aria-current="page" href="${root}/notice/list?pgno=1&key=&word=">공지사항</a>
 						<a class="nav-link freeboard-page" aria-current="page" href="${root}/freeboard/list?pgno=1&key=&word=">자유게시판</a></li>
 					</ul>
 
