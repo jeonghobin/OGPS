@@ -25,6 +25,12 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:spring/mybatisConfig.xml"></property>	
 	</bean>
+	<!-- config파일 사용하지않고 직접 별칭이랑 맵퍼설정방법 -->
+	<!-- <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="typeAliasesPackage" value="com.ssafy.*.model"/>
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+	</bean> -->
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
@@ -36,7 +42,7 @@
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="transactionManager" mode="proxy"/>
-	
+	 
 	<aop:aspectj-autoproxy/>
 	
 </beans>

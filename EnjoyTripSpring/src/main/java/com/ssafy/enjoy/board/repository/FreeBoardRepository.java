@@ -1,26 +1,30 @@
 package com.ssafy.enjoy.board.repository;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.ssafy.enjoy.board.dto.FNBoardDto;
-import com.ssafy.enjoy.board.dto.FreeCommentDto;
+import com.ssafy.enjoy.board.dto.FreeComDto;
 
 
 public interface FreeBoardRepository {
 
 	/** 게시판 **/
-	public void freeWrite(FNBoardDto fndto) throws Exception;
-	public List<FNBoardDto> freeList(int pgno) throws Exception;
-	public FNBoardDto freeView(int articleno) throws Exception;
-	public void freeDelete(int articleno) throws Exception;
-	public void freeUpdate(FNBoardDto fndto) throws Exception;
-	public void freeHitUp(int articleno) throws Exception;
+	void write(FNBoardDto boardDto) throws SQLException;
+	List<FNBoardDto> list(Map<String, Object> map) throws SQLException;
+	int getTotalArticleCount(Map<String, Object> param) throws SQLException;
+	FNBoardDto getnotice(int articleNo) throws SQLException;
+	void updateHit(int articleNo) throws SQLException;
+	void modify(FNBoardDto boardDto) throws SQLException;
+	void delete(int articleNO) throws SQLException;
 
 	/** 댓글 **/
-	public List<FreeCommentDto> commentList(int articleno) throws Exception;
-	public FreeCommentDto commetnSelect(int articleno, int commentno) throws Exception;
-	public void commentDelete(int articleno, int commentno) throws Exception;
-	public void commentUpdate(FreeCommentDto fcdto) throws Exception;
+	public List<FreeComDto> comList(int articleno) throws SQLException;
+	public FreeComDto comOne(int articleno, int commentno) throws SQLException;
+	public void comDelete( int commentno) throws SQLException;
+	public void comModify(FreeComDto fcdto) throws SQLException;
+	public void comWrite(FreeComDto fcdto) throws SQLException;
 	
 }
 

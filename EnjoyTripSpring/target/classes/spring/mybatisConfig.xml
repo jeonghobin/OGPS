@@ -6,12 +6,16 @@
 	<typeAliases>
 		<typeAlias type="com.ssafy.enjoy.member.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.ssafy.enjoy.board.dto.FNBoardDto" alias="FNBoardDto"/>
-		<typeAlias type="com.ssafy.enjoy.board.dto.FreeCommentDto" alias="FreeCommentDto"/>
+		<typeAlias type="com.ssafy.enjoy.board.dto.FreeComDto" alias="FreeComDto"/>
+		<typeAlias type="com.ssafy.enjoy.attraction.dto.sidoDto" alias="sidoDto"/>
+		<typeAlias type="com.ssafy.enjoy.attraction.dto.gugunDto" alias="gugunDto"/>
+		<typeAlias type="com.ssafy.enjoy.attraction.dto.attractionDto" alias="attractionDto"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="spring/mapper/MemberMapper.xml"/>
 		<mapper resource="spring/mapper/FreeboardMapper.xml"/>
 		<mapper resource="spring/mapper/NoticeBoardMapper.xml"/>
+		<mapper resource="spring/mapper/planMapper.xml"/>
 	</mappers>
 </configuration>

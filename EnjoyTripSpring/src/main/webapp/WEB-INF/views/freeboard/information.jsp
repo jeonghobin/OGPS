@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
 <c:choose>
 	<c:when test="${empty userInfo}">
 		<c:set var="loginStatus" value="no" />
@@ -23,12 +22,12 @@
 		<div class="row justify-content-between ps-2 pe-2 ms-2 ms-2">
 			<div class="col-auto">
 				<a type="button" id="write-button" class="btn btn-outline-primary"
-					style="font-weight: bold" href="${root}/freeboard/write"> 글쓰기 </a>
+					style="font-weight: bold" href=""> 글쓰기 </a>
 			</div>
 			<div class="col-auto">
 				<form id="form-search">
-					<input type="hidden" name="action" value="information" /> <input
-						type="hidden" name="pgno" value="1" />
+					<input type="hidden" name="action" value="information"/>
+	                <input type="hidden" name="pgno" value="1"/>
 					<div class="row pe-2 me-2">
 						<select class="col form-select me-1" name="key" id="key"
 							aria-label=".form-select example">
@@ -38,8 +37,7 @@
 							<option value="user_id">작성자</option>
 						</select> <input type="text" name="word" id="word" placeholder="검색어입력..."
 							class="col form-control me-1" />
-						<button type="button" id="btn-search"
-							class="col btn btn-outline-secondary me-2">검색</button>
+						<button type="button" id="btn-search" class="col btn btn-outline-secondary me-2">검색</button>
 					</div>
 				</form>
 			</div>
@@ -61,8 +59,8 @@
 								<tr>
 									<th scope="row">${post.article_no}</th>
 									<td><a href="#" class="post-title link-dark"
-										data-no="${post.article_no}"
-										style="text-decoration: underline;">${post.subject}</a></td>
+										data-no="${post.article_no}" style="text-decoration: underline;">${post.subject}</a>
+									</td>
 									<td>${post.user_id}</td>
 									<td>${post.register_time}</td>
 									<td>${post.hit}</td>
@@ -74,14 +72,15 @@
 
 				<div class="d-flex justify-content-center">
 					<nav aria-label="Page navigation example">
-						${navigation.navigator}</nav>
+						${navigation.navigator}
+					</nav>
 				</div>
 				<form id="form-param" method="get" action="">
-					<input type="hidden" id="p-action" name="action" value="">
-					<input type="hidden" id="p-pgno" name="pgno" value=""> <input
-						type="hidden" id="p-key" name="key" value=""> <input
-						type="hidden" id="p-word" name="word" value="">
-				</form>
+			      <input type="hidden" id="p-action" name="action" value="">
+			      <input type="hidden" id="p-pgno" name="pgno" value="">
+			      <input type="hidden" id="p-key" name="key" value="">
+			      <input type="hidden" id="p-word" name="word" value="">
+			    </form>
 			</div>
 		</div>
 	</div>
@@ -93,42 +92,40 @@
 <script src="${root}/js/main.js"></script>
 <script>
 	let titles = document.querySelectorAll(".post-title");
-	titles.forEach(function(title) {
-		title.addEventListener("click", function() {
-			console.log(this.getAttribute("data-no"));
-			location.href = "${root}/freeboard/view?postno="+ this.getAttribute("data-no");
-		});
+	titles.forEach(function (title) {
+	  title.addEventListener("click", function () {
+	    console.log(this.getAttribute("data-no"));
+	    location.href = "${root}/free/view?article_no=" + this.getAttribute("data-no");
+	  });
 	});
 
-	document.querySelector("#write-button").addEventListener("click",function() {
+	document.querySelector("#write-button").addEventListener("click", function() {
 		var state = "${loginStatus}";
-		console.log("state: "+state+", userInfo = ${userInfo}");
-/* 		if (state == "ok") */
-			document.querySelector("#write-button").href = "${root}/freeboard/write";
-/* 		else {
+		if (state == "ok")
+			document.querySelector("#write-button").href = "${root}/free/write";
+		else {
 			alert("로그인이 필요한 서비스입니다.")
 			document.querySelector("#write-button").href = "";
-		} */
+		}
 	});
-
-	document.querySelector("#btn-search").addEventListener("click", function() {
-		let form = document.querySelector("#form-search");
-		form.setAttribute("action", "${root}/board");
-		form.submit();
-	});
-
+	
+	document.querySelector("#btn-search").addEventListener("click", function () {
+  	  let form = document.querySelector("#form-search");
+        form.setAttribute("action", "${root}/free/list");
+        form.submit();
+    });
+	
 	let pages = document.querySelectorAll(".page-link");
-	pages.forEach(function(page) {
-		page.addEventListener("click", function() {
-			console.log(this.parentNode.getAttribute("data-pg"));
-			document.querySelector("#p-action").value = "information";
-			document.querySelector("#p-pgno").value = this.parentNode
-					.getAttribute("data-pg");
-			document.querySelector("#p-key").value = "${param.key}";
-			document.querySelector("#p-word").value = "${param.word}";
-			document.querySelector("#form-param").submit();
-		});
-	});
+    pages.forEach(function (page) {
+      page.addEventListener("click", function () {
+        console.log(this.parentNode.getAttribute("data-pg"));
+        document.querySelector("#p-action").value = "${root}/free/list";
+     	  document.querySelector("#p-pgno").value = this.parentNode.getAttribute("data-pg");
+     	  document.querySelector("#p-key").value = "${param.key}";
+     	  document.querySelector("#p-word").value = "${param.word}";
+        document.querySelector("#form-param").submit();
+      });
+    });
 </script>
 </body>
 </html>

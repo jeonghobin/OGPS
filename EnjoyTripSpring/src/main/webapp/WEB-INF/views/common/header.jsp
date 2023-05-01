@@ -83,7 +83,7 @@
 		<nav class="navbar navbar-light bg-light navbar-expand-lg">
 			<div class="section-content p-1 mt-3 container-fluid">
 				<a class="navbar-brand text-primary fw-bold"
-					href="${root}/index"> <img src="${root}/img/trip-logo.png"
+					href="${root}/"> <img src="${root}/img/trip-logo.png"
 					alt="" width="130px" />
 				</a>
 
@@ -91,9 +91,9 @@
 					id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-lg-0">
 						<li class="nav-item d-flex">
-						<a class="nav-link"	aria-current="page" href="${root}/attraction/attraction.jsp">전국 관광지 정보</a> 
+						<a class="nav-link"	aria-current="page" href="${root}/attractionview">전국 관광지 정보</a> 
 						<a class="nav-link information-page" aria-current="page" href="${root}/notice/list?pgno=1&key=&word=">공지사항</a>
-						<a class="nav-link freeboard-page" aria-current="page" href="${root}/freeboard/list?pgno=1&key=&word=">자유게시판</a></li>
+						<a class="nav-link freeboard-page" aria-current="page" href="${root}/free/list?pgno=1&key=&word=">자유게시판</a></li>
 					</ul>
 
 					<c:choose>

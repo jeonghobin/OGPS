@@ -10,4 +10,8 @@ public class MainController {
 	public String index() {
 		return"index";
 	}
+	@GetMapping("/attractionview")
+	public String attraction() {
+		return "attraction/attraction";
+	}
 }
