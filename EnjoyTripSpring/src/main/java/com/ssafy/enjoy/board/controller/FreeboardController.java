@@ -3,7 +3,6 @@ package com.ssafy.enjoy.board.controller;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +18,6 @@ import com.ssafy.enjoy.board.dto.FNBoardDto;
 import com.ssafy.enjoy.board.dto.FreeComDto;
 import com.ssafy.enjoy.board.service.FreeboardService;
 import com.ssafy.enjoy.util.PageNavigation;
-import com.ssafy.enjoy.util.QuickSorter;
 
 @Controller
 @RequestMapping("/free")
@@ -107,6 +105,7 @@ public class FreeboardController {
 		
 		List<FreeComDto> list = service.comList(articleNo);
 		model.addAttribute("cposts", list);
+		model.addAttribute("csize",list.size());
 		
 		return"freeboard/view";
 	}
@@ -116,7 +115,7 @@ public class FreeboardController {
 	public String comwrite(String user_id, @RequestParam(value = "article_no") int articleNo, String comment) throws SQLException {
 		FreeComDto fcdto = new FreeComDto();
 		fcdto.setArticle_no(articleNo);
-		fcdto.setComment(comment);
+		fcdto.setComment(comment.replace("\r\n","<br>"));
 		fcdto.setUser_id(user_id);
 		service.comWrite(fcdto);
 

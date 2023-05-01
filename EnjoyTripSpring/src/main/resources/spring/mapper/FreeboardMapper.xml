@@ -34,7 +34,7 @@
 	<select id="list" parameterType="map" resultMap="article">
 		select b.article_no, b.user_id, b.subject, b.content, b.hit,
 		b.register_time
-		from free_board b, members m
+		from free_board b
 		where 1
 		<include refid="search"></include>
 		order by b.article_no desc

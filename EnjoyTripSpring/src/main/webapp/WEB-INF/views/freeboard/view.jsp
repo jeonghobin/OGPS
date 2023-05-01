@@ -48,14 +48,13 @@
 
 	<!-- 댓글  -->
 	<div class="col-lg-8 col-md-10 col-sm-12">
-		<div>댓글</div>
+		<h5>댓글 (${csize})</h5>
 		<hr>
 		<form class="form-comment" id="form-comment" action="" method="post">
 			<div class="d-flex">
 				<textarea class="form-control mb-3" id="comment" name="comment"
 					rows="3" placeholder="댓글을 입력해 주세요"
-					style="overflow-y: scroll; resize: none">
-				</textarea>
+					style="overflow-y: scroll; resize: none"></textarea>
 				<button type="button" id="btn-comment"
 					class="btn btn-outline-primary mb-3 ms-3">등록</button>
 			</div>
@@ -63,20 +62,26 @@
 
 		<div>
 			<c:forEach var="cpost" items="${cposts}">
-				<div class="">
+				<div class="row-md-5">
 					<form action="" method="post" class="form-manager">
-						<div class="d-flex justify-content-start">
-						<div class="">
-							<img class="user-img mr=3" src="${root}/img/ssafy-logo-small.png"
-								width="50px" height="50px" />
-						</div>
-						<div class="">
-							${cpost.user_id} ${cpost.memo_time} 
-							<a href="${root}/free/comdelete?article_no=${post.article_no}&comment_no=${cpost.comment_no}">삭제</a>
+						<div class="row">
+						 <hr>
+							<div class="col-1 ">
+								<img class="user-img mr=3 justify-content-end"
+									src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+									width="50px" height="50px" style="border-radius: 100%" />
 							</div>
-							<div class="border">
-							${cpost.comment}
-						</div>
+							<div class="col-9">
+								<div class="row">
+									<h5 class="col-1" style="display: inline">${cpost.user_id}</h5>
+									${cpost.memo_time}
+									<c:if test="${userInfo.user_id eq cpost.user_id}">
+										<a class="col-1"
+											href="${root}/free/comdelete?article_no=${post.article_no}&comment_no=${cpost.comment_no}">삭제</a>
+									</c:if>
+								</div>
+								<h6>${cpost.comment}</h6>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -86,19 +91,19 @@
 
 </div>
 <script>
-	document
-			.querySelector("#btn-comment")
-			.addEventListener(
-					"click",
+	document.querySelector("#btn-comment").addEventListener("click",
 					function() {
 						if (!document.querySelector("#comment").value) {
 							alert("댓글 입력!!");
+							return;
+						}else if (${userInfo.user_id eq null}) {
+							alert("댓글을 입력하려면 로그인 먼저 해주세요!!");
 							return;
 						} else {
 							let form = document.querySelector("#form-comment");
 							form
 									.setAttribute("action",
-											"${root}/free/comwrite?article_no=${post.article_no}&user_id=${post.user_id}");
+											"${root}/free/comwrite?article_no=${post.article_no}&user_id=${userInfo.user_id}");
 							form.submit();
 						}
 					});
@@ -107,8 +112,7 @@
 		location.href = "${root}/free/list?pgno=1&key=&word=";
 	});
 
-	document
-			.querySelector("#btn-mv-modify")
+	document.querySelector("#btn-mv-modify")
 			.addEventListener(
 					"click",
 					function() {

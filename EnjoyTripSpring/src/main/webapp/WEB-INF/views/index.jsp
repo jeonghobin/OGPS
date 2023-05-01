@@ -73,19 +73,19 @@
             <div class="col">
               <img src="${root}/img/741661_image2_1.jpg" alt="" class="img-thumbnail" />
               <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h1 class="main_image_text" style="font-size: 25px">이름</h1>
+                <h1 class="main_image_text" style="font-size: 25px"></h1>
               </a>
             </div>
             <div class="col">
               <img src="${root}/img/1820973_image2_1.jpg" alt="" class="img-thumbnail" />
               <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h1 class="main_image_text" style="font-size: 25px">이름</h1>
+                <h1 class="main_image_text" style="font-size: 25px"></h1>
               </a>
             </div>
             <div class="col">
               <img src="${root}/img/2659866_image2_1.jpg" alt="" class="img-thumbnail" />
               <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h1 class="main_image_text" style="font-size: 25px">이름</h1>
+                <h1 class="main_image_text" style="font-size: 25px"></h1>
               </a>
             </div>
           </div>
@@ -94,19 +94,19 @@
             <div class="col">
               <img src="${root}/img/11098856260173493.jpg" alt="" class="img-thumbnail" />
               <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h1 class="main_image_text" style="font-size: 25px">이름</h1>
+                <h1 class="main_image_text" style="font-size: 25px"></h1>
               </a>
             </div>
             <div class="col">
               <img src="${root}/img/2841121_image2_1.jpg" alt="" class="img-thumbnail" />
               <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h1 class="main_image_text" style="font-size: 25px">이름</h1>
+                <h1 class="main_image_text" style="font-size: 25px"></h1>
               </a>
             </div>
             <div class="col">
               <img src="${root}/img/2856653_image2_1.jpg" alt="" class="img-thumbnail" />
               <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h1 class="main_image_text" style="font-size: 25px">이름</h1>
+                <h1 class="main_image_text" style="font-size: 25px"></h1>
               </a>
             </div>
           </div>

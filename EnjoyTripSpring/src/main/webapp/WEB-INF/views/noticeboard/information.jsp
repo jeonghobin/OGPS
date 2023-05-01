@@ -15,8 +15,8 @@
 		<div class="row text-center">
 			<div class="col m-5">
 				<h1
-					style="font-weight: bold; text-decoration-line: underline; text-decoration-thickness: 6px; text-decoration-color: rgb(189, 201, 255)">
-					좋은 정보 공유해요!!!</h1>
+					style="font-weight: bold; text-decoration-line: underline; text-decoration-thickness: 6px; text-decoration-color: #a207df">
+					공지 확인해요!!!</h1>
 			</div>
 		</div>
 		<div class="row justify-content-between ps-2 pe-2 ms-2 ms-2">
