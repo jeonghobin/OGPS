@@ -17,5 +17,7 @@
 		<mapper resource="spring/mapper/FreeboardMapper.xml"/>
 		<mapper resource="spring/mapper/NoticeBoardMapper.xml"/>
 		<mapper resource="spring/mapper/planMapper.xml"/>
+		<mapper resource="spring/mapper/PlanBoardMapper.xml"/>
+		
 	</mappers>
 </configuration>

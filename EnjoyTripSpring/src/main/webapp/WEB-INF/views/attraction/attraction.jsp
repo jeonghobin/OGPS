@@ -155,8 +155,8 @@
         positions = [];
 
         trips.forEach((area) => {
-        	  tripList += '<tr onclick="moveCenter(area.latitude, area.longitude);>'
-        	  tripList += '<td><img src='+area.first_image+' width=100px></td>'
+        	  tripList += '<tr onclick="moveCenter(area.latitude, area.longitude);">'
+        	  tripList += '<td><img src='+area.first_image+' width=100px onerror="this.src=\'${root}/img/no_image.jpg\';" width=100px></td>'
         	  tripList += '<td>'+area.title+'</td>'
         	  tripList += '<td>'+area.addr1+' '+area.addr2+'</td>'
         	  tripList += '<td>'+area.latitude+'</td>'
