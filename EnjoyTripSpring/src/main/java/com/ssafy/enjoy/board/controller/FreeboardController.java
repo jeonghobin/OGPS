@@ -30,6 +30,7 @@ public class FreeboardController {
 	/** 게시판 **/
 	@GetMapping("/list")
 	public String list(Model model, @RequestParam Map<String, String> map) throws Exception {
+		
 		List<FNBoardDto> list = service.list(map);
 		PageNavigation pageNavigation = service.makePageNavigation(map);
 		model.addAttribute("posts", list);
