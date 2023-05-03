@@ -1,6 +1,5 @@
 package com.ssafy.enjoy.board.controller;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,17 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoy.attraction.dto.attractionDto;
 import com.ssafy.enjoy.board.dto.PlanBoardDto;
 import com.ssafy.enjoy.board.service.PlanBoardService;
+import com.ssafy.enjoy.util.PageNavigation;
 
 @RestController
 @RequestMapping("/api")
@@ -50,6 +50,38 @@ public class RestPlanBoardController {
 		rsmap.put("word", "");
 		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
 		
+		return entity; 
+	}
+	
+	@GetMapping("/plan")
+	public ResponseEntity<Map<String, Object>> list(@RequestBody Map<String, String> reqmap) throws Exception {
+		
+		List<PlanBoardDto> list = service.list(reqmap);
+		PageNavigation pageNavigation = service.makePageNavigation(reqmap);
+		
+		ResponseEntity<Map<String,Object>> entity =null;
+		Map<String,Object> rsmap=new HashMap<String, Object>();
+		rsmap.put("resmsg", "리스트 성공");
+		rsmap.put("posts",list);
+		rsmap.put("navigation",pageNavigation);
+		rsmap.put("pgno",reqmap.get("pgno"));
+		rsmap.put("key",reqmap.get("key"));
+		rsmap.put("word",reqmap.get("word"));
+		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
+		
+		return entity;
+	}
+	
+	@DeleteMapping("/plan/{articleno}")
+	public ResponseEntity<Map<String,Object>> delete(@PathVariable("articleno") int articleNo) throws Exception {
+		
+		service.delete(articleNo);
+		
+		ResponseEntity<Map<String,Object>> entity =null;
+		Map<String,Object> rsmap=new HashMap<String, Object>();
+		rsmap.put("resmsg", "삭제 성공");
+		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
+		
 		return entity;
 	}
 	
@@ -58,8 +90,10 @@ public class RestPlanBoardController {
 	/** view **/
 	@GetMapping("/plan/{title}")
 	public ResponseEntity<Map<String, Object>> search(@PathVariable("title") String title) throws Exception{
-		ResponseEntity<Map<String, Object>> entity=null;
+		
 		List<attractionDto> attlist = service.getInfo(title);
+		
+		ResponseEntity<Map<String,Object>> entity =null;
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("list",attlist);
 		map.put("rsmsg","검색성공");

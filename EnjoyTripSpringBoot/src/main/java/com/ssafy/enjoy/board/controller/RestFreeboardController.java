@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.enjoy.board.dto.FNBoardDto;
 import com.ssafy.enjoy.board.dto.FreeComDto;
@@ -34,24 +31,24 @@ public class RestFreeboardController {
 	@Qualifier("FreeboardServiceMapperImpl")
 	FreeboardService service;
 
-	/** 게시판 **/
+	/** 
+	 * 게시판 
+	 **/
 	@GetMapping("/free")
-	public ResponseEntity<Map<String, Object>> list(Model model, @RequestBody  Map<String, String> reqmap) {
+	public ResponseEntity<Map<String, Object>> list(@RequestBody  Map<String, String> reqmap) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		
 		try {
 			List<FNBoardDto> list = service.list(reqmap);
 			PageNavigation pageNavigation = service.makePageNavigation(reqmap);
-			model.addAttribute("posts", list);
-			model.addAttribute("navigation", pageNavigation);
-			model.addAttribute("pgno", reqmap.get("pgno"));
-			model.addAttribute("key", reqmap.get("key"));
-			model.addAttribute("word", reqmap.get("word"));
-
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "글 조회 성공");
 			map.put("posts", list);
 			map.put("navigation", pageNavigation);
+			map.put("pgno",reqmap.get("pgno"));
+			map.put("key",reqmap.get("key"));
+			map.put("word",reqmap.get("word"));
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (Exception e) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -65,7 +62,7 @@ public class RestFreeboardController {
 	}
 
 	@PostMapping("/free")
-	public ResponseEntity<Map<String, Object>> write(@RequestBody Map<String, String> reqmap, RedirectAttributes ra) {
+	public ResponseEntity<Map<String, Object>> write(@RequestBody Map<String, String> reqmap) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 
 		try {
@@ -73,15 +70,14 @@ public class RestFreeboardController {
 			bdto.setUser_id(reqmap.get("post-user-id"));
 			bdto.setContent(reqmap.get("context"));
 			bdto.setSubject(reqmap.get("title"));
+			
 			service.write(bdto);
-
-			ra.addAttribute("pgno", "1");
-			ra.addAttribute("key", "");
-			ra.addAttribute("word", "");
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "글 작성 성공");
-			map.put("resValue", bdto);
+			map.put("pgno","1");
+			map.put("key","");
+			map.put("word","");
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (SQLException e) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -94,19 +90,17 @@ public class RestFreeboardController {
 	}
 
 	@DeleteMapping("/free/{articleNo}")
-	public ResponseEntity<Map<String, Object>> delete(@PathVariable(value = "articleNo") int articleNo,
-			RedirectAttributes ra) {
+	public ResponseEntity<Map<String, Object>> delete(@PathVariable(value = "articleNo") int articleNo) {
 		ResponseEntity<Map<String, Object>> reEntity = null;
 
 		try {
 			service.delete(articleNo);
 
-			ra.addAttribute("pgno", "1");
-			ra.addAttribute("key", "");
-			ra.addAttribute("word", "");
-
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "글 삭제 성공");
+			map.put("pgno","1");
+			map.put("key","");
+			map.put("word","");
 			reEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (SQLException e) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -119,7 +113,7 @@ public class RestFreeboardController {
 	}
 
 	@PutMapping("/free")
-	public ResponseEntity<Map<String, Object>> modify(@RequestBody Map<String, String> reqmap, RedirectAttributes ra) {
+	public ResponseEntity<Map<String, Object>> modify(@RequestBody Map<String, String> reqmap) {
 		ResponseEntity<Map<String, Object>> reEntity = null;
 
 		try {
@@ -127,16 +121,14 @@ public class RestFreeboardController {
 			bdto.setArticle_no(Integer.parseInt(reqmap.get("postno")));
 			bdto.setContent(reqmap.get("context"));
 			bdto.setSubject(reqmap.get("title"));
-
+			
 			service.modify(bdto);
-
-			ra.addAttribute("pgno", "1");
-			ra.addAttribute("key", "");
-			ra.addAttribute("word", "");
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "글 수정 성공");
-			map.put("resValue", bdto);
+			map.put("pgno","1");
+			map.put("key","");
+			map.put("word","");
 			reEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (SQLException e) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -172,7 +164,9 @@ public class RestFreeboardController {
 		return reEntity;
 	}
 
-	/** 댓글 **/
+	/** 
+	 * 댓글
+	 **/
 	@PostMapping("/freecomment/{userid}/{articleNo}/{comment}")
 	public ResponseEntity<Map<String, Object>> comwrite(@PathVariable("userid") String user_id, @PathVariable("articleNo") int articleNo,
 			@PathVariable("comment") String comment) {
