@@ -23,7 +23,21 @@
 		<result column="mlevel" property="mlevel"/>
 	</resultMap>
   	
+  	<!-- 게시판 -->
+  	<insert id="write" parameterType="PlanBoardDto">
+		insert into plan(user_id,subject,content,register_time,start_time,end_time)
+		values(#{user_id},#{subject},#{content},now(),#{start_time},#{end_time})
+	</insert>
   	
+  	<insert id="writePath" parameterType="string">
+  		insert into plan_path(plan_id,content_id) values(#{a},#{str})
+  	</insert>
+  	
+  	<select id="getAuto" resultType="int">
+  		select last_insert_id()
+  	</select>
+  	
+  	<!-- view -->
   	<select id="getInfo" parameterType="string" resultMap="attraction">
   		select * from attraction_info where title Like CONCAT('%',#{title},'%');
   	</select>

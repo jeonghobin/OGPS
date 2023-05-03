@@ -7,6 +7,7 @@
 		<typeAlias type="com.ssafy.enjoy.member.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.ssafy.enjoy.board.dto.FNBoardDto" alias="FNBoardDto"/>
 		<typeAlias type="com.ssafy.enjoy.board.dto.FreeComDto" alias="FreeComDto"/>
+		<typeAlias type="com.ssafy.enjoy.board.dto.PlanBoardDto" alias="PlanBoardDto"/>
 		<typeAlias type="com.ssafy.enjoy.attraction.dto.sidoDto" alias="sidoDto"/>
 		<typeAlias type="com.ssafy.enjoy.attraction.dto.gugunDto" alias="gugunDto"/>
 		<typeAlias type="com.ssafy.enjoy.attraction.dto.attractionDto" alias="attractionDto"/>
