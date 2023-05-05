@@ -85,6 +85,23 @@ public class RestPlanBoardController {
 		return entity;
 	}
 	
+	@GetMapping("/plandetail/{articleno}")
+	public ResponseEntity<Map<String,Object>> detail(@PathVariable("articleno") int articleNo) throws Exception{
+		
+		PlanBoardDto pdto = service.getDetail(articleNo);
+		List<attractionDto> pathlist = service.getPaths(articleNo);
+		System.out.println(pdto.toString());
+		for(attractionDto a: pathlist)
+			System.out.println(a.toString());
+		ResponseEntity<Map<String,Object>> entity =null;
+		Map<String,Object> rsmap=new HashMap<String, Object>();
+		rsmap.put("resmsg", "조회 성공");
+		rsmap.put("board", pdto);
+		rsmap.put("paths", pathlist);
+		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
+		
+		return entity;
+	}
 	
 	
 	/** view **/

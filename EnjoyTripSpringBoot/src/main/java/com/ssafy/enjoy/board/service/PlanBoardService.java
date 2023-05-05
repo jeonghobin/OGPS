@@ -16,7 +16,9 @@ public interface PlanBoardService {
 	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 	void delete(int articleNO) throws Exception;
 	void updateHit(int articleNo) throws Exception;
-
+	PlanBoardDto getDetail(int articleNo)throws Exception;
+	List<attractionDto> getPaths (int articleNo)throws Exception;
+	
 	/** view **/
 	List<attractionDto> getInfo(String title)throws Exception;
 	

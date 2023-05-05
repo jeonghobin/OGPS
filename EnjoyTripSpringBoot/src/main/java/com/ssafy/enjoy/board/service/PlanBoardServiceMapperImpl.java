@@ -92,6 +92,18 @@ public class PlanBoardServiceMapperImpl implements PlanBoardService {
 		session.getMapper(PlanBoardRepository.class).updateHit(plan_id);
 	}
 	
+	@Override
+	public PlanBoardDto getDetail(int articleNo) throws Exception {
+		// TODO Auto-generated method stub
+		return session.getMapper(PlanBoardRepository.class).getDetail(articleNo);
+	}
+	
+	
+	@Override
+	public List<attractionDto> getPaths(int articleNo) throws Exception {
+		// TODO Auto-generated method stub
+		return session.getMapper(PlanBoardRepository.class).getPaths(articleNo);
+	}
 	
 	/** 
 	 * view 
@@ -101,6 +113,8 @@ public class PlanBoardServiceMapperImpl implements PlanBoardService {
 		// TODO Auto-generated method stub
 		return session.getMapper(PlanBoardRepository.class).getInfo(title);
 	}
+
+
 
 
 

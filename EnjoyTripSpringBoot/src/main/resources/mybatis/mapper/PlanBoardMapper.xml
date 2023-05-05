@@ -84,6 +84,16 @@
   		select last_insert_id()
   	</select>
   	
+  	<select id="getDetail" parameterType="int" resultMap="planboard">
+  		select * from plan where plan_id=#{articleNo}
+  	</select>
+  	
+  	<select id="getPaths" parameterType="int" resultMap="attraction">
+  		select * from attraction_info 
+  		where content_id in (select content_id 
+  		from plan_path where plan_id=#{articleNo})
+  	</select>
+  	
   	<!-- view -->
   	<select id="getInfo" parameterType="string" resultMap="attraction">
   		select * from attraction_info where title Like CONCAT('%',#{title},'%');
