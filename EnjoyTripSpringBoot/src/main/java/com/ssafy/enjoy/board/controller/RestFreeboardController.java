@@ -167,22 +167,20 @@ public class RestFreeboardController {
 	/** 
 	 * 댓글
 	 **/
-	@PostMapping("/freecomment/{userid}/{articleNo}/{comment}")
-	public ResponseEntity<Map<String, Object>> comwrite(@PathVariable("userid") String user_id, @PathVariable("articleNo") int articleNo,
-			@PathVariable("comment") String comment) {
+	@PostMapping("/freecomment")
+	public ResponseEntity<Map<String, Object>> comwrite(@RequestBody Map<String, String> reqmap) {
 		ResponseEntity<Map<String, Object>> reEntity = null;
 		
 		try {
 			FreeComDto fcdto = new FreeComDto();
-			fcdto.setArticle_no(articleNo);
-			fcdto.setComment(comment.replace("\r\n", "<br>"));
-			fcdto.setUser_id(user_id);
+			fcdto.setArticle_no(Integer.parseInt(reqmap.get("articleNo")));
+			fcdto.setComment(reqmap.get("comment").replace("\r\n", "<br>"));
+			fcdto.setUser_id(reqmap.get("user_id"));
 
 			service.comWrite(fcdto);
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("resmsg", "댓글 작성 성공");
-			map.put("resValue", fcdto);
 			reEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (SQLException e) {
 			Map<String, Object> map = new HashMap<String, Object>();
