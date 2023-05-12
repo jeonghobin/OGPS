@@ -18,7 +18,6 @@ import com.ssafy.enjoy.attraction.dto.sidoDto;
 import com.ssafy.enjoy.attraction.service.PlanService;
 
 @RestController
-@CrossOrigin("*")
 public class AttractionController {
 	
 	@Autowired

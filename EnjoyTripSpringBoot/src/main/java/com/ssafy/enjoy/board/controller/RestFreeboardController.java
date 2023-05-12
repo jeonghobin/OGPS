@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoy.board.dto.FNBoardDto;
@@ -35,7 +36,7 @@ public class RestFreeboardController {
 	 * 게시판 
 	 **/
 	@GetMapping("/free")
-	public ResponseEntity<Map<String, Object>> list(@RequestBody  Map<String, String> reqmap) {
+	public ResponseEntity<Map<String, Object>> list(@RequestParam  Map<String, String> reqmap) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		
 		try {

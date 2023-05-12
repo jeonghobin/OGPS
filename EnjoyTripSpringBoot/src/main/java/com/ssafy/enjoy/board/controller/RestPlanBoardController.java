@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoy.attraction.dto.attractionDto;
@@ -54,7 +55,7 @@ public class RestPlanBoardController {
 	}
 	
 	@GetMapping("/plan")
-	public ResponseEntity<Map<String, Object>> list(@RequestBody Map<String, String> reqmap) throws Exception {
+	public ResponseEntity<Map<String, Object>> list(@RequestParam Map<String, String> reqmap) throws Exception {
 		
 		List<PlanBoardDto> list = service.list(reqmap);
 		PageNavigation pageNavigation = service.makePageNavigation(reqmap);
