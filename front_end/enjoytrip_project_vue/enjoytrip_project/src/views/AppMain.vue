@@ -1,0 +1,106 @@
+<template>
+  <div class="main">
+    <main-content class="main-content" :map-info="mapInfo"></main-content>
+  </div>
+</template>
+
+<script>
+import MainContent from "@/components/MainContent";
+
+export default {
+  name: "AppMain",
+  components: {
+    MainContent,
+  },
+};
+</script>
+
+<style scope>
+header {
+    justify-content: space-between;
+}
+
+body > div {
+    font-family: 'Black Han Sans', sans-serif;
+}
+
+.carousel-inner > div > img {
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+} 
+
+.col > img {
+    top: 0;
+    left: 0;
+
+    min-width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.img-thumbnail {
+    overflow: hidden;
+}
+
+.img-thumbnail:hover {
+    transform: scale(0.9);
+}
+
+.col {
+    position: relative;
+}
+
+.main_image_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: white;
+}
+
+.carousel-text {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: white;
+}
+
+.carousel-up-text {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: white;
+}
+
+.last-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: black;
+    text-align: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 100px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+</style>
