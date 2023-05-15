@@ -1,18 +1,23 @@
 <template>
   <div id="app">
     <div class="background">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <h1>1</h1>
-      <h1>2</h1>
-      <h1>3</h1>
-      
-    </nav>
-    <router-view/>
+      <the-header></the-header>
+      <router-view/>
+      <the-footer></the-footer>
     </div>
   </div>
 </template>
+
+<script>
+import TheFooter from './components/TheFooter.vue'
+import TheHeader from './components/TheHeader.vue'
+export default {
+  components:{
+    TheHeader,
+    TheFooter
+  }
+}
+</script>
 
 <style>
 body{
@@ -20,7 +25,7 @@ body{
 }
 .background{
   height: 120vh;
-  /* overflow: hidden; */
+  overflow: hidden;
   margin:0;
   background-image: url("@/assets/main/main6.jpg");
   background-size: cover;
