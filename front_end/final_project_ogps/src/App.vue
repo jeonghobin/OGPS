@@ -1,23 +1,8 @@
 <template>
   <div id="app">
-    <the-header></the-header>
     <div class="background">
+      <the-header></the-header>
       <router-view/>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      <h1>1</h1>
-      
     </div>
     <the-footer></the-footer>
   </div>
