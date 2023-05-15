@@ -1,8 +1,23 @@
 <template>
   <div id="app">
+    <the-header></the-header>
     <div class="background">
-      <the-header></the-header>
       <router-view/>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      <h1>1</h1>
+      
     </div>
     <the-footer></the-footer>
   </div>
@@ -24,9 +39,10 @@ body{
   margin: 0;
 }
 .background{
-  height: 120vh;
+  height: 100%;
   overflow: hidden;
   margin:0;
+  padding-top: 15px;
   background-image: url("@/assets/main/main6.jpg");
   background-size: cover;
   background-repeat: no-repeat;

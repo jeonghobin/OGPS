@@ -1,16 +1,16 @@
 <template>
     <div>
         <b-navbar toggleable="lg" type="light" variant="light">
-        <b-navbar-brand href="#">O! G.P.S</b-navbar-brand>
+        <b-navbar-brand href="#" to="/">O! G.P.S</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav >
-                <b-nav-item href="#">전국 관광지</b-nav-item>
-                <b-nav-item href="#">공지사항</b-nav-item>
-                <b-nav-item href="#">그룹플랜</b-nav-item>
-                <b-nav-item href="#">여행후기</b-nav-item>
+                <b-nav-item href="#" to="/">전국 관광지</b-nav-item>
+                <b-nav-item href="#" to="/fdfd">공지사항</b-nav-item>
+                <b-nav-item>그룹플랜</b-nav-item>
+                <b-nav-item>여행후기</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -45,4 +45,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+    
+</style>
