@@ -3,8 +3,8 @@
     <div class="background">
       <the-header></the-header>
       <router-view/>
-      <the-footer></the-footer>
     </div>
+    <the-footer></the-footer>
   </div>
 </template>
 
