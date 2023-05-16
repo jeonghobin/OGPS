@@ -1,5 +1,5 @@
 <template>
-    <div style="width:80%; margin:auto">
+    <div style="width:85%; margin:auto">
         <b-row class="bg-white text-dar mt-2 mb-2">
             <b-col>1</b-col>
             <b-col>2</b-col>
