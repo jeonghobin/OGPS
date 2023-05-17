@@ -11,7 +11,6 @@ import com.ssafy.enjoy.member.dto.MemberDto;
 import com.ssafy.enjoy.member.repository.MemberRepository;
 
 
-
 @Service("MemberServiceMapperImpl")
 public class MemberServiceMapperImpl implements MemberService {
 	
@@ -26,9 +25,10 @@ public class MemberServiceMapperImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDto login(MemberDto mdto) throws Exception {
-		
-		return session.getMapper(MemberRepository.class).login(mdto);
+	public MemberDto login(MemberDto memberDto) throws Exception {
+		if (memberDto.getUserId() == null || memberDto.getUserPassword() == null)
+			return null;
+		return session.getMapper(MemberRepository.class).login(memberDto);
 	}
 
 	@Override
@@ -41,6 +41,32 @@ public class MemberServiceMapperImpl implements MemberService {
 	public void memberDelete(String id) throws Exception {
 		// TODO Auto-generated method stub
 		session.getMapper(MemberRepository.class).memberDelete(id);
+	}
+
+	@Override
+	public MemberDto userInfo(String userId) throws Exception {
+		return session.getMapper(MemberRepository.class).userInfo(userId);
+	}
+
+	@Override
+	public void saveRefreshToken(String userId, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", refreshToken);
+		session.getMapper(MemberRepository.class).saveRefreshToken(map);
+	}
+
+	@Override
+	public Object getRefreshToken(String userId) throws Exception {
+		return session.getMapper(MemberRepository.class).getRefreshToken(userId);
+	}
+
+	@Override
+	public void deleRefreshToken(String userId) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", null);
+		session.getMapper(MemberRepository.class).deleteRefreshToken(map);
 	}
 
 }

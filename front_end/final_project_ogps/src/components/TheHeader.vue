@@ -14,23 +14,31 @@
                 <b-nav-item>날씨</b-nav-item>
             </b-navbar-nav>
 
-            <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto">
-                <b-nav-item disabled>
-                    ssafy 님
+            <!-- after login -->
+            <b-navbar-nav class="ml-auto" v-if="userInfo">
+                <b-nav-item class="align-self-center">
+                    {{ userInfo.username }}({{ userInfo.userid }})님 환영합니다.
                 </b-nav-item>
-                <div>
+                <b-nav-item class="align-self-center">
+                    <router-link :to="{ name: 'mypage' }" class="link align-self-center">내정보보기</router-link>
+                </b-nav-item>
+                <b-nav-item class="align-self-center link" @click.prevent="onClickLogout">로그아웃</b-nav-item>
+                <b-nav-item>
                     <b-button v-b-toggle.sidebar-right><img src="@/assets/img/alarm.png" width="20px" height="20px"></b-button>
                     <b-sidebar id="sidebar-right" title="Sidebar" right shadow>
                     <div class="px-3 py-2">
                         <p>
                         Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                        in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
                         </p>
                         <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
                     </div>
                     </b-sidebar>
-                </div>
+                </b-nav-item>
+            </b-navbar-nav>
+            <!-- before login -->
+            <b-navbar-nav class="ml-auto" v-else>
+                <router-link :to="{ name: 'join' }" class="link"> <b-icon icon="person-circle"></b-icon> 회원가입</router-link>
+                <router-link :to="{ name: 'login' }" class="link"> <b-icon icon="key"></b-icon> 로그인 </router-link>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>

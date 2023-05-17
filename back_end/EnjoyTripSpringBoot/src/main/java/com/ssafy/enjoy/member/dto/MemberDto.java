@@ -8,10 +8,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDto {
-	String user_id;
-	String user_name;
-	String user_password;
-	String email_id;
-	String email_domain;
-	String join_date;
+	String userId;
+	String userName;
+	String userPassword;
+//	String emailId;
+//	String emailDomain;
+	String userEmail;
+	String joinDate;
+	int grade;
+	String token;
 }

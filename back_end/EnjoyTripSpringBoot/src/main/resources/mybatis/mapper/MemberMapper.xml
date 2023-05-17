@@ -9,23 +9,50 @@
 			<result column="user_name" property="user_name" jdbcType="VARCHAR" javaType="String"/>
 			<result column="user_password" property="user_password" jdbcType="VARCHAR" javaType="String"/>
 			<result column="email_id" property="email_id" jdbcType="VARCHAR" javaType="String"/>
+			<result column="token" property="token" jdbcType="VARCHAR" javaType="String"/>
 		</resultMap>
 	
 	
 		<insert id="memberJoin" parameterType="memberDto">
-			insert into members(user_id, user_name, user_password, email_id, email_domain, join_date)
-			values (#{user_id}, #{user_name}, #{user_password}, #{email_id}, #{email_domain}, now())
+<!-- 			insert into members(userId, userName, userPassword, emailId, emailDomain, joinDate, grade)
+			values (#{userId}, #{userName}, #{userPassword}, #{emailId}, #{emailDomain}, now(), #{grade}) -->
+			insert into members(userId, userName, userPassword, userEmail, joinDate, grade)
+			values (#{userId}, #{userName}, #{userPassword}, #{userEmail}, now(), #{grade}) 
 		</insert>
 		<select id="login" parameterType="memberDto" resultMap="memberMap">
-			select user_id,user_name,user_password,email_id from members
-			where user_id=#{user_id} and user_password=#{user_password}
+			select userId,userName,userPassword,userEmail,grade from members
+			where userId=#{userId} and userPassword=#{userPassword}
 		</select> 
 		<update id="memberUpdate" parameterType="memberDto">
-			update members set user_name=#{user_name},user_password=#{user_password},
-			email_id=#{email_id},email_domain=#{email_domain}
-			where user_id=#{user_id}
+			update members set userName=#{userName},userPassword=#{userPassword},
+			userId=#{userId},userEmail=#{userEmail}
+			where userId=#{userId}
 		</update>
 		<delete id="memberDelete" parameterType="string">
-			delete from members where user_id=#{id}
+			delete from members where userId=#{id}
 		</delete>
+		
+		<select id="userInfo" parameterType="string" resultType="memberDto">
+			select userName, userId, emailId, joinDate
+			from members
+			where userId = #{userId}
+		</select>
+	
+		<select id="getRefreshToken" parameterType="string" resultType="string">
+			select token
+			from members
+			where userId = #{userId}
+		</select>
+		
+		<update id="saveRefreshToken" parameterType="map">
+			update members
+			set token = #{token}
+			where userId = #{userId}
+		</update>
+		
+		<update id="deleteRefreshToken" parameterType="map">
+			update members
+			set token = #{token, jdbcType=VARCHAR}
+			where userId = #{userId}
+		</update>
 	</mapper>
