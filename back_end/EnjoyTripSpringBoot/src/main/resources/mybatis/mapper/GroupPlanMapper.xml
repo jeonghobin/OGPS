@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.ssafy.enjoy.group.repository.GroupPlanRepository">
+	
+	<resultMap type="GroupPlanDto" id="groupplandto">
+		<result column="planNo" property="planNo"/>
+		<result column="groupNo" property="groupNo"/>
+		<result column="subject" property="subject"/>
+		<result column="userId" property="userId"/>
+		<result column="like" property="like"/>
+	</resultMap>
+	
+	<resultMap type="GroupCommentDto" id="groupcommentdto">
+		<result column="commentNo" property="commentNo"/>
+		<result column="groupNo" property="groupNo"/>
+		<result column="comment" property="comment"/>
+		<result column="userId" property="userId"/>
+	</resultMap>
+	
+	<resultMap type="GroupMemberDto" id="groupmemberdto">
+		<result column="groupNo" property="groupNo"/>
+		<result column="grade" property="grade"/>
+		<result column="userId" property="userId"/>
+	</resultMap>
+	
+	<select id="getGroupPlan" parameterType="int" resultMap="groupplandto">
+		select * from plan where groupNo=#{groupNo}
+	</select>
+	
+	<select id="getGroupComment" parameterType="int" resultMap="groupcommentdto">
+		select * from group_comment where groupNo=#{groupNo}
+	</select>
+	<select id="getGroupMember" parameterType="int" resultMap="groupmemberdto">
+		select * from group_members where groupNo=#{groupNo}
+	</select>
+	
+  	
+</mapper>
+ 
