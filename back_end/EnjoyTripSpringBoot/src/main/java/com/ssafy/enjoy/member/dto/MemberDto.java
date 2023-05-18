@@ -11,8 +11,6 @@ public class MemberDto {
 	String userId;
 	String userName;
 	String userPassword;
-//	String emailId;
-//	String emailDomain;
 	String userEmail;
 	String joinDate;
 	int grade;

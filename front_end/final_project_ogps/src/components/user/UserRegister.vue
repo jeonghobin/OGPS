@@ -10,7 +10,7 @@
       <b-col cols="8">
         <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
           <b-form class="text-left">
-            <b-alert show variant="danger" v-model="isRegisterError.state">{{isRegisterError.info}}를 확인해주세요.</b-alert>
+            <b-alert show variant="danger" v-model="isRegisterError.state">{{isRegisterError.info}}</b-alert>
             <b-form-group label="이름:" label-for="userName">
               <b-form-input
                 id="userName"
@@ -50,7 +50,6 @@
               ></b-form-input>
             </b-form-group>
             <b-button type="button" variant="primary" class="m-1" @click="register">회원가입</b-button>
-            <b-button type="button" variant="success" class="m-1" @click="movePage">로그인</b-button>
           </b-form>
         </b-card>
       </b-col>
@@ -60,7 +59,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 const memberStore = "memberStore";
 
@@ -80,29 +79,35 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(memberStore, ["duplicate"]),
+  },
   methods: {
     ...mapActions(memberStore, ["memberRegister"]),
     async register() {
       if (this.user.userName === null) {
         this.isRegisterError.state = true;
-        this.isRegisterError.info = "'이름'";
+        this.isRegisterError.info = "'이름'을 작성해주세요";
       }else if (this.user.userId === null) {
         this.isRegisterError.state = true;
-        this.isRegisterError.info = "'아이디'";
+        this.isRegisterError.info = "'아이디'를 작성해주세요";
       }else if (this.user.userPassword === null) {
         this.isRegisterError.state = true;
-        this.isRegisterError.info = "'비밀번호'";
+        this.isRegisterError.info = "'비밀번호'를 작성해주세요";
       }else if (this.user.userEmail === null) {
         this.isRegisterError.state = true;
-        this.isRegisterError.info = "'이메일'";
+        this.isRegisterError.info = "'이메일'을 작성해주세요";
       }else{
         this.isRegisterError.state = false;
-        
         await this.memberRegister(this.user);
-     
-        if (this.isLogin) {
-          this.$router.push({ name: "main" });
+
+        if (this.duplicate) {
+          this.isRegisterError.state = true;
+          this.isRegisterError.info = "이미 사용중인 '아이디' 입니다.";
+        }else{
+          this.$router.push({ name: "AppMain" });
         }
+
       } 
     },
     movePage() {

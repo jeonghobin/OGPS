@@ -9,6 +9,8 @@ const memberStore = {
     isLoginError: false,
     userInfo: null,
     isValidToken: false,
+    duplicate: false,
+    user: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -31,6 +33,12 @@ const memberStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+    },
+    SET_USER_DUPLICATE:(state, duplicate) => {
+      state.duplicate = duplicate;
+    },
+    SET_USER_UPDATE:(state, user) => {
+      state.user = user;
     },
   },
   actions: {
@@ -60,13 +68,14 @@ const memberStore = {
     },
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
-      // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+      console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+      console.log("2. getUserInfo() userId :: ", decodeToken.userId);
       await findById(
         decodeToken.userId,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_USER_INFO", data.userInfo);
-            // console.log("3. getUserInfo data >> ", data);
+            console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
           }
@@ -103,7 +112,7 @@ const memberStore = {
                 } else {
                   console.log("리프레시 토큰 제거 실패");
                 }
-                alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
+                alert("세션 유지 기간이 만료되었습니다. 다시 로그인해 주세요.");
                 commit("SET_IS_LOGIN", false);
                 commit("SET_USER_INFO", null);
                 commit("SET_IS_VALID_TOKEN", false);
@@ -136,22 +145,24 @@ const memberStore = {
         }
       );
     },
-    async memberRegister(user) {
-      console.log(user.userId);
+    async memberRegister({ commit }, user) {
       await mRegister(
         user,
         ({ data }) => {
+          commit("SET_USER_DUPLICATE", data.duplicate);
           console.log(data.message);
         },
         (error) => {
+          commit("SET_USER_DUPLICATE", true);
           console.log(error);
         }
       );
     }, 
-    async memberUpdate(user) {
+    async memberUpdate({ commit }, user) {
       await mUpdate(
         user,
         ({ data }) => {
+          commit("SET_USER_UPDATE", user);
           console.log(data.message);
         },
         (error) => {
@@ -159,17 +170,23 @@ const memberStore = {
         }
       );
     },
-    async memberDelete(userId) {
-      await mDelete(
-        userId,
-        ({ data }) => {
-          console.log(data.message);
-        },
-        (error) => {
-          console.log(error);
+  async memberDelete({ commit }, userId) {
+    await mDelete(
+      userId,
+      ({ data }) => {
+        if (data.message === "success") {
+          commit("SET_IS_LOGIN", false);
+          commit("SET_USER_INFO", null);
+          commit("SET_IS_VALID_TOKEN", false);
+        } else {
+          console.log("유저 정보 없음!!!!");
         }
-      );
-    },
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  },
   },
 };
 

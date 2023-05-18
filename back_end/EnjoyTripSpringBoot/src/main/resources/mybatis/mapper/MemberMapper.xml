@@ -5,17 +5,15 @@
   
 	<mapper namespace="com.ssafy.enjoy.member.repository.MemberRepository">
 		<resultMap id="memberMap" type="memberDto">
-			<result column="user_id" property="user_id" jdbcType="VARCHAR" javaType="String"/>
-			<result column="user_name" property="user_name" jdbcType="VARCHAR" javaType="String"/>
-			<result column="user_password" property="user_password" jdbcType="VARCHAR" javaType="String"/>
-			<result column="email_id" property="email_id" jdbcType="VARCHAR" javaType="String"/>
+			<result column="userId" property="userId" jdbcType="VARCHAR" javaType="String"/>
+			<result column="userName" property="userName" jdbcType="VARCHAR" javaType="String"/>
+			<result column="userPassword" property="userPassword" jdbcType="VARCHAR" javaType="String"/>
+			<result column="userEmail" property="userEmail" jdbcType="VARCHAR" javaType="String"/>
 			<result column="token" property="token" jdbcType="VARCHAR" javaType="String"/>
 		</resultMap>
 	
 	
 		<insert id="memberJoin" parameterType="memberDto">
-<!-- 			insert into members(userId, userName, userPassword, emailId, emailDomain, joinDate, grade)
-			values (#{userId}, #{userName}, #{userPassword}, #{emailId}, #{emailDomain}, now(), #{grade}) -->
 			insert into members(userId, userName, userPassword, userEmail, joinDate, grade)
 			values (#{userId}, #{userName}, #{userPassword}, #{userEmail}, now(), #{grade}) 
 		</insert>
@@ -33,7 +31,7 @@
 		</delete>
 		
 		<select id="userInfo" parameterType="string" resultType="memberDto">
-			select userName, userId, emailId, joinDate
+			select userName, userId, userPassword, userEmail, joinDate, token
 			from members
 			where userId = #{userId}
 		</select>

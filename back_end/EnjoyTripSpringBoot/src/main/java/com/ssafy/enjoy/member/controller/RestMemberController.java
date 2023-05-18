@@ -54,16 +54,16 @@ public class RestMemberController {
 			mdto.setUserName(reqmap.get("userName"));
 			mdto.setUserPassword(reqmap.get("userPassword"));
 			mdto.setUserEmail(reqmap.get("userEmail"));
-//			mdto.setEmailId(reqmap.get("emailId"));
-//			mdto.setEmailDomain(reqmap.get("emailDomain"));
 			mdto.setGrade(0);
 
 			memberService.memberJoin(mdto);
 
 			map.put("message", SUCCESS);
+			map.put("duplicate", false);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			map.put("message", FAIL);
+			map.put("duplicate", true);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 			e.printStackTrace();
 		}
@@ -79,11 +79,9 @@ public class RestMemberController {
 		try {
 			MemberDto mdto = new MemberDto();
 			mdto.setUserId(reqmap.get("userId"));
-			mdto.setUserName(reqmap.get("name"));
-			mdto.setUserPassword(reqmap.get("password"));
+			mdto.setUserName(reqmap.get("userName"));
+			mdto.setUserPassword(reqmap.get("userPassword"));
 			mdto.setUserEmail(reqmap.get("userEmail"));
-//			mdto.setEmailId(reqmap.get("email"));
-//			mdto.setEmailDomain(reqmap.get("emailDomain"));
 
 			memberService.memberUpdate(mdto);
 
@@ -124,8 +122,8 @@ public class RestMemberController {
 			MemberDto loginUser = memberService.login(memberDto);
 		
 			if (loginUser != null) {
-				String accessToken = jwtService.createAccessToken("userid", loginUser.getUserId());// key, data
-				String refreshToken = jwtService.createRefreshToken("userid", loginUser.getUserId());// key, data
+				String accessToken = jwtService.createAccessToken("userId", loginUser.getUserId());// key, data
+				String refreshToken = jwtService.createRefreshToken("userId", loginUser.getUserId());// key, data
 				memberService.saveRefreshToken(memberDto.getUserId(), refreshToken);
 				logger.debug("로그인 accessToken 정보 : {}", accessToken);
 				logger.debug("로그인 refreshToken 정보 : {}", refreshToken);
