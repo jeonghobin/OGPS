@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.enjoy.group.dto.GroupDto;
 import com.ssafy.enjoy.group.repository.GroupRepository;
@@ -28,6 +29,7 @@ public class GroupServiceMapperImpl implements GroupService {
 		return session.getMapper(GroupRepository.class).getMyGroup(userId);
 	}
 	@Override
+	@Transactional
 	public void createGroup(GroupDto gdto) throws Exception {
 		// TODO Auto-generated method stub
 		session.getMapper(GroupRepository.class).createGroup(gdto);

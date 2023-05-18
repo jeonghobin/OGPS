@@ -34,6 +34,7 @@ public class RestGroupController {
 		Map<String, Object> rsmap = new HashMap<String, Object>();
 		List<GroupDto> gdto = service.getGroup();
 		rsmap.put("data", gdto);
+		rsmap.put("rsmsg","전체그룹조회성공");
 		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
 		return entity;
 	}
@@ -44,6 +45,7 @@ public class RestGroupController {
 		Map<String, Object> rsmap = new HashMap<String, Object>();
 		List<GroupDto> gdto = service.getMyGroup(userId);
 		rsmap.put("data", gdto);
+		rsmap.put("rsmsg","내그룹조회성공");
 		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
 		return entity;
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.enjoy.group.dto.GroupDto;
+import com.ssafy.enjoy.group.dto.GroupPlanDto;
 
 public interface GroupService {
 	public List<GroupDto> getGroup()throws Exception;

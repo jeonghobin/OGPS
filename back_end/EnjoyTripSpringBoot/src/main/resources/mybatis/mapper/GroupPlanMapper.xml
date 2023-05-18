@@ -26,6 +26,27 @@
 		<result column="userId" property="userId"/>
 	</resultMap>
 	
+	<resultMap type="attractionDto" id="attraction">
+		<result column="content_id" property="content_id"/>
+		<result column="content_type_id" property="content_type_id"/>
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="zipcode" property="zipcode"/>
+		<result column="tel" property="tel"/>
+		<result column="first_image" property="first_image"/>
+		<result column="first_image2" property="first_image2"/>
+		<result column="readcount" property="readcount"/>
+		<result column="sido_code" property="sido_code"/>
+		<result column="gugun_code" property="gugun_code"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="mlevel" property="mlevel"/>
+	</resultMap>
+	
+	
+	
+	
 	<select id="getGroupPlan" parameterType="int" resultMap="groupplandto">
 		select * from plan where groupNo=#{groupNo}
 	</select>
@@ -37,6 +58,55 @@
 		select * from group_members where groupNo=#{groupNo}
 	</select>
 	
+	<select id="getDetailPlan" parameterType="int" resultMap="groupplandto">
+		select * from plan where planNo=#{planNo}
+	</select>
+	
+	<select id="getPlanPath" parameterType="int" resultMap="attraction">
+		SELECT a.*
+		FROM attraction_info AS a
+		JOIN (
+		  SELECT contentId, ROW_NUMBER() OVER (ORDER BY planSeq) AS rn
+		  FROM plan_path
+		  WHERE planNo = #{planNo}
+		) AS p
+		ON a.content_id = p.contentId
+		ORDER BY p.rn;
+	</select>
+	
+	<update id="updateHit" parameterType="string">
+		update attraction_info set hit=hit+1 where content_id =#{contentId}
+	</update>
+	
+	<select id="getPlanMemo" parameterType="int" resultType="string">
+		select memo from plan_path where planNo=#{planNo} order by planSeq
+	</select>
+  	
+  	<delete id="deletePlan" parameterType="int">
+  		delete from plan where planNo=#{planNo};
+  	</delete>
+  	
+  	<insert id="writeGroupPlan" parameterType="GroupPlanDto">
+  		insert into plan(subject,userId,groupNo)
+  		values(#{subject},#{userId},#{groupNo})
+  	</insert>
+  	
+  	<select id="getAuto" resultType="int">
+  		select last_insert_id()
+  	</select>
+  	
+  	<insert id="writeGroupPlanPath" parameterType="string">
+  		insert into plan_path values(#{a},#{seq},#{contentId},#{memo})
+  	</insert>
+  	
+  	<update id="updateGroupPlan" parameterType="string">
+  		update plan set subject=#{subject} where planNo=#{planNo}
+  	</update>
+  	
+  	<delete id="deleteGroupPlanPath" parameterType="string">
+  		delete from plan_path where planNo = #{planNo}
+  	</delete>
+  	
   	
 </mapper>
  

@@ -25,5 +25,7 @@
 		<mapper resource="mybatis/mapper/PlanBoardMapper.xml"/>
 		<mapper resource="mybatis/mapper/GroupMapper.xml"/>
 		<mapper resource="mybatis/mapper/GroupPlanMapper.xml"/>
+		<mapper resource="mybatis/mapper/GroupMemberMapper.xml"/>
+		
 	</mappers>
 </configuration>

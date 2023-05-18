@@ -13,4 +13,5 @@ public interface GroupRepository {
 	public void joinMember(Map<String,String> map) throws Exception;
 	public void deleteGroup(int groupNo) throws Exception;
 	public void updateGroup(GroupDto gdto) throws Exception;
+	
 }
