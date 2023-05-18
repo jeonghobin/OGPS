@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import AppMain from '@/views/AppMain'
 import store from "@/store";
+import AppAttraction from '@/views/AppAttraction'
+
 Vue.use(VueRouter)
 
 const onlyAuthUser = async (to, from, next) => {
@@ -53,6 +55,11 @@ const routes = [
       },
     ],
   },
+  {
+    path:"/attraction",
+    name:"attraction",
+    component: AppAttraction,
+  }
 ]
 
 const router = new VueRouter({
