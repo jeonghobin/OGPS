@@ -5,6 +5,16 @@
  
  <mapper namespace="com.ssafy.enjoy.group.repository.GroupPlanRepository">
 	
+	<resultMap type="GroupDto" id="groupdto">
+		<result column="groupNo" property="groupNo"/>
+		<result column="userId" property="userId"/>
+		<result column="subject" property="subject"/>
+		<result column="registerTime" property="registerTime"/>
+		<result column="startTime" property="startTime"/>
+		<result column="endTime" property="endTime"/>
+		<result column="memberCnt" property="memberCnt"/>
+	</resultMap>
+	
 	<resultMap type="GroupPlanDto" id="groupplandto">
 		<result column="planNo" property="planNo"/>
 		<result column="groupNo" property="groupNo"/>
@@ -107,6 +117,13 @@
   		delete from plan_path where planNo = #{planNo}
   	</delete>
   	
+  	<update id="likeGroupPlan" parameterType="int">
+  		update plan set heart=heart+1 where planNo=#{planNo}
+  	</update>
+  	
+  	<select id="getDetailGroup" parameterType="int" resultMap="groupdto">
+  		select * from groupplan where groupNo=#{groupNo}
+  	</select>
   	
 </mapper>
  

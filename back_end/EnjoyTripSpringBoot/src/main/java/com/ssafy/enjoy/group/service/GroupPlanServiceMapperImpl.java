@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.enjoy.attraction.dto.attractionDto;
 import com.ssafy.enjoy.group.dto.GroupCommentDto;
+import com.ssafy.enjoy.group.dto.GroupDto;
 import com.ssafy.enjoy.group.dto.GroupMemberDto;
 import com.ssafy.enjoy.group.dto.GroupPlanDto;
 import com.ssafy.enjoy.group.dto.GroupPlanPathDto;
@@ -90,6 +91,18 @@ public class GroupPlanServiceMapperImpl implements GroupPlanService {
 			session.getMapper(GroupPlanRepository.class).updateHit(path.get("contentId"));
 			i++;
 		}
+	}
+
+	@Override
+	public void likeGroupPlan(int planNo) throws Exception {
+		// TODO Auto-generated method stub
+		session.getMapper(GroupPlanRepository.class).likeGroupPlan(planNo);
+	}
+
+	@Override
+	public GroupDto getDetailGroup(int groupNo) throws Exception {
+		// TODO Auto-generated method stub
+		return session.getMapper(GroupPlanRepository.class).getDetailGroup(groupNo);
 	}
 
 	

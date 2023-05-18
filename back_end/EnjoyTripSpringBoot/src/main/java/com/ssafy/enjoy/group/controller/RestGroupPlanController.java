@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoy.attraction.dto.attractionDto;
 import com.ssafy.enjoy.group.dto.GroupCommentDto;
+import com.ssafy.enjoy.group.dto.GroupDto;
 import com.ssafy.enjoy.group.dto.GroupMemberDto;
 import com.ssafy.enjoy.group.dto.GroupPlanDto;
 import com.ssafy.enjoy.group.dto.GroupPlanPathDto;
@@ -35,10 +36,12 @@ public class RestGroupPlanController {
 	@GetMapping("/groupplan/{groupNo}")
 	public ResponseEntity<Map<String,Object>> getGroup(@PathVariable("groupNo") int groupNo) throws Exception{
 		ResponseEntity<Map<String,Object>> entity = null;
+		GroupDto group = service.getDetailGroup(groupNo);
 		List<GroupPlanDto> gplist = service.getGroupPlan(groupNo);
 		List<GroupCommentDto> gclist = service.getGroupComment(groupNo);
 		List<GroupMemberDto> gmlist = service.getGroupMember(groupNo);
 		Map<String,Object> rsmap = new HashMap<String, Object>();
+		rsmap.put("group", group);
 		rsmap.put("plans", gplist);
 		rsmap.put("comments",gclist);
 		rsmap.put("members",gmlist);
@@ -63,6 +66,16 @@ public class RestGroupPlanController {
 		return entity;
 	}
 	
+	@PostMapping("/groupplan/{groupNo}/{planNo}")
+	public ResponseEntity<Map<String,Object>> likeGroupPlan(@PathVariable("groupNo") int groupNo
+		,@PathVariable("planNo") int planNo) throws Exception{
+		ResponseEntity<Map<String,Object>> entity = null;
+		service.likeGroupPlan(planNo);
+		Map<String,Object> rsmap = new HashMap<String, Object>();
+		rsmap.put("rsmsg", "좋아요 성공");
+		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
+		return entity;
+	}
 	@DeleteMapping("/groupplan/{groupNo}/{planNo}")
 	public ResponseEntity<Map<String,Object>> deleteGroupPlan(@PathVariable("groupNo") int groupNo,
 			@PathVariable("planNo") int planNo) throws Exception{

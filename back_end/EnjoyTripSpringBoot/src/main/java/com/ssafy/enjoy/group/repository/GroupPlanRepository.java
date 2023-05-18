@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssafy.enjoy.attraction.dto.attractionDto;
 import com.ssafy.enjoy.group.dto.GroupCommentDto;
+import com.ssafy.enjoy.group.dto.GroupDto;
 import com.ssafy.enjoy.group.dto.GroupMemberDto;
 import com.ssafy.enjoy.group.dto.GroupPlanDto;
 
@@ -21,5 +22,6 @@ public interface GroupPlanRepository {
 	void updateGroupPlan(String subject,String planNo) throws Exception;
 	void writeGroupPlanPath(String a, String contentId,String memo,String seq) throws Exception;
 	void deleteGroupPlanPath(String planNo) throws Exception;
-	
+	void likeGroupPlan(int planNo) throws Exception;
+	GroupDto getDetailGroup(int groupNo) throws Exception;
 }

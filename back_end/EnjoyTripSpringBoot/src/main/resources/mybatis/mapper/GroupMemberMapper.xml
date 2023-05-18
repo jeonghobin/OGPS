@@ -5,33 +5,36 @@
  
  <mapper namespace="com.ssafy.enjoy.group.repository.GroupMemberRepository">
 	
-	<resultMap type="GroupPlanDto" id="groupplandto">
-		<result column="planNo" property="planNo"/>
+	<resultMap type="NoticeDto" id="noticedto">
 		<result column="groupNo" property="groupNo"/>
-		<result column="subject" property="subject"/>
 		<result column="userId" property="userId"/>
-		<result column="like" property="like"/>
+		<result column="targetId" property="targetId"/>
 	</resultMap>
 	
-	<resultMap type="GroupCommentDto" id="groupcommentdto">
-		<result column="commentNo" property="commentNo"/>
-		<result column="groupNo" property="groupNo"/>
-		<result column="comment" property="comment"/>
-		<result column="userId" property="userId"/>
-	</resultMap>
-	
-	<resultMap type="GroupMemberDto" id="groupmemberdto">
-		<result column="groupNo" property="groupNo"/>
-		<result column="grade" property="grade"/>
-		<result column="userId" property="userId"/>
-	</resultMap>
 	
 	
 	<select id="getOwner" parameterType="int" resultType="string">
 		select userId from group_members where groupNo=#{groupNo} and grade=1
 	</select>
 	
+	<insert id="submitJoin" parameterType="string">
+		insert into notice values(#{userId},#{groupNo},#{owner});
+	</insert>
 	
+	<select id="getNotice" parameterType="string" resultMap="noticedto">
+		select * from notice where targetId=#{userId}
+	</select>
   	
+  	<delete id="deleteNotice" parameterType="string">
+  		delete from notice where userId=#{userId} and groupNo=#{groupNo}
+  	</delete>
+  	
+  	<select id="getTotalMember" parameterType="string" resultType="int">
+  		select COUNT(*) from group_members group by groupNo having(groupNo=#{groupNo})
+  	</select>
+  	
+  	<delete id="deleteMember" parameterType="string">
+  		delete from group_members where groupNo=#{groupNo} and userId=#{userId}
+  	</delete>
   	
 </mapper>
