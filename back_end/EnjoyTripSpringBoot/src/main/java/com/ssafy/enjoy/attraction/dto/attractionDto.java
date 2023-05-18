@@ -23,4 +23,5 @@ public class attractionDto {
 	double latitude;
 	double longitude;
 	String mlevel;
+	int hit;
 }
