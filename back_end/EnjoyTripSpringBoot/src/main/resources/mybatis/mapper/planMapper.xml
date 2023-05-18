@@ -48,7 +48,10 @@
   		where content_type_id=#{contentType} and sido_code=#{areaCode} and gugun_code=#{townCode}
   	</select>
   	
-  	
+  	<select id="getSearchAttraction" parameterType="string" resultMap="attraction">
+  		select * from attraction_info
+  		where title Like CONCAT('%', #{word}, '%')
+  	</select>
   	
   	
   	

@@ -13,5 +13,5 @@ public interface PlanService {
 	public List<sidoDto> getsido() throws Exception;
 	public List<gugunDto> getgugun(int code) throws Exception;
 	public List<attractionDto> getattraction(Map<String,Integer> map) throws Exception;
-	
+	public List<attractionDto> getSearchAttraction(String word) throws Exception;
 }

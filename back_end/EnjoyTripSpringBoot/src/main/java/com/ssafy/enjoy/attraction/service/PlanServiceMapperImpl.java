@@ -35,6 +35,12 @@ public class PlanServiceMapperImpl implements PlanService {
 		// TODO Auto-generated method stub
 		return session.getMapper(PlanRepository.class).getattraction(map);
 	}
+
+	@Override
+	public List<attractionDto> getSearchAttraction(String word) throws Exception {
+		// TODO Auto-generated method stub
+		return session.getMapper(PlanRepository.class).getSearchAttraction(word);
+	}
 	
 	
 	
