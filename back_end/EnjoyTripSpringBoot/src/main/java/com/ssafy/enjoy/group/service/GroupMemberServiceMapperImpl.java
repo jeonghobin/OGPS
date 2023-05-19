@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.enjoy.group.dto.GroupDto;
 import com.ssafy.enjoy.group.dto.NoticeDto;
@@ -35,6 +36,7 @@ public class GroupMemberServiceMapperImpl implements GroupMemberService {
 	}
 
 	@Override
+	@Transactional
 	public boolean joinMember(String userId, String groupNo) throws Exception {
 		// TODO Auto-generated method stub
 		Map<String,String> map = new HashMap<String, String>();

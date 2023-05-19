@@ -26,4 +26,6 @@ public interface GroupPlanRepository {
 	GroupDto getDetailGroup(int groupNo) throws Exception;
 	int getHeart(String planNo, String userId)throws Exception;
 	void deleteHeart(String planNo, String userId)throws Exception;
+	void downHeart(int planNo)throws Exception;
+	void updateHeart(int planNo)throws Exception;
 }

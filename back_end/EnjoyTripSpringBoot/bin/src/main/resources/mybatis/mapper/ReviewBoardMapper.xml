@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssafy.enjoy.board.repository.ReviewBoardRepository">
+	<resultMap type="ReviewDto" id="ReviewDto">
+		<result column="articleNo" property="articleNo" />
+		<result column="userId" property="userId" />
+		<result column="subject" property="subject" />
+		<result column="content" property="content" />
+		<result column="hit" property="hit" />
+		<result column="registerTime" property="registerTime" />
+		<result column="heart" property="heart" />
+	</resultMap>
+  	<resultMap type="ReviewComDto" id="ReviewComDto">
+		<result column="commentNo" property="commentNo" />
+		<result column="articleNo" property="articleNo" />
+		<result column="userId" property="userId" />
+		<result column="comment" property="comment" />
+		<result column="memoTime" property="memoTime" />
+	</resultMap>  
+	<resultMap type="ReviewHeartDto" id="ReviewHeartDto">
+		<result column="articleNo" property="articleNo" />
+		<result column="userId" property="userId" />
+		<result column="state" property="state" />
+	</resultMap>  
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+	<select id="list" parameterType="map" resultMap="ReviewDto">
+		SELECT b.articleNo, b.userId, b.subject, b.content, b.hit, b.registerTime,
+		(SELECT COUNT(*) FROM review_heart WHERE articleNo = b.articleNo AND state = 1) AS heart
+		FROM review_board b where 1
+		<include refid="search"></include>
+		order by b.articleNo desc
+		limit #{start}, #{listsize}
+	</select>
+
+	<select id="getTotalArticleCount" parameterType="map"
+		resultType="int">
+		select count(articleNo)
+		from review_board
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+
+	<insert id="write" parameterType="ReviewDto">
+		insert into
+		review_board(userId,subject,content,registerTime)
+		values(#{userId},#{subject},#{content},now())
+	</insert>
+
+	<select id="getnotice" parameterType="int" resultMap="ReviewDto">
+		select *
+		from review_board where articleNo=#{articleNo}
+	</select>
+	
+	<update id="updateHit" parameterType="int">
+		update review_board set hit =
+		hit+1 where articleNo=#{articleNo}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from review_board where
+		articleNo=#{articleNo}
+	</delete>
+	
+	<update id="modify" parameterType="ReviewDto">
+		update review_board set
+		subject=#{subject},content=#{content} where articleNo=#{articleNo}
+	</update>
+	
+	
+	<!-- comment -->
+	<insert id="comWrite" parameterType="ReviewComDto">
+		insert into
+		review_comment(articleNo,userId,comment,memoTime)
+		values(#{articleNo},#{userId},#{comment},now())
+	</insert>
+	
+	<select id="comList" parameterType="int" resultMap="ReviewComDto">
+		select * from review_comment where articleNo=#{articleNo};
+	</select>
+	
+	<delete id="comDelete" parameterType="int">
+		delete from review_comment where commentNo=#{commentNo}
+	</delete> 
+	
+
+	<!-- heart -->
+	<select id="heartState" parameterType="ReviewHeartDto" resultType="int">
+		select state from review_haert where userId=#{userId} and articleNo=#{articleNo}
+	</select>
+	
+	<select id="exitHeart" parameterType="ReviewHeartDto" resultType="int">
+		select count(*) from review_haert where articleNo=#{articleNo} and userId=#{userId}
+	</select>
+	
+	<select id="allHeart" parameterType="int" resultType="int">
+		select count(*) from review_haert where articleNo=#{articleNo} and state=1
+	</select>
+	
+	<insert id="addHeart" parameterType="ReviewHeartDto">
+		insert into review_heart(articleNo,userId,state) values(#{articleNo},#{userId},#{state})
+	</insert>
+	
+	<update id="updateHeart" parameterType="ReviewHeartDto">
+		update review_heart set state = #{state} where articleNo=#{articleNo} and userId=#{userId}
+	</update> 
+	
+	<!-- file -->
+	<select id="getAuto" resultType="int">
+  		select last_insert_id()
+  	</select>
+	
+	<insert id="savefile" parameterType="FileInfoDto">
+		insert into review_file(articleNo,saveFolder, originalFile,saveFile)
+ 		values(#{articleNo},#{saveFolder},#{originalFile},#{saveFile})
+	</insert>
+	
+	<delete id="deletefile" parameterType="int">
+		delete from review_file where idx=#{idx}
+	</delete>
+</mapper>

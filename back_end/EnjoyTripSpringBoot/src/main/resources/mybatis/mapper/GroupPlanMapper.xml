@@ -135,5 +135,14 @@
   		select COUNT(*) from plan_heart where planNo=#{planNo} and userId=#{userId}
   	</select>
   	
+  	<update id="downHeart" parameterType="int">
+  		update plan set heart=heart-1 where planNo=#{planNo}
+  	</update>
+  	
+  	<update id="updateHeart" parameterType="int">
+  		update plan set heart=heart+1 where planNo=#{planNo}
+  	</update>
+  	
+  	
 </mapper>
  

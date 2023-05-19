@@ -20,7 +20,7 @@
 		<result column="groupNo" property="groupNo"/>
 		<result column="subject" property="subject"/>
 		<result column="userId" property="userId"/>
-		<result column="like" property="like"/>
+		<result column="heart" property="heart"/>
 	</resultMap>
 	
 	<resultMap type="GroupCommentDto" id="groupcommentdto">
@@ -69,7 +69,9 @@
 	</select>
 	
 	<select id="getDetailPlan" parameterType="int" resultMap="groupplandto">
-		select * from plan where planNo=#{planNo}
+		select planNo,groupNo,subject,userId,
+		(select COUNT(*) from plan_heart where planNo=#{planNo}) as heart 
+		from plan where planNo=#{planNo}
 	</select>
 	
 	<select id="getPlanPath" parameterType="int" resultMap="attraction">
@@ -117,12 +119,20 @@
   		delete from plan_path where planNo = #{planNo}
   	</delete>
   	
-  	<update id="likeGroupPlan" parameterType="int">
-  		update plan set heart=heart+1 where planNo=#{planNo}
-  	</update>
+  	<insert id="likeGroupPlan" parameterType="string">
+  		insert into plan_heart values(#{planNo},#{userId});
+  	</insert>
+  	
+  	<delete id="deleteHeart" parameterType="string">
+  		delete from plan_heart where planNo=#{planNo} and userId=#{userId}
+  	</delete>
   	
   	<select id="getDetailGroup" parameterType="int" resultMap="groupdto">
   		select * from groupplan where groupNo=#{groupNo}
+  	</select>
+  	
+  	<select id="getHeart" parameterType="string" resultType="int">
+  		select COUNT(*) from plan_heart where planNo=#{planNo} and userId=#{userId}
   	</select>
   	
 </mapper>
