@@ -114,7 +114,7 @@ public class RestReviewboardController {
 					fileInfos.add(fileInfoDto);
 					service.savefile(fileInfoDto);
 				}
-				map.put("fileInfos", fileInfos);
+				map.put("imageUrl", fileInfos);
 			}
 
 			
