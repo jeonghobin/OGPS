@@ -1,6 +1,6 @@
 <template>
   
-<footer class="footer bg-light">
+<footer class="footer bg-white">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
