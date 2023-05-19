@@ -10,7 +10,7 @@
                 <b-nav-item href="#" to="/attraction">전국 관광지</b-nav-item>
                 <b-nav-item href="#" to="/fdfd">공지사항</b-nav-item>
                 <b-nav-item to="/group">그룹플랜</b-nav-item>
-                <b-nav-item>여행후기</b-nav-item>
+                <b-nav-item to="/review">여행후기</b-nav-item>
                 <b-nav-item>날씨</b-nav-item>
             </b-navbar-nav>
 

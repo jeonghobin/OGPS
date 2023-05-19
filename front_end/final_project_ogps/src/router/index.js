@@ -3,10 +3,13 @@ import VueRouter from 'vue-router'
 import AppMain from '@/views/AppMain'
 import store from "@/store";
 import AppAttraction from '@/views/AppAttraction'
-import AppFile from '@/views/AppFile'
 import AppGroup from '@/views/AppGroup'
 import GroupList from '@/components/group/GroupList'
 import GroupWrite from '@/components/group/GroupWrite'
+import AppReview from '@/views/AppReview'
+import ReviewList from '@/components/review/ReviewList'
+import ReviewWrite from '@/components/review/ReviewWrite'
+import ReviewView from '@/components/review/ReviewView'
 
 Vue.use(VueRouter)
 
@@ -65,9 +68,27 @@ const routes = [
     component: AppAttraction,
   },
   {
-    path:"/fileupload",
-    name:"fileupload",
-    component: AppFile,
+    path:"/review",
+    name:"review",
+    component: AppReview,
+    redirect:"/review/list",
+    children:[
+      {
+        path:"list",
+        name:"reviewlist",
+        component: ReviewList
+      },
+      {
+        path:"write",
+        name:"reviewwrite",
+        component: ReviewWrite
+      },
+      {
+        path:"view",
+        name:"reviewview",
+        component: ReviewView
+      },
+    ]
   },
   {
     path:"/group",
