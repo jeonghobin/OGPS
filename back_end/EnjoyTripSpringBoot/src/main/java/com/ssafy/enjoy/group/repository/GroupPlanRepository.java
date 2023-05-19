@@ -22,6 +22,8 @@ public interface GroupPlanRepository {
 	void updateGroupPlan(String subject,String planNo) throws Exception;
 	void writeGroupPlanPath(String a, String contentId,String memo,String seq) throws Exception;
 	void deleteGroupPlanPath(String planNo) throws Exception;
-	void likeGroupPlan(int planNo) throws Exception;
+	void likeGroupPlan(String planNo, String userId) throws Exception;
 	GroupDto getDetailGroup(int groupNo) throws Exception;
+	int getHeart(String planNo, String userId)throws Exception;
+	void deleteHeart(String planNo, String userId)throws Exception;
 }

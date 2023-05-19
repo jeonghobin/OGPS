@@ -94,11 +94,15 @@ public class GroupPlanServiceMapperImpl implements GroupPlanService {
 	}
 
 	@Override
-	public void likeGroupPlan(int planNo) throws Exception {
+	public void likeGroupPlan(int planNo,String userId) throws Exception {
 		// TODO Auto-generated method stub
-		session.getMapper(GroupPlanRepository.class).likeGroupPlan(planNo);
+		int i = session.getMapper(GroupPlanRepository.class).getHeart(String.valueOf(planNo),userId);
+		if(i==1) {
+			session.getMapper(GroupPlanRepository.class).deleteHeart(String.valueOf(planNo),userId);
+		}else {
+			session.getMapper(GroupPlanRepository.class).likeGroupPlan(String.valueOf(planNo),userId);	
+		}
 	}
-
 	@Override
 	public GroupDto getDetailGroup(int groupNo) throws Exception {
 		// TODO Auto-generated method stub

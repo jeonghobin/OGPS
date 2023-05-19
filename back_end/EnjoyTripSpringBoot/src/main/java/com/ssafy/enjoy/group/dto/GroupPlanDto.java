@@ -12,5 +12,5 @@ public class GroupPlanDto {
 	int groupNo;
 	String subject;
 	String userId;
-	int like;
+	int heart;
 }

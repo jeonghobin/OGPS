@@ -66,11 +66,11 @@ public class RestGroupPlanController {
 		return entity;
 	}
 	
-	@PostMapping("/groupplan/{groupNo}/{planNo}")
+	@PostMapping("/groupplan/{groupNo}/{planNo}/{userId}")
 	public ResponseEntity<Map<String,Object>> likeGroupPlan(@PathVariable("groupNo") int groupNo
-		,@PathVariable("planNo") int planNo) throws Exception{
+		,@PathVariable("planNo") int planNo,@PathVariable("userId") String userId) throws Exception{
 		ResponseEntity<Map<String,Object>> entity = null;
-		service.likeGroupPlan(planNo);
+		service.likeGroupPlan(planNo,userId);
 		Map<String,Object> rsmap = new HashMap<String, Object>();
 		rsmap.put("rsmsg", "좋아요 성공");
 		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
