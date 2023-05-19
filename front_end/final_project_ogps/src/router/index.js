@@ -4,6 +4,9 @@ import AppMain from '@/views/AppMain'
 import store from "@/store";
 import AppAttraction from '@/views/AppAttraction'
 import AppFile from '@/views/AppFile'
+import AppGroup from '@/views/AppGroup'
+import GroupList from '@/components/group/GroupList'
+import GroupWrite from '@/components/group/GroupWrite'
 
 Vue.use(VueRouter)
 
@@ -65,6 +68,24 @@ const routes = [
     path:"/fileupload",
     name:"fileupload",
     component: AppFile,
+  },
+  {
+    path:"/group",
+    name:"group",
+    component: AppGroup,
+    redirect:"/group/list",
+    children:[
+      {
+        path:"list",
+        name:"grouplist",
+        component: GroupList
+      },
+      {
+        path:"write",
+        name:"groupwrite",
+        component: GroupWrite
+      }
+    ]
   }
 ]
 

@@ -16,12 +16,12 @@
 	</resultMap>
 	
 	<select id="getGroup" resultMap="groupdto">
-		select * from groupplan
+		select * from groupplan order by groupNo desc
 	</select>  
 	
 	<select id="getMyGroup" parameterType="string" resultMap="groupdto">
 		select * from groupplan 
-		where userId=#{userId}
+		where userId=#{userId}order by groupNo desc
 	</select>  
   	
   	<insert id="createGroup" parameterType="GroupDto">
