@@ -15,6 +15,8 @@
 		<typeAlias type="com.ssafy.enjoy.group.dto.GroupPlanDto" alias="GroupPlanDto"/>
 		<typeAlias type="com.ssafy.enjoy.group.dto.GroupCommentDto" alias="GroupCommentDto"/>
 		<typeAlias type="com.ssafy.enjoy.group.dto.GroupMemberDto" alias="GroupMemberDto"/>
+		<typeAlias type="com.ssafy.enjoy.group.dto.NoticeDto" alias="NoticeDto"/>
+		
 	</typeAliases>
 
 	<mappers>
@@ -25,5 +27,7 @@
 		<mapper resource="mybatis/mapper/PlanBoardMapper.xml"/>
 		<mapper resource="mybatis/mapper/GroupMapper.xml"/>
 		<mapper resource="mybatis/mapper/GroupPlanMapper.xml"/>
+		<mapper resource="mybatis/mapper/GroupMemberMapper.xml"/>
+		
 	</mappers>
 </configuration>

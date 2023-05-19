@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="header">
         <b-navbar toggleable="lg" type="light" variant="light">
         <b-navbar-brand href="#" to="/">O! G.P.S</b-navbar-brand>
 
@@ -86,5 +86,10 @@ export default {
 }
 .link {
   text-decoration: none;
+}
+.header{
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
 }
 </style>
