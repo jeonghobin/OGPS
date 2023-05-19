@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import AppMain from '@/views/AppMain'
 import store from "@/store";
 import AppAttraction from '@/views/AppAttraction'
+import AppFile from '@/views/AppFile'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,11 @@ const routes = [
     path:"/attraction",
     name:"attraction",
     component: AppAttraction,
+  },
+  {
+    path:"/fileupload",
+    name:"fileupload",
+    component: AppFile,
   }
 ]
 

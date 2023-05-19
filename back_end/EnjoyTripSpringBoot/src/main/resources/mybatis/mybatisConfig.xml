@@ -16,6 +16,10 @@
 		<typeAlias type="com.ssafy.enjoy.group.dto.GroupCommentDto" alias="GroupCommentDto"/>
 		<typeAlias type="com.ssafy.enjoy.group.dto.GroupMemberDto" alias="GroupMemberDto"/>
 		<typeAlias type="com.ssafy.enjoy.group.dto.NoticeDto" alias="NoticeDto"/>
+		<typeAlias type="com.ssafy.enjoy.board.dto.ReviewDto" alias="ReviewDto"/>
+		<typeAlias type="com.ssafy.enjoy.board.dto.ReviewComDto" alias="ReviewComDto"/>
+		<typeAlias type="com.ssafy.enjoy.board.dto.ReviewHeartDto" alias="ReviewHeartDto"/>
+		<typeAlias type="com.ssafy.enjoy.board.dto.FileInfoDto" alias="FileInfoDto"/>
 		
 	</typeAliases>
 
@@ -28,6 +32,7 @@
 		<mapper resource="mybatis/mapper/GroupMapper.xml"/>
 		<mapper resource="mybatis/mapper/GroupPlanMapper.xml"/>
 		<mapper resource="mybatis/mapper/GroupMemberMapper.xml"/>
+		<mapper resource="mybatis/mapper/ReviewBoardMapper.xml"/>
 		
 	</mappers>
 </configuration>
