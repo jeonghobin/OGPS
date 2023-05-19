@@ -1,8 +1,20 @@
 <template>
   
-  <div class="footer">
-    © footer입니다.
+<footer class="footer bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>About Us</h4>
+        <p>Lorem ipsum dolor sit Quae, explicabo, doloremque. Ratione autem, impedit inventore et adipisci quia totam exercitationem.</p>
+      </div>
+      <div class="col-md-6">
+        <h4>Contact Us</h4>
+        <p>123 Street, City</p>
+      </div>
+    </div>
   </div>
+</footer>
+
   
   
 </template>
@@ -22,12 +34,9 @@ export default {
 </script>
 
 <style scoped>
-  .footer{
-    display: flex;
-    height: 50px;
-    justify-content : center;
-    /* 세로축 가운데 정렬 */
-    align-items : center;
-    background-color: white;
-  }
+.footer{
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
 </style>

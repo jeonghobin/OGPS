@@ -115,10 +115,6 @@ export default {
                     key:'addr1',
                     label:'주소'
                 },
-                {
-                    key:'addr2',
-                    label:'세부주소'
-                }
             ],
             infowindow: null,
         };

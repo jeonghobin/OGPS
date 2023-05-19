@@ -3,8 +3,9 @@
     <div class="background">
       <the-header></the-header>
       <router-view/>
+      <the-footer></the-footer>
     </div>
-    <the-footer></the-footer>
+    
   </div>
 </template>
 
@@ -28,6 +29,7 @@ body{
   overflow: hidden;
   margin:0;
   padding-top: 15px;
+  padding-bottom: 15px;
   background-image: url("@/assets/main/main6.jpg");
   background-size: cover;
   background-repeat: no-repeat;
