@@ -24,6 +24,9 @@
                     :current-page="currentPage"
                     small
                     >
+                        <template #cell(subject)="row">
+                            <router-link :to="{ name: 'groupview', params:{groupNo : row.item.groupNo} }">{{ row.value }}</router-link>
+                        </template>
                     </b-table>
                     </div>
                     <div class="p-2 bd-highlight d-flex justify-content-center">
@@ -57,8 +60,8 @@ export default {
         items: [],
         fields:[
                 {
-                key:'groupNo',
-                label:'그룹번호',
+                    key:'groupNo',
+                    label:'그룹번호',
                 },
                 {
                     key:'subject',

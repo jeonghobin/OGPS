@@ -22,4 +22,6 @@ public interface GroupPlanService {
 	void writeGroupPlan(GroupPlanDto gdto, List<Map<String,String>> plist)throws Exception;
 	void updateGroupPlan(GroupPlanDto gdto, List<Map<String,String>> plist, int planNo)throws Exception;
 	void likeGroupPlan(int planNo, String userId)throws Exception;
+	void writeGroupComment(GroupCommentDto gcdto) throws Exception;
+
 }

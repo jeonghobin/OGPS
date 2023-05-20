@@ -113,6 +113,12 @@ public class GroupPlanServiceMapperImpl implements GroupPlanService {
 		return session.getMapper(GroupPlanRepository.class).getDetailGroup(groupNo);
 	}
 
+	@Override
+	public void writeGroupComment(GroupCommentDto gcdto) throws Exception {
+		// TODO Auto-generated method stub
+		session.getMapper(GroupPlanRepository.class).writeGroupComment(gcdto);
+	}
+
 	
 
 }

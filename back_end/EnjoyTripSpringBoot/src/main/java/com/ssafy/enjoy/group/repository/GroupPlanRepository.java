@@ -28,4 +28,6 @@ public interface GroupPlanRepository {
 	void deleteHeart(String planNo, String userId)throws Exception;
 	void downHeart(int planNo)throws Exception;
 	void updateHeart(int planNo)throws Exception;
+	void writeGroupComment(GroupCommentDto gcdto) throws Exception;
+	
 }

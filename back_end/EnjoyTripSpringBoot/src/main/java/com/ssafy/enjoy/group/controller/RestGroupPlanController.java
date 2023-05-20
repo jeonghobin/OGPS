@@ -121,4 +121,21 @@ public class RestGroupPlanController {
 		return entity;
 	}
 	
+	@PostMapping("/groupplan/comment/{groupNo}")
+	public ResponseEntity<Map<String,Object>> writeGroupComment(@RequestBody Map<String,Object> map,@PathVariable("groupNo") int groupNo) throws Exception{
+		ResponseEntity<Map<String,Object>> entity = null;
+		GroupCommentDto gcdto = new GroupCommentDto();
+		gcdto.setGroupNo(groupNo);
+		gcdto.setUserId((String)map.get("userId"));
+		gcdto.setComment((String)map.get("comment"));
+		
+		service.writeGroupComment(gcdto);
+		
+		Map<String,Object> rsmap = new HashMap<String, Object>();
+		rsmap.put("rsmsg", "작성 성공");
+		
+		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
+		return entity;
+	}
+	
 }
