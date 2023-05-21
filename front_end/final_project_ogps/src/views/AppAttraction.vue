@@ -1,10 +1,10 @@
 <template>
     <div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center animate__animated animate__backInDown">
         <h1 class="mt-2"><mark class="highlight-bottom">전국 관광지 조회</mark></h1>
     </div>    
     <div class="row mr-0 ml-0">
-        <div class="col-6 pr-3 pt-2 pb-2 bbc">
+        <div class="col-6 pr-3 pt-2 pb-2 bbc animate__animated animate__backInLeft">
             <form class="mr-0 ml-0 mb-2 row">
                 <select class="col-3 form-control mr-3" @change="showValue" ref="SearchArea">
                 <option value="0" selected>시도</option>
@@ -31,7 +31,7 @@
                 <div id="map" class="roundmap" style="width: 100%; height: 900px"></div>
             </div>
         </div>
-        <div class="col-6 pl-2 pt-2 pb-2 abc">
+        <div class="col-6 pl-2 pt-2 pb-2 abc animate__animated animate__backInRight ">
             <div class="overflow-auto transparent-background roundlist" style="height: 100%;">
                 <div class="d-flex flex-column bd-highlight">
                     <div class="p-2 bd-highlight">
@@ -68,7 +68,7 @@
 
 <script>
 import http from '@/api/http'
-
+import 'animate.css'
 export default {
     name: 'AppAttraction',
     components: {},
@@ -266,6 +266,13 @@ export default {
     background: linear-gradient(to top, rgb(207, 250, 219) 18%, transparent 40%);
     color: rgb(218, 247, 223);
 }
-
+.animate__animated.animate__backInLeft{
+    /* --animate-duration: 2s; */
+    animation-delay: 0.5s;
+}
+.animate__animated.animate__backInRight{
+    /* --animate-duration: 3s; */
+    animation-delay: 1s;
+}
 
 </style>

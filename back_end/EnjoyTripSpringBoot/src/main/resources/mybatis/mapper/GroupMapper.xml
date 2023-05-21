@@ -21,7 +21,9 @@
 	
 	<select id="getMyGroup" parameterType="string" resultMap="groupdto">
 		select * from groupplan 
-		where userId=#{userId}order by groupNo desc
+		where groupNo in (select groupNo 
+		from group_members where userId=#{userId})
+		order by groupNo desc
 	</select>  
   	
   	<insert id="createGroup" parameterType="GroupDto">

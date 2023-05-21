@@ -65,6 +65,7 @@ public class GroupMemberServiceMapperImpl implements GroupMemberService {
 	@Override
 	public void deleteMember(String groupNo, String userId) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(groupNo+" "+userId);
 		session.getMapper(GroupMemberRepository.class).deleteMember(groupNo,userId);
 	}
 	

@@ -12,6 +12,8 @@ import ReviewWrite from '@/components/review/ReviewWrite'
 import ReviewView from '@/components/review/ReviewView'
 import GroupView from '@/components/group/GroupView'
 import GroupModify from '@/components/group/GroupModify'
+import GroupPlanView from '@/components/group/GroupPlanView'
+
 Vue.use(VueRouter)
 
 const onlyAuthUser = async (to, from, next) => {
@@ -116,6 +118,11 @@ const routes = [
         path:"modify/:groupNo",
         name:"groupmodify",
         component: GroupModify
+      },
+      {
+        path:"planview/:groupNo?/:planNo?",
+        name:"groupplanview",
+        component: GroupPlanView
       }
     ]
   }

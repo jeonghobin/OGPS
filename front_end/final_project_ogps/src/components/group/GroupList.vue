@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center animate__animated animate__backInDown">
             <h1 class="mt-2"><mark class="highlight-bottom">그룹 플랜</mark></h1>
         </div>   
-        <div class="mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
+        <div class="mt-3 mb-3 roundlist animate__animated animate__backInLeft" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
         margin-left: 130px; margin-right: 130px; padding-top: 10px;">
             <div  class="row ml-2 mr-3">
                 <button type="button" class="col-2 btn btn-light ml-3" @click="showtotal">전체 그룹</button>
@@ -131,5 +131,9 @@ export default {
 .highlight-bottom {
     background: linear-gradient(to top, rgb(207, 250, 219) 18%, transparent 40%);
     color: rgb(218, 247, 223);
+}
+.animate__animated.animate__backInLeft{
+    /* --animate-duration: 2s; */
+    animation-delay: 0.5s;
 }
 </style>
