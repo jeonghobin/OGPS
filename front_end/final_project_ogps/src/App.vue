@@ -21,9 +21,7 @@ export default {
 </script>
 
 <style>
-body{
-  /* margin: 0; */
-}
+
 .background{
   height: 100%;
   overflow: hidden;

@@ -13,6 +13,7 @@ import ReviewView from '@/components/review/ReviewView'
 import GroupView from '@/components/group/GroupView'
 import GroupModify from '@/components/group/GroupModify'
 import GroupPlanView from '@/components/group/GroupPlanView'
+import GroupPlanWrite from '@/components/group/GroupPlanWrite'
 
 Vue.use(VueRouter)
 
@@ -123,6 +124,11 @@ const routes = [
         path:"planview/:groupNo?/:planNo?",
         name:"groupplanview",
         component: GroupPlanView
+      },
+      {
+        path:"planwrite/:groupNo",
+        name:"groupplanwrite",
+        component:GroupPlanWrite
       }
     ]
   }

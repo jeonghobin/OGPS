@@ -19,7 +19,7 @@
                     <button type="button" class="btn btn-primary mr-2" @click="joinsubmit">참여하기</button>
                 </div>
                 <div v-if="memberOk==='OK'">
-                    <button type="button" class="btn btn-primary mr-2">계획 작성하기</button>
+                    <button type="button" class="btn btn-primary mr-2" @click="movewrite">계획 작성하기</button>
                 </div>
             </div>
             <div class="overflow-auto">
@@ -194,6 +194,9 @@ export default {
                     alert(response.data.rsmsg);
                 })
             }
+        },
+        movewrite(){
+            this.$router.push({name:'groupplanwrite',params:{groupNo:this.groupNo}});
         }
     },
     computed: {
