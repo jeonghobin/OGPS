@@ -25,9 +25,10 @@ public class ReviewBoardServiceMapperImpl implements ReviewBoardService{
 	
 	/** board **/
 	@Override
-	public void write(ReviewDto rDto) throws Exception {
+	public int write(ReviewDto rDto) throws Exception {
 		// TODO Auto-generated method stub
 		session.getMapper(ReviewBoardRepository.class).write(rDto);
+		return getAuto();
 	}
 
 	@Override
@@ -162,8 +163,6 @@ public class ReviewBoardServiceMapperImpl implements ReviewBoardService{
 	@Override
 	public void savefile(FileInfoDto rfDto) throws Exception {
 		// TODO Auto-generated method stub
-		int articleNo = getAuto();
-		rfDto.setArticleNo(articleNo);
 		session.getMapper(ReviewBoardRepository.class).savefile(rfDto);
 	}
 
@@ -177,6 +176,12 @@ public class ReviewBoardServiceMapperImpl implements ReviewBoardService{
 	public int getAuto() throws Exception {
 		// TODO Auto-generated method stub
 		return session.getMapper(ReviewBoardRepository.class).getAuto();
+	}
+
+	@Override
+	public FileInfoDto[] getFile(int articleNo) throws Exception {
+		// TODO Auto-generated method stub
+		return session.getMapper(ReviewBoardRepository.class).getFile(articleNo);
 	}
 
 

@@ -100,11 +100,11 @@
 
 	<!-- heart -->
 	<select id="heartState" parameterType="ReviewHeartDto" resultType="int">
-		select state from review_haert where userId=#{userId} and articleNo=#{articleNo}
+		select state from review_heart where userId=#{userId} and articleNo=#{articleNo}
 	</select>
 	
 	<select id="exitHeart" parameterType="ReviewHeartDto" resultType="int">
-		select count(*) from review_haert where articleNo=#{articleNo} and userId=#{userId}
+		select count(*) from review_heart where articleNo=#{articleNo} and userId=#{userId}
 	</select>
 	
 	<select id="allHeart" parameterType="int" resultType="int">

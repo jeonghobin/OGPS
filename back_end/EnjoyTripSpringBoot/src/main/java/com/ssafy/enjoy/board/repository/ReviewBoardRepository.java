@@ -12,7 +12,7 @@ import com.ssafy.enjoy.board.dto.ReviewHeartDto;
 public interface ReviewBoardRepository {
 
 	/** 게시판 **/
-	void write(ReviewDto rDto) throws Exception;
+	int write(ReviewDto rDto) throws Exception;
 	List<ReviewDto> list(Map<String, Object> map) throws Exception;
 	int getTotalArticleCount(Map<String, Object> param) throws Exception;
 	ReviewDto getnotice(int articleNo) throws Exception;
@@ -37,6 +37,7 @@ public interface ReviewBoardRepository {
 	/** 파일업로드 **/
 	int getAuto() throws Exception;
 	void savefile(FileInfoDto rfDto) throws Exception;
+	FileInfoDto[] getFile(int ArticleNo) throws Exception;
 	void deletefile(int idx) throws Exception;
 	
 }

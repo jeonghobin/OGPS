@@ -8,23 +8,26 @@
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav >
                 <b-nav-item href="#" to="/attraction">전국 관광지</b-nav-item>
-                <b-nav-item href="#" to="/fdfd">공지사항</b-nav-item>
                 <b-nav-item to="/group">그룹플랜</b-nav-item>
                 <b-nav-item to="/review">여행후기</b-nav-item>
                 <b-nav-item>날씨</b-nav-item>
             </b-navbar-nav>
 
+            
             <!-- after login -->
             <b-navbar-nav class="ml-auto" v-if="userInfo">
                 <b-nav-item class="align-self-center">
                     {{ userInfo.userName }}({{ userInfo.userId }})님 환영합니다.
                 </b-nav-item>
-               <b-nav-item class="align-self-center">
+                <b-nav-item class="align-self-center">
+                <b-icon icon="person-fill"></b-icon>
                 <router-link :to="{ name: 'mypage' }" class="link align-self-center">내정보보기</router-link>
                 </b-nav-item> 
-                <b-nav-item class="align-self-center link" @click.prevent="onClickLogout">로그아웃</b-nav-item> 
+                <b-nav-item class="align-self-center link" @click.prevent="onClickLogout">
+                  <b-icon icon="power"></b-icon>로그아웃
+                </b-nav-item> 
                 <b-nav-item>
-                    <b-button v-b-toggle.sidebar-right><img src="@/assets/img/alarm.png" width="20px" height="20px"></b-button>
+                    <b-button v-b-toggle.sidebar-right variant="outline-info"><img src="@/assets/img/alarm.png" width="20px" height="20px"></b-button>
                     <b-sidebar id="sidebar-right" title="Sidebar" right shadow>
                     <div class="px-3 py-2">
                         <p>
@@ -37,8 +40,7 @@
             </b-navbar-nav>
             <!-- before login -->
             <b-navbar-nav class="ml-auto" v-else>
-                <router-link :to="{ name: 'join' }" class="link"> 회원가입</router-link>
-                <router-link :to="{ name: 'login' }" class="link"> 로그인 </router-link>
+              <b-icon icon="unlock-fill" variant="primary" width="20px" height="19px"></b-icon><router-link :to="{ name: 'AppMain' }" class="ml-1 mr-3"> Login </router-link>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
@@ -83,9 +85,6 @@ export default {
 <style scoped>
 #logo {
   width: 120px;
-}
-.link {
-  text-decoration: none;
 }
 .header{
   margin-left: auto;

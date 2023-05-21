@@ -1,66 +1,72 @@
-<!-- <template>
-  <div>
-    <div class="information">
-      <p>이미지를 업로드하세요.</p>
-      <button @click="$refs.fileRef.click">선택</button>
-      <input type="file" @change="selectFile" multiple accept="image/*" ref="fileRef" hidden/>
-    </div>
-    <div class="images" v-if="files.length > 0">
-      <div v-for="fileName in files" :key="fileName" class="image">
-        <img :src="`${backendUrl}/image/${fileName}`" alt="이미지">
-      </div>
-    </div>
-  </div>
-</template> -->
-
 <template>
     <div>
       <div>
-        <input type="file" multiple accept="imageUrl/*" ref="fileInput" @change="handleFileUpload">
-        <button @click="uploadImage">업로드</button>
+        <input type="file" multiple ref="fileInput" @change="handleFileUpload">
+        <button @click="uploadImage">글 등록</button>
       </div>
-      <div v-if="imageUrl">
-        <h1>{{ imageUrl.saveFile }}</h1>
-        <img :src="imageUrl" alt="이미지">
+      <div class="row">
+        <div  class="col-1" v-for="image in images" :key="image.imageUrl">
+          <img :src="image.imageUrl" width="100px" height="100px" alt="이미지">
+        </div>
       </div>
     </div>
-  </template>
+</template>
   
   <script>
   import axios from 'axios';
   
   export default {
+    name: 'ReviewWrite',
     data() {
       return {
-        file: null,
+        articleNo: 0,
         imageUrl: '',
+        images: [],
       };
     },
     methods: {
       handleFileUpload(event) {
-        this.file = event.target.files[0];
+        this.images = event.target.files;
+        for (var i = 0; i < this.images.length; i++){
+          //이미지 미리 보기
+          this.images[i].imageUrl =  URL.createObjectURL(this.images[i]);
+        }
       },
       uploadImage() {
-        if (this.file) {
-          const formData = new FormData();
-          formData.append('upfile', this.file);
-          formData.append('userId', 123);
-          formData.append('subject', '글');
-          formData.append('content', '작성중');
-  
-          axios.post('http://localhost:9001/api/review', formData, {
-                header: {
-                    'Content-Type':'multipart/form-data'
-                }
-            })
-            .then(response => {
-              this.imageUrl = response.data.imageUrl;
-              console.log(this.imageUrl);
-            })
-            .catch(error => {
+
+        axios.post('http://localhost:9001/api/review', {
+            userId: 123,
+            subject: '테스트',
+            content: '중임'
+        }).then(response => {
+            console.log(response.data.message);
+            this.articleNo = response.data.articleNo;
+
+          if (this.images) {
+              for (var i = 0; i < this.images.length; i++) {
+                const formData = new FormData();
+                formData.append('upfile', this.images[i]);
+                formData.append('articleNo', this.articleNo);
+
+                axios.post('http://localhost:9001/api/rfile', formData, {
+                  header: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                  })
+                  .then(response => {
+                    console.log(response.data.message);
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
+              }
+            }
+
+        }).catch(error => {
               console.error(error);
-            });
-        }
+        });
+
+
       }
     }
   };

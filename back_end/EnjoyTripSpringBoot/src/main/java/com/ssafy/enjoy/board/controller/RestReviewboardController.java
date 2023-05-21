@@ -1,6 +1,7 @@
 package com.ssafy.enjoy.board.controller;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,46 +82,15 @@ public class RestReviewboardController {
 	}
 
 	@PostMapping("/review")
-	public ResponseEntity<Map<String, Object>> write(ReviewDto rdto, @RequestParam("upfile") MultipartFile[] files) {
+	public ResponseEntity<Map<String, Object>> write(ReviewDto rdto) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		HttpStatus status = null;
 
 		try {
-			service.write(rdto);
-
-//			FileUpload 관련 설정.
-			logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
-			if (!files[0].isEmpty()) {
-				String realPath = servletContext.getRealPath("/upload");
-//				String realPath = servletContext.getRealPath("/resources/img");
-				String today = new SimpleDateFormat("yyMMdd").format(new Date());
-				String saveFolder = realPath + File.separator + today;
-				logger.debug("저장 폴더 : {}", saveFolder);
-				File folder = new File(saveFolder);
-				if (!folder.exists())
-					folder.mkdirs();
-				List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
-				for (MultipartFile mfile : files) {
-					FileInfoDto fileInfoDto = new FileInfoDto();
-//					fileInfoDto.setArticleNo(rdto.getArticleNo());
-					String originalFileName = mfile.getOriginalFilename();
-					if (!originalFileName.isEmpty()) {
-						String saveFileName = UUID.randomUUID().toString()
-								+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-						fileInfoDto.setSaveFolder(today);
-						fileInfoDto.setOriginalFile(originalFileName);
-						fileInfoDto.setSaveFile(saveFileName);
-						logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
-						mfile.transferTo(new File(folder, saveFileName));
-					}
-					fileInfos.add(fileInfoDto);
-					service.savefile(fileInfoDto);
-				}
-				map.put("imageUrl", fileInfos);
-			}
-
+			int articleNo = service.write(rdto);
 			
 			map.put("message", SUCCESS);
+			map.put("articleNo", articleNo);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			map.put("message", FAIL);
@@ -176,28 +148,48 @@ public class RestReviewboardController {
 	 * 댓글
 	 **/
 	@GetMapping("/review/{articleNo}")
-	public ResponseEntity<Map<String, Object>> view(@PathVariable("articleNo") int articleNo) {
+	public void view(HttpServletResponse response, @PathVariable("articleNo") int articleNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		HttpStatus status = null;
 
 		try {
-			ReviewDto rdto = service.getnotice(articleNo);
-			List<ReviewComDto> rcom = service.comList(articleNo);
-			
-			service.allHeart(rdto.getArticleNo());
+			FileInfoDto[] files = service.getFile(articleNo);
+			for (FileInfoDto fIDto : files) {
+				String realPath = servletContext.getRealPath("/upload");
+				
+				// db에서 폴더명 조회 
+				String folderName = fIDto.getSaveFolder();
+				String imageName = fIDto.getSaveFile();
+				String imagePath = realPath + File.separator + folderName  + File.separator + imageName;
+//				System.out.println(imagePath);
+//				File imagefile = new File(imagePath);
+				
+			    byte[] fileByte = FileUtils.readFileToByteArray(new File(imagePath));
+			    response.setContentType("application/octet-stream");
+			    response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode("tistory.png", "UTF-8")+"\";");
+			    response.setHeader("Content-Transfer-Encoding", "binary");
 
-			map.put("review", rdto);
-			map.put("comment", rcom);
-			map.put("csize", rcom.size());
-			map.put("message", SUCCESS);
-			status = HttpStatus.ACCEPTED;
+			    response.getOutputStream().write(fileByte);
+			    response.getOutputStream().flush();
+			    response.getOutputStream().close();
+			}
+			
+//			ReviewDto rdto = service.getnotice(articleNo);
+//			List<ReviewComDto> rcom = service.comList(articleNo);
+//			
+//			service.allHeart(rdto.getArticleNo());
+//
+//			map.put("review", rdto);
+//			map.put("comment", rcom);
+//			map.put("csize", rcom.size());
+//			map.put("message", SUCCESS);
+//			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
-			map.put("message", FAIL);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
+//			map.put("message", FAIL);
+//			status = HttpStatus.INTERNAL_SERVER_ERROR;
 			e.printStackTrace();
 		}
-
-		return new ResponseEntity<Map<String, Object>>(map, status);
+//		return new ResponseEntity<Map<String, Object>>(map, status);
 	}
 
 	@PostMapping("/rcomment")
@@ -274,6 +266,54 @@ public class RestReviewboardController {
 	/**
 	 * 파일
 	 **/
+	@PostMapping("/rfile")
+	public ResponseEntity<Map<String, Object>> filesave(@RequestParam("upfile") MultipartFile[] files, int articleNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		HttpStatus status = null;
+
+		try {
+//			FileUpload 관련 설정.
+			logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
+			if (!files[0].isEmpty()) {
+				String realPath = servletContext.getRealPath("/upload");
+				String today = new SimpleDateFormat("yyMMdd").format(new Date());
+				String saveFolder = realPath + File.separator + today;
+				logger.debug("저장 폴더 : {}", saveFolder);
+				File folder = new File(saveFolder);
+				if (!folder.exists())
+					folder.mkdirs();
+				List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
+				for (MultipartFile mfile : files) {
+					FileInfoDto fileInfoDto = new FileInfoDto();
+					fileInfoDto.setArticleNo(articleNo);
+					String originalFileName = mfile.getOriginalFilename();
+					if (!originalFileName.isEmpty()) {
+						String saveFileName = UUID.randomUUID().toString()
+								+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+						fileInfoDto.setSaveFolder(today);
+						fileInfoDto.setOriginalFile(originalFileName);
+						fileInfoDto.setSaveFile(saveFileName);
+						logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+						mfile.transferTo(new File(folder, saveFileName));
+					}
+					fileInfos.add(fileInfoDto);
+					service.savefile(fileInfoDto);
+				}
+				map.put("imageUrl", fileInfos);
+			}
+
+			
+			map.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			map.put("message", FAIL);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, status);
+	}
+	
 	@DeleteMapping("/rfile/{idx}")
 	public ResponseEntity<Map<String, Object>> filedelete(@PathVariable("idx") int idx) {
 		Map<String, Object> map = new HashMap<String, Object>();

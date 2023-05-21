@@ -13,7 +13,7 @@ import com.ssafy.enjoy.util.PageNavigation;
 public interface ReviewBoardService {
 
 	/** 게시판 **/
-	void write(ReviewDto rDto) throws Exception;
+	int write(ReviewDto rDto) throws Exception;
 	List<ReviewDto> list(Map<String, String> map) throws Exception;
 	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 	ReviewDto getnotice(int articleNo) throws Exception;
@@ -43,6 +43,7 @@ public interface ReviewBoardService {
 	/** 파일업로드 **/
 	int getAuto() throws Exception;
 	void savefile(FileInfoDto rfDto) throws Exception;
+	FileInfoDto[] getFile(int ArticleNo) throws Exception;
 	void deletefile(int idx) throws Exception;
 	
 }
