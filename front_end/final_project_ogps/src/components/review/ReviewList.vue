@@ -5,73 +5,107 @@
         </div>   
         <div class="d-flex justify-content-center mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
         margin-left: 130px; margin-right: 130px; padding-top: 10px;">
-        <div class="row d-flex justify-content-center" style="height: 90%; width: 90%;">
+        <div class="row" style="height: 90%; width: 90%;">
             <div style="width: 100%; color: white;">
                 <hr style="border: solid 1px white; ">
                 <h3> Trip Review </h3>
                 <hr style="border: solid 1px white;">
             </div>
-            <div>
-                <b-card no-body class="overflow-hidden" style="width: 100%; height: 50%; border: solid 7px white;">
-                    <b-row no-gutters>
-                        <b-col>
-                            <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
-                        </b-col>
-                        <b-col>
-                            <b-card-body title="Horizontal Card">
-                            <b-card-text>
-                                This is a wider card with supporting text as a natural lead-in to additional content.
-                                This content is a little bit longer.
-                            </b-card-text>
-                            </b-card-body>
-                        </b-col>
-                    </b-row>
-                </b-card>
+            <div class="row d-flex justify-content-center" style=" height: 30%; width: 100%;">
+                <div style="width: 80%;">
+                    <h4 class="d-flex justify-content-start" style="color: white;"> Best Review </h4>
+                    <b-card no-body class="overflow-hidden" style=" border: solid 7px white;">
+                        <b-row no-gutters>
+                            <b-col>
+                                <img alt="@/assets/img/main_1.png" :src="fileObjectUrl" @error="replaceImg" width="100px" height="200px" class="rounded-0" >
+                                <!-- <b-card-img src="fileObjectUrl" alt="image" width="100px" height="200px" class="rounded-0" ></b-card-img> -->
+                            </b-col>
+                            <b-col>
+                                <b-card-body title="Horizontal Card">
+                                <b-card-text>
+                                    This is a wider card with supporting text as a natural lead-in to additional content.
+                                    This content is a little bit longer.
+                                </b-card-text>
+                                </b-card-body>
+                            </b-col>
+                        </b-row>
+                    </b-card>
+                </div>
             </div>
-            <div class="d-flex justify-content-end" style="height: 5%;">
-                <button type="button" class="btn btn-primary" @click="creategroup">여행 후기 작성하기</button>
-            </div>
-            <div class="d-flex justify-content-end" style="height: 5%;">
-                <button type="button" class="btn btn-primary" @click="creategroup">검색</button>
-            </div>
-            <div>
-                <div class="overflow-auto"  style="height: 90%; width: 90%;">
+            <div class="overflow-auto mt-4" style="width: 100%; height: 50%;">
                 <div class="d-flex flex-column bd-highlight">
                     <div class="p-2 bd-highlight">
+                    <h3 class="d-flex justify-content-center ml-3" style="color: white;"> Review </h3> 
+                    <button type="button" class="btn btn-primary d-flex justify-content-end" @click="creategroup">Create Review</button>
                     </div>
                     <div class="p-2 bd-highlight">
-                        <div v-for="item in items" :key="item.articleNo">
-                            <router-link :to="{ name: 'reviewview', params:{articleNo : item.articleNo} }">
-                                <b-card title="Title" img-src="https://placekitten.com/100/100" img-alt="Card image" img-top>
-                                <b-card-text>
-                                    <h2>제목:{{ item.subject }}</h2>
-                                    <h3>내용:{{ item.content }}</h3>
-                                    <h4>작성 날짜:{{ item.registerTime }}</h4>
-                                    <h4>조회수:{{ item.hit }}   추천수:{{ item.heart }}</h4>
-                                </b-card-text>
-                                <template #footer>
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                                </template>
-                                </b-card>
-                            </router-link>
-                        </div>
+                    <b-table
+                    id="my-table"
+                    :items="items"
+                    :fields="fields"
+                    :per-page="perPage"
+                    :current-page="currentPage"
+                    small
+                    >
+                        <template #cell(subject)="row">
+                            <router-link :to="{ name: 'reviewview', params:{articleNo : row.item.articleNo} }">{{ row.value }}</router-link>
+                        </template>
+                    </b-table>
                     </div>
-                    <div class="p-2 bd-highlight d-flex justify-content-center">
+        
+                </div>
+            </div>
+            <div class="p-2 bd-highlight d-flex justify-content-center" style="width: 100%;">
                     <b-pagination class=""
                     v-model="currentPage"
                     :total-rows="rows"
                     :per-page="perPage"
                     aria-controls="my-table"
                     ></b-pagination>
+            </div>
+            <!-- <div class="row" style="width: 100%; height: 60%;">
+                    <div style="width: 60%;">
+                        <h3 class="d-flex justify-content-center ml-3" style="color: white;"> Review </h3> 
+                        <div class="overflow-auto" style="width: 100%; height: 41%;">
+                            <div class="d-flex flex-column bd-highlight">
+                                <div class="p-1 bd-highlight">
+                                </div>
+                                <div class="p-1 bd-highlight">
+                                    <div class="mb-3" v-for="(item, index) in items" :key="index">
+                                        <router-link :to="{ name: 'reviewview', params:{articleNo : item.articleNo} }">
+                                            <b-card img-src="https://placekitten.com/100/100" img-width="200px" img-height="160px" img-alt="Card image" img-right>
+                                            <b-card-text>
+                                                <h3>제목:{{ item.subject }}</h3>
+                                                <h3>내용:{{ item.content }}</h3>
+                                                <h4>조회수:{{ item.hit }}   추천수:{{ item.heart }}</h4>
+                                            </b-card-text>
+                                            </b-card>
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div style="width: 40%;">
+                        <div>
+                        <div class="d-flex justify-content-end" style="height: 5%;">
+                            <button type="button" class="btn btn-primary" @click="creategroup">여행 후기 작성하기</button>
+                        </div>
+                        <div class="d-flex justify-content-end" style="height: 5%;">
+                            <button type="button" class="btn btn-primary" @click="creategroup">검색</button>
+                        </div> 
+                        </div>
                     </div>
                 </div>
-            </div> 
+                <div class="p-1 bd-highlight d-flex justify-content-center">
+                    <b-pagination class=""
+                    v-model="currentPage"
+                    :total-rows="rows"
+                    :per-page="perPage"
+                    aria-controls="my-table"
+                    ></b-pagination>
+                </div> -->
             </div>
-        </div>
-      
-          
-        
-        
         </div>
     </div>
 </template>
@@ -86,15 +120,62 @@ export default {
     components: {},
     data() {
         return {
-        perPage: 5,
+        perPage: 6,
         currentPage: 1,
+        bestNo: 0,
+        fileObjectUrl: '',
         items: [],
+            fields: [
+                {
+                    key:'userId',
+                    label:'작성자'
+                },
+                {
+                    key:'subject',
+                    label:'제목'
+                },
+                {
+                    key:'registerTime',
+                    label:'등록일'
+                },
+                {
+                    key:'hit',
+                    label:'조회수'
+                },
+                {
+                    key:'heart',
+                    label:'좋아요'
+                },
+            ],
         };
     },
     created() {
         http.get('/api/review')
         .then(response => {
             this.items = response.data.data;
+
+            let MaxHeart = 0
+            for (let i = 0; i < this.items.length; i++) {
+                const cnt = this.items[i].heart;
+                if (cnt >= MaxHeart) {
+                    MaxHeart = cnt;
+                    this.bestNo = this.items[i].articleNo;
+                }
+            }
+
+            http.get(`/api/review/${this.bestNo}`, {
+                responseType: "blob"
+            }).then(response => {
+                console.log(response.data.size);
+                if (response.data.size > 0) {
+                    const blob = new Blob([response.data]);
+                    this.fileObjectUrl = window.URL.createObjectURL(blob);
+                } else {
+                    this.fileObjectUrl = '@/assets/img/main_1.png';
+                    console.log(this.fileObjectUrl);
+                }
+            })
+
         })
     },
     methods: {
@@ -114,7 +195,10 @@ export default {
         },
         creategroup(){
             this.$router.push("/review/write");
-        }
+        },
+        replaceImg(e) {
+            e.target.src = require(`@/assets/main/main2.jpg`);
+        },
     },
     computed: {
       rows() {

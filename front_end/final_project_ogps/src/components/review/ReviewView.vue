@@ -1,6 +1,6 @@
 <template>
   <div>
-  
+  {{ articleNo }}
       <img :src="fileObjectUrl" width="100px" height="100px" alt="이미지">
       <!-- <div  class="col-1" v-for="image in images" :key="image.imageUrl">
         <img :src="image.imageUrl" width="100px" height="100px" alt="이미지">

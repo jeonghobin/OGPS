@@ -1,10 +1,13 @@
 package com.ssafy.enjoy.board.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +18,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,7 +165,6 @@ public class RestReviewboardController {
 				String folderName = fIDto.getSaveFolder();
 				String imageName = fIDto.getSaveFile();
 				String imagePath = realPath + File.separator + folderName  + File.separator + imageName;
-//				System.out.println(imagePath);
 //				File imagefile = new File(imagePath);
 				
 			    byte[] fileByte = FileUtils.readFileToByteArray(new File(imagePath));
@@ -187,11 +190,12 @@ public class RestReviewboardController {
 		} catch (Exception e) {
 //			map.put("message", FAIL);
 //			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 //		return new ResponseEntity<Map<String, Object>>(map, status);
 	}
-
+	
+	
 	@PostMapping("/rcomment")
 	public ResponseEntity<Map<String, Object>> comwrite(@RequestBody Map<String, String> reqmap) {
 		Map<String, Object> map = new HashMap<String, Object>();

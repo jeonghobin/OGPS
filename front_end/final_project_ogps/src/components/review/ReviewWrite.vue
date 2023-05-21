@@ -33,6 +33,7 @@
         }
       },
       uploadImage() {
+        
 
         axios.post('http://localhost:9001/api/review', {
             userId: 123,
