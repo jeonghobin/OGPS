@@ -14,32 +14,36 @@
             <div class="row d-flex justify-content-center" style=" height: 30%; width: 100%;">
                 <div style="width: 80%;">
                     <h4 class="d-flex justify-content-start" style="color: white;"> Best Review </h4>
-                    <b-card no-body class="overflow-hidden" style=" border: solid 7px white;">
-                        <b-row no-gutters>
-                            <b-col>
-                                <img alt="@/assets/img/main_1.png" :src="fileObjectUrl" @error="replaceImg" width="100px" height="200px" class="rounded-0" >
-                                <!-- <b-card-img src="fileObjectUrl" alt="image" width="100px" height="200px" class="rounded-0" ></b-card-img> -->
-                            </b-col>
-                            <b-col>
-                                <b-card-body title="Horizontal Card">
-                                <b-card-text>
-                                    This is a wider card with supporting text as a natural lead-in to additional content.
-                                    This content is a little bit longer.
-                                </b-card-text>
-                                </b-card-body>
-                            </b-col>
-                        </b-row>
-                    </b-card>
+                    <div v-for="item in items" :key="item.articleNo">
+                        <div v-if="item.articleNo === bestNo">
+                            <router-link :to="{ name: 'reviewview', params:{articleNo : item.articleNo} }">
+                                <b-card no-body class="overflow-hidden" style=" border: solid 7px white; border-radius: 20px; color: black;">
+                                    <b-row no-gutters>
+                                        <b-col>
+                                            <img :src="fileObjectUrl" @error="replaceImg" width="600px" height="200px" class="rounded-0" >
+                                        </b-col>
+                                        <b-col>
+                                            <b-card-body ><h2>{{ item.subject }}</h2>
+                                            <b-card-text>
+                                                <h4>{{ item.content }}</h4>
+                                            </b-card-text>
+                                            </b-card-body>
+                                        </b-col>
+                                    </b-row>
+                                </b-card>
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="overflow-auto mt-4" style="width: 100%; height: 50%;">
                 <div class="d-flex flex-column bd-highlight">
                     <div class="p-2 bd-highlight">
-                    <h3 class="d-flex justify-content-center ml-3" style="color: white;"> Review </h3> 
+                    <h3 class="d-flex justify-content-center ml-3" style="color: white;"> Our's Trip Review </h3> 
                     <button type="button" class="btn btn-primary d-flex justify-content-end" @click="creategroup">Create Review</button>
                     </div>
                     <div class="p-2 bd-highlight">
-                    <b-table
+                    <b-table 
                     id="my-table"
                     :items="items"
                     :fields="fields"
@@ -63,48 +67,6 @@
                     aria-controls="my-table"
                     ></b-pagination>
             </div>
-            <!-- <div class="row" style="width: 100%; height: 60%;">
-                    <div style="width: 60%;">
-                        <h3 class="d-flex justify-content-center ml-3" style="color: white;"> Review </h3> 
-                        <div class="overflow-auto" style="width: 100%; height: 41%;">
-                            <div class="d-flex flex-column bd-highlight">
-                                <div class="p-1 bd-highlight">
-                                </div>
-                                <div class="p-1 bd-highlight">
-                                    <div class="mb-3" v-for="(item, index) in items" :key="index">
-                                        <router-link :to="{ name: 'reviewview', params:{articleNo : item.articleNo} }">
-                                            <b-card img-src="https://placekitten.com/100/100" img-width="200px" img-height="160px" img-alt="Card image" img-right>
-                                            <b-card-text>
-                                                <h3>제목:{{ item.subject }}</h3>
-                                                <h3>내용:{{ item.content }}</h3>
-                                                <h4>조회수:{{ item.hit }}   추천수:{{ item.heart }}</h4>
-                                            </b-card-text>
-                                            </b-card>
-                                        </router-link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                    <div style="width: 40%;">
-                        <div>
-                        <div class="d-flex justify-content-end" style="height: 5%;">
-                            <button type="button" class="btn btn-primary" @click="creategroup">여행 후기 작성하기</button>
-                        </div>
-                        <div class="d-flex justify-content-end" style="height: 5%;">
-                            <button type="button" class="btn btn-primary" @click="creategroup">검색</button>
-                        </div> 
-                        </div>
-                    </div>
-                </div>
-                <div class="p-1 bd-highlight d-flex justify-content-center">
-                    <b-pagination class=""
-                    v-model="currentPage"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    aria-controls="my-table"
-                    ></b-pagination>
-                </div> -->
             </div>
         </div>
     </div>

@@ -10,10 +10,12 @@ import AppReview from '@/views/AppReview'
 import ReviewList from '@/components/review/ReviewList'
 import ReviewWrite from '@/components/review/ReviewWrite'
 import ReviewView from '@/components/review/ReviewView'
+import ReviewUpdate from '@/components/review/ReviewUpdate'
 import GroupView from '@/components/group/GroupView'
 import GroupModify from '@/components/group/GroupModify'
 import GroupPlanView from '@/components/group/GroupPlanView'
 import GroupPlanWrite from '@/components/group/GroupPlanWrite'
+
 
 Vue.use(VueRouter)
 
@@ -91,6 +93,11 @@ const routes = [
         path:"view",
         name:"reviewview",
         component: ReviewView
+      },
+      {
+        path:"update",
+        name:"reviewupdate",
+        component: ReviewUpdate
       },
     ]
   },
