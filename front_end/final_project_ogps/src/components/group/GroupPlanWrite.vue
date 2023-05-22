@@ -22,7 +22,7 @@
                     </div>
                     <div class="row">
                         <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
-                        <li class="list-group-item mb-1 mt-1 pt-4 roundlist" v-for="index in attractions" :key="index.content_id"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}</div><div class="ml-auto"><button class="btn btn-success mb-3 mr-2 mt-4" type="button" @click="pushdata(index)">추가</button></div></div> </li>
+                        <li class="list-group-item mb-1 mt-1 pt-4 roundlist" v-for="index in attractions" :key="index.content_id"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" @error="replaceImg" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}</div><div class="ml-auto"><button class="btn btn-success mb-3 mr-2 mt-4" type="button" @click="pushdata(index)">추가</button></div></div> </li>
                         </ul>
                     </div>
 
@@ -34,20 +34,20 @@
                 </div>
             </div>
             <div class="col-4 abc animate__animated animate__backInUp ">
-                <div class="mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; margin-right:130px">
+                <div class="mt-3 mb-3 roundlist overflow-auto" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; margin-right:130px">
                     <div class="d-flex justify-content-center">
                         <h2>경로</h2>
                     </div>
                     <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
-                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in paths" :key="index.contentId"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}<textarea class="form-control" name="" v-model="index.memo" id="" cols="20" rows="1"></textarea></div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4 mt-4" type="button" @click="removedata(index)">삭제</button></div></div>
+                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in paths" :key="index.contentId"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" @error="replaceImg" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}<textarea class="form-control" name="" v-model="index.memo" id="" cols="20" rows="1"></textarea></div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4 mt-4" type="button" @click="removedata(index)">삭제</button></div></div>
                         </li>
                         </ul>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-end animate__animated animate__backInRight">
-            <button class="btn btn-primary mb-3 mr-4" type="button" @click="writeplan">작성</button>
-            <button class="btn btn-success mb-3" style="margin-right:130px" type="button" @click="movegroup">목록으로</button>
+            <button class="btn btn-primary mb-3 mr-4" style="border-radius:10px; font-size:25px;" type="button" @click="writeplan">작성</button>
+            <button class="btn btn-success mb-3" style="border-radius:10px; font-size:25px; margin-right:130px;" type="button" @click="movegroup">목록으로</button>
         </div>
     </div>
 </template>
@@ -204,7 +204,10 @@ export default {
             }else{
                 alert("계획명을 작성하세요")
             }
-        }
+        },
+        replaceImg(e) {
+            e.target.src = require(`@/assets/main/main2.jpg`);
+        },
     },
     mounted(){
         if (window.kakao && window.kakao.maps) {

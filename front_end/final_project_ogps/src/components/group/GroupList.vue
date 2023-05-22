@@ -6,9 +6,9 @@
         <div class="mt-3 mb-3 roundlist animate__animated animate__backInLeft" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
         margin-left: 130px; margin-right: 130px; padding-top: 10px;">
             <div  class="row ml-2 mr-3">
-                <button type="button" class="col-2 btn btn-light ml-3" @click="showtotal">전체 그룹</button>
-                <button type="button" class="col-2 btn btn-light ml-3" @click="showmy">내 그룹</button>
-                <button type="button" class="col-2 btn btn-primary ml-auto" @click="creategroup">그룹 생성</button>
+                <button type="button" style="border-radius:10px; font-size:25px;" class="col-1 btn btn-light ml-5" @click="showtotal">전체 그룹</button>
+                <button type="button" style="border-radius:10px; font-size:25px;" class="col-1 btn btn-light ml-3" @click="showmy">내 그룹</button>
+                <button type="button" style="border-radius:10px; font-size:25px;" class="col-1 btn btn-primary ml-auto mr-5" @click="creategroup">그룹 생성</button>
             </div>
             <div class="overflow-auto" style="height: 100%;">
                 <div class="d-flex flex-column bd-highlight">
@@ -30,8 +30,9 @@
                     </b-table>
                     </div>
                     <div class="p-2 bd-highlight d-flex justify-content-center">
-                    <b-pagination class=""
+                    <b-pagination
                     v-model="currentPage"
+                    pills
                     :total-rows="rows"
                     :per-page="perPage"
                     aria-controls="my-table"
@@ -55,7 +56,7 @@ export default {
     components: {},
     data() {
         return {
-            perPage: 18,
+            perPage: 9,
         currentPage: 1,
         items: [],
         fields:[

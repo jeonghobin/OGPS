@@ -6,15 +6,15 @@
     <div class="row mr-0 ml-0">
         <div class="col-6 pr-3 pt-2 pb-2 bbc animate__animated animate__backInLeft">
             <form class="mr-0 ml-0 mb-2 row">
-                <select class="col-3 form-control mr-3" @change="showValue" ref="SearchArea">
+                <select class="col-3 form-control mr-3" style="border-radius:10px; font-size:25px;" @change="showValue" ref="SearchArea">
                 <option value="0" selected>시도</option>
                 <option v-for="i in sido" :key="i.sido_code" :value="i.sido_code">{{i.sido_name}}</option>
                 </select>
-                <select class="col-3 form-control mr-3" ref="SearchTown">
+                <select class="col-3 form-control mr-3" style="border-radius:10px; font-size:25px;" ref="SearchTown">
                 <option value="0" selected>군구</option>
                 <option v-for="i in gugun" :key="i.gugun_code" :value="i.gugun_code">{{i.gugun_name}}</option>
                 </select>
-                <select class=" col-3 form-control mr-3" ref="SearchContentId">
+                <select class=" col-3 form-control mr-3" style="border-radius:10px; font-size:25px;" ref="SearchContentId">
                 <option value="0" selected>관광지 유형</option>
                     <option value="12">관광지</option>
                     <option value="14">문화시설</option>
@@ -25,7 +25,7 @@
                     <option value="38">쇼핑</option>
                     <option value="39">음식점</option>
                 </select>
-                <button type="button" class="col-1 btn btn-primary ml-auto" @click="search">검색</button>
+                <button type="button" style="border-radius:10px; font-size:25px;" class="col-1 btn btn-primary ml-auto" @click="search">검색</button>
             </form>
             <div class="mr-0 ml-0">
                 <div id="map" class="roundmap" style="width: 100%; height: 900px"></div>
@@ -54,6 +54,7 @@
                     <div class="p-2 bd-highlight d-flex justify-content-center">
                     <b-pagination class=""
                     v-model="currentPage"
+                    pills
                     :total-rows="rows"
                     :per-page="perPage"
                     aria-controls="my-table"
@@ -103,7 +104,7 @@ export default {
                     overflow: hidden;">
                         <img style="width: 100%;
                         height: 100%;
-                        object-fit: cover;" src="${value}"/>
+                        object-fit: cover;" src="${value}" onerror="this.src='https://via.placeholder.com/100x100'"/>
                     </div>`
                 }
                 },
@@ -202,7 +203,7 @@ export default {
                     overflow: hidden;">
                         <img style="width: 100%;
                         height: 100%;
-                        object-fit: cover;" src="${this.positions[i].img}" width=55px height=55px/>
+                        object-fit: cover;" src="${this.positions[i].img}" onerror="this.src='https://via.placeholder.com/55x55'" width=55px height=55px/>
                     </div>
                     <div>
                         <div>
@@ -235,7 +236,10 @@ export default {
             return function(){
                 infowindow.close();
             }
-        }
+        },
+        replaceImg(e) {
+            e.target.src = require(`@/assets/main/main2.jpg`);
+        },
     },
     computed: {
       rows() {

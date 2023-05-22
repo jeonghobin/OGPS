@@ -27,7 +27,7 @@
                   <b-icon icon="power"></b-icon>로그아웃
                 </b-nav-item> 
                 <b-nav-item>
-                    <b-button v-b-toggle.sidebar-right variant="outline-info" @click="noticeview"><img src="@/assets/img/alarm.png" width="20px" height="20px"></b-button>
+                    <b-button :class="{'animate__animated animate__bounce animate__infinite': condition}" v-b-toggle.sidebar-right variant="outline-info" @click="noticeview"><img src="@/assets/img/alarm.png" width="20px" height="20px"></b-button>
                     <b-sidebar id="sidebar-right" title="알림" right shadow>
                     <div class="px-3 py-2">
                         <ul style="list-style-type: none;">
@@ -50,6 +50,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 import http from "@/api/http";
+import "animate.css";
 const memberStore = "memberStore";
 
 export default {
@@ -57,11 +58,21 @@ export default {
   data() {
     return {
       notices:[],
+      condition:false,
     };
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
     ...mapGetters(["checkUserInfo"]),
+  },
+  created(){
+    http.get(`/api/groupmember/${this.userInfo.userId}`)
+      .then(response => {
+        this.notices = response.data.notices;
+        if(this.notices.length>0){
+          this.condition=true;
+        }
+      })
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),
@@ -81,10 +92,13 @@ export default {
       if (this.$route.path != "/") this.$router.push({ name: "AppMain" });
     },
     noticeview(){
-      http.get(`/api/groupmember/${this.userInfo.userId}`)
-      .then(response => {
-        this.notices = response.data.notices;
-      })
+      // http.get(`/api/groupmember/${this.userInfo.userId}`)
+      // .then(response => {
+      //   this.notices = response.data.notices;
+      //   if(this.notices.length>0){
+      //     this.condition=true;
+      //   }
+      // })
     },
     joinmember(userId1,groupNo1){
       if(confirm("참가 승인하시겠습니까?")){
@@ -97,6 +111,9 @@ export default {
           http.get(`/api/groupmember/${this.userInfo.userId}`)
           .then(response => {
             this.notices = response.data.notices;
+            if(this.notices.length==0){
+              this.condition=false;
+            }
           })
         })
       }
@@ -114,6 +131,9 @@ export default {
           http.get(`/api/groupmember/${this.userInfo.userId}`)
           .then(response => {
             this.notices = response.data.notices;
+            if(this.notices.length==0){
+              this.condition=false;
+            }
           })
         })
       }

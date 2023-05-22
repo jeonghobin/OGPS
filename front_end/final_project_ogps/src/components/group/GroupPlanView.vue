@@ -4,30 +4,30 @@
             <h1 class="mt-2"><mark class="highlight-bottom">그룹 플랜</mark></h1>
         </div>
         <div class="mt-3 mb-3 roundlist animate__animated animate__backInLeft" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
-        margin-left: 130px; margin-right: 130px; padding-top: 10px;">
+        margin-left: 130px; margin-right: 130px; padding-top: 10px; overflow-y:scroll">
             <div class="d-flex justify-content-center">
-                <h2>제목 : {{ plan.subject }}</h2>
+                <h2>제목 : {{ plan.subject }} / 좋아요 수 : {{plan.heart}}</h2>
             </div>
             <div class="d-flex justify-content-center mt-3 mb-3">
                 <h2>[경로]</h2>
             </div>
             
-            <div class="d-flex justify-content-center">
-                <div class="card mt-3 mb-5 ml-3" v-for="(index,i) in paths" :key="i" style="width: 250px; height: 300px;">
-                    <img :src="index.first_image" class="card-img-top" alt="..." width="100px" height="100px">
+            <div class="row ml-5">
+                <div class="col-2 card mt-3 mb-5 ml-3 mr-4 pt-2 roundlist" v-for="(index,i) in paths" :key="i" style="width: 250px; height: 400px;">
+                    <img :src="index.first_image" @error="replaceImg" style="border-radius:30px" class="card-img-top" alt="..." width="100px" height="100px">
                     <div class="card-body">
-                        <h5 class="card-title">{{ index.title }}</h5>
+                        <h5 class="card-title"><strong>{{ index.title }}</strong></h5>
                         <p class="card-text">{{ index.addr1 }}</p>
-                        <textarea :value="memos[i]" readonly></textarea>
+                        <div class="border" style="border-radius:30px">{{memos[i]}}</div>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-5">
-                <button type="button" class="btn btn-success mr-2" @click="updateheart">좋아요</button>
+                <button type="button" class="btn btn-success mr-2" style="border-radius:10px; font-size:25px;" @click="updateheart">좋아요</button>
             </div>
             <div class="d-flex justify-content-center mt-5">
-                <button type="button" class="btn btn-primary mr-2" @click="movegroup">목록으로</button>
-                <button v-if="this.userInfo.userId===this.plan.userId" type="button" class="btn btn-danger mr-2" @click="deleteplan">계획 삭제</button>
+                <button type="button"  class="btn btn-primary mr-2" style="border-radius:10px; font-size:25px;" @click="movegroup">목록으로</button>
+                <button v-if="this.userInfo.userId===this.plan.userId" type="button" class="btn btn-danger mr-2" style="border-radius:10px; font-size:25px;" @click="deleteplan">계획 삭제</button>
             </div>
         </div>
     </div>
@@ -86,8 +86,17 @@ export default {
             http.post(`/api/groupplan/${this.groupNo}/${this.planNo}/${this.userInfo.userId}`)
             .then(response=>{
                 alert(response.data.rsmsg);
+                http.get(`/api/groupplan/${this.groupNo}/${this.planNo}`)
+                .then(response => {
+                    this.plan = response.data.plan;
+                    console.log(response.data);
+                })
+
             })
-        }
+        },
+        replaceImg(e) {
+            e.target.src = require(`@/assets/main/main2.jpg`);
+        },
     },
     computed:{
         ...mapState(memberStore, ["userInfo"]),
@@ -98,7 +107,6 @@ export default {
 <style scoped>
 .roundlist{
     border-radius: 30px;
-    overflow-y: scroll;
 }
 .highlight-bottom {
     background: linear-gradient(to top, rgb(207, 250, 219) 18%, transparent 40%);

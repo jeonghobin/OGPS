@@ -27,8 +27,8 @@
                     <input type="number" class="form-control" ref="memberCnt" min="2" max="8" step="1">
                 </div>
                 
-                <button type="button" class="btn btn-primary mr-2" @click="creategroup">생성</button>
-                <button type="button" class="btn btn-danger mr-2" @click="movelist">취소</button>
+                <button type="button" style="border-radius:10px; font-size:25px;" class="btn btn-primary mr-2" @click="creategroup">생성</button>
+                <button type="button" style="border-radius:10px; font-size:25px;" class="btn btn-danger mr-2" @click="movelist">취소</button>
                 
             </form>
         </div>
