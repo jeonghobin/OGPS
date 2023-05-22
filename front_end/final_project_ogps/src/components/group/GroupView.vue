@@ -7,7 +7,7 @@
         margin-left: 200px; margin-right: 200px; padding-top: 10px; ">
             맴버( {{members.length}} / {{ group.memberCnt }} )<span v-if="memberOk!=='NO'"><button v-if="userInfo.userId!==members[0].userId" type="button" style="border-radius:10px; font-size:15px;" class="btn btn-danger ml-2" @click="exitmember">그룹나가기</button></span>
             <div class="d-flex justify-content-center">
-                <div class="test" style="border: 1px solid black; width: 150px; height:70px; border-radius:10px; background-color:white;">
+                <div class="test" style=" width: 150px; height:70px; border-radius:10px; background-color:white;">
                     <ol>
                         <li v-for="member in members" :key="member.userId">
                             {{ member.userId }}<button v-if="member.grade===0&&userInfo.userId===members[0].userId" type="button" class="btn btn-danger" style="font-size: 10px; width:15px; height:15px; padding:0px" @click="deletemember(member.userId)">X</button></li>
