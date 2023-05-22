@@ -11,7 +11,7 @@
         </div>
         <div class="row mr-0 ml-0">
             <div class="col-4">
-                <div class="mt-3 mb-3 roundlist animate__animated animate__backInUp overflow-auto" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; padding-right:5px; margin-left:130px">
+                <div class="mt-3 mb-3 roundlist animate__animated animate__backInUp test" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; padding-right:5px; margin-left:130px">
                     <div class="row">
                         <div class="input-group mb-3 ml-4 mr-4">
                         <input type="text" ref="searchword" class="form-control" style="border-radius:10px" placeholder="검색할 지역을 입력하시오..." aria-label="Recipient's username" aria-describedby="button-addon2" @keydown.enter="searchattraction">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="col-4 abc animate__animated animate__backInUp ">
-                <div class="mt-3 mb-3 roundlist overflow-auto" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; margin-right:130px">
+                <div class="mt-3 mb-3 roundlist test" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; margin-right:130px">
                     <div class="d-flex justify-content-center">
                         <h2>경로</h2>
                     </div>
@@ -240,5 +240,21 @@ export default {
     /* --animate-duration: 2s; */
     animation-delay: 1s;
 }
-
+.test{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.test::-webkit-scrollbar{
+    width: 20px;
+}
+.test::-webkit-scrollbar-thumb{
+    background-color: rgb(169, 248, 244); /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 30px;
+}
+.test::-webkit-scrollbar-track{
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+}
 </style>

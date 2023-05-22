@@ -92,13 +92,13 @@ export default {
       if (this.$route.path != "/") this.$router.push({ name: "AppMain" });
     },
     noticeview(){
-      // http.get(`/api/groupmember/${this.userInfo.userId}`)
-      // .then(response => {
-      //   this.notices = response.data.notices;
-      //   if(this.notices.length>0){
-      //     this.condition=true;
-      //   }
-      // })
+      http.get(`/api/groupmember/${this.userInfo.userId}`)
+      .then(response => {
+        this.notices = response.data.notices;
+        if(this.notices.length>0){
+          this.condition=true;
+        }
+      })
     },
     joinmember(userId1,groupNo1){
       if(confirm("참가 승인하시겠습니까?")){

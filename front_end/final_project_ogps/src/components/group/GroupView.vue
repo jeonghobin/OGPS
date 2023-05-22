@@ -7,7 +7,7 @@
         margin-left: 200px; margin-right: 200px; padding-top: 10px; ">
             맴버( {{members.length}} / {{ group.memberCnt }} )<span v-if="memberOk!=='NO'"><button v-if="userInfo.userId!==members[0].userId" type="button" style="border-radius:10px; font-size:15px;" class="btn btn-danger ml-2" @click="exitmember">그룹나가기</button></span>
             <div class="d-flex justify-content-center">
-                <div style="border: 1px solid black; width: 150px; height:70px; overflow-y: scroll; border-radius:10px; background-color:white;">
+                <div class="test" style="border: 1px solid black; width: 150px; height:70px; border-radius:10px; background-color:white;">
                     <ol>
                         <li v-for="member in members" :key="member.userId">
                             {{ member.userId }}<button v-if="member.grade===0&&userInfo.userId===members[0].userId" type="button" style="font-size: 5px; width: 20px; height: 20px;" @click="deletemember(member.userId)">X</button></li>
@@ -41,6 +41,7 @@
                     <div class="p-2 bd-highlight d-flex justify-content-center">
                     <b-pagination class=""
                     v-model="currentPage"
+                    pills
                     :total-rows="rows"
                     :per-page="perPage"
                     aria-controls="my-table"
@@ -48,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center" style="margin-top: 80px;">
+            <div class="d-flex justify-content-center" style="margin-top: 60px;">
                 <div v-if="ownerOk==='OK'">
                     <button type="button" style="border-radius:10px; font-size:25px;" class="btn btn-primary mr-2" @click="modifygroup">그룹 수정</button>
                     <button type="button" style="border-radius:10px; font-size:25px;" class="btn btn-danger" @click="deletegroup">그룹 삭제</button>
@@ -243,5 +244,21 @@ export default {
 .animate__animated.animate__backInLeft{
     /* --animate-duration: 2s; */
     animation-delay: 0.5s;
+}
+.test{
+    overflow-y: scroll;
+}
+.test::-webkit-scrollbar{
+    width: 20px;
+}
+.test::-webkit-scrollbar-thumb{
+    background-color: rgb(169, 248, 244); /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 30px;
+}
+.test::-webkit-scrollbar-track{
+    background-color: rgb(226, 226, 226);
+    border-radius: 30px;
 }
 </style>

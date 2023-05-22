@@ -3,8 +3,8 @@
         <div class="d-flex justify-content-center animate__animated animate__backInDown">
             <h1 class="mt-2"><mark class="highlight-bottom">그룹 플랜</mark></h1>
         </div>
-        <div class="mt-3 mb-3 roundlist animate__animated animate__backInLeft" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
-        margin-left: 130px; margin-right: 130px; padding-top: 10px; overflow-y:scroll">
+        <div class="mt-3 mb-3 roundlist animate__animated animate__backInLeft test" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
+        margin-left: 130px; margin-right: 130px; padding-top: 10px;">
             <div class="d-flex justify-content-center">
                 <h2>제목 : {{ plan.subject }} / 좋아요 수 : {{plan.heart}}</h2>
             </div>
@@ -25,7 +25,7 @@
             <div class="d-flex justify-content-center mt-5">
                 <button type="button" class="btn btn-success mr-2" style="border-radius:10px; font-size:25px;" @click="updateheart">좋아요</button>
             </div>
-            <div class="d-flex justify-content-center mt-5">
+            <div class="d-flex justify-content-center mt-5 mb-3">
                 <button type="button"  class="btn btn-primary mr-2" style="border-radius:10px; font-size:25px;" @click="movegroup">목록으로</button>
                 <button v-if="this.userInfo.userId===this.plan.userId" type="button" class="btn btn-danger mr-2" style="border-radius:10px; font-size:25px;" @click="deleteplan">계획 삭제</button>
             </div>
@@ -115,5 +115,22 @@ export default {
 .animate__animated.animate__backInLeft{
     /* --animate-duration: 2s; */
     animation-delay: 0.5s;
+}
+.test{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.test::-webkit-scrollbar{
+    width: 20px;
+}
+.test::-webkit-scrollbar-thumb{
+    background-color: rgb(169, 248, 244); /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 30px;
+}
+.test::-webkit-scrollbar-track{
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
 }
 </style>
