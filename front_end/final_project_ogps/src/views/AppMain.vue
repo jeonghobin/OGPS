@@ -115,16 +115,19 @@
         <div class="row">
           <div class="col-4">
             <b-card
-              title="Card Title"
-              img-src="https://picsum.photos/600/300/?image=25"
+              :title="attractions[0].title"
+              :img-src="attractions[0].first_image"
               img-alt="Image"
               img-top
               tag="article"
               style="max-width: 24rem;"
               class="mb-2"
             >
+            <template #img="{src,alt}">
+              <img :src="src" :alt="alt" @error="handleImage">
+            </template>
               <b-card-text>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                {{attractions[0].addr1}}
               </b-card-text>
 
               <b-button href="#" variant="primary">Go somewhere</b-button>
@@ -132,8 +135,8 @@
           </div>
           <div class="col-4">
             <b-card
-              title="Card Title"
-              img-src="https://picsum.photos/600/300/?image=25"
+              :title="attractions[1].title"
+              :img-src="attractions[1].first_image"
               img-alt="Image"
               img-top
               tag="article"
@@ -141,7 +144,7 @@
               class="mb-2"
             >
               <b-card-text>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                {{attractions[1].addr1}}
               </b-card-text>
 
               <b-button href="#" variant="primary">Go somewhere</b-button>
@@ -149,8 +152,8 @@
           </div>
           <div class="col-4">
             <b-card
-              title="Card Title"
-              img-src="https://picsum.photos/600/300/?image=25"
+              :title="attractions[2].title"
+              :img-src="attractions[2].first_image"
               img-alt="Image"
               img-top
               tag="article"
@@ -158,7 +161,7 @@
               class="mb-2"
             >
               <b-card-text>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                {{attractions[2].addr1}}
               </b-card-text>
 
               <b-button href="#" variant="primary">Go somewhere</b-button>
@@ -182,7 +185,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
+import http from "@/api/http";
 const memberStore = "memberStore";
 
 export default {
@@ -195,8 +198,16 @@ export default {
         userPassword: null,
       },
       slide: 0,
-      sliding: null
+      sliding: null,
+      attractions:[],
     };
+  },
+  created(){
+    http.get('/attraction/rank')
+    .then(response =>{
+      console.log(response.data.attractions);
+      this.attractions=response.data.attractions;
+    })
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
@@ -212,6 +223,10 @@ export default {
         // console.log("4. confirm() userInfo :: ", this.userInfo);
         // this.$router.push({ name: "AppMain" });
       }
+    },
+    handleImage(event) {
+      event.target.src = '@/assets/main/main2.jpg';
+      event.target.alt = 'Fallback Image';
     },
     movePage() {
       this.$router.push({ name: "join" });

@@ -60,5 +60,15 @@ public class AttractionController {
 		return entity;
 	}
 	
+	@GetMapping("/attraction/rank")
+	public ResponseEntity<Map<String, Object>> getRank() throws Exception{
+		ResponseEntity<Map<String, Object>> entity = null;
+		Map<String, Object> rsmap = new HashMap<String, Object>();
+		List<attractionDto> attlist=service.getRank();
+		rsmap.put("attractions",attlist);
+		rsmap.put("rsmsg","조회 성공");
+		entity = new ResponseEntity<Map<String,Object>>(rsmap,HttpStatus.OK);
+		return entity;
+	} 
 	
 }

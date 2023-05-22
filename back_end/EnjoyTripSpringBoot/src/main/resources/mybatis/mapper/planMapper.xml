@@ -54,6 +54,10 @@
   		where title Like CONCAT('%', #{word}, '%')
   	</select>
   	
+  	<select id="getRank" resultMap="attraction">
+  		select * from attraction_info
+  		order by hit desc limit 3 
+  	</select>
   	
   	
   </mapper>
