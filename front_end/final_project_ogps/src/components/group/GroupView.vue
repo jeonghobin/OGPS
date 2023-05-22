@@ -7,7 +7,7 @@
         margin-left: 200px; margin-right: 200px; padding-top: 10px; ">
             맴버( {{members.length}} / {{ group.memberCnt }} )
             <div class="d-flex justify-content-center">
-                <div style="border: 1px solid black; width: 150px; height:70px; overflow-y: scroll;">
+                <div style="border: 1px solid black; width: 150px; height:70px; overflow-y: scroll; border-radius:10px">
                     <ol>
                         <li v-for="member in members" :key="member.userId">
                             {{ member.userId }}<button v-if="member.grade===0&&userInfo.userId===members[0].userId" type="button" style="font-size: 5px; width: 20px; height: 20px;" @click="deletemember(member.userId)">X</button></li>
@@ -16,15 +16,15 @@
             </div>
             <div class="d-flex justify-content-end mb-2" style="margin-top: 100px;">
                 <div v-if="members.length!==group.memberCnt&&memberOk==='NO'">
-                    <button type="button" class="btn btn-primary mr-2" @click="joinsubmit">참여하기</button>
+                    <button type="button" class="btn btn-primary mr-5" @click="joinsubmit">참여하기</button>
                 </div>
                 <div v-if="memberOk==='OK'">
-                    <button type="button" class="btn btn-primary mr-2" @click="movewrite">계획 작성하기</button>
+                    <button type="button" class="btn btn-primary mr-5" @click="movewrite">계획 작성하기</button>
                 </div>
             </div>
             <div class="overflow-auto">
                 <div class="d-flex flex-column bd-highlight">
-                    <div class="p-2 bd-highlight">
+                    <div class="p-2 bd-highlight bg-white ml-3 mr-3 roundlist pl-3 pr-3">
                     <b-table
                     id="my-table"
                     :items="items"
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center" style="margin-top: 100px;">
+            <div class="d-flex justify-content-center" style="margin-top: 80px;">
                 <div v-if="ownerOk==='OK'">
                     <button type="button" class="btn btn-primary mr-2" @click="modifygroup">그룹 수정</button>
                     <button type="button" class="btn btn-danger" @click="deletegroup">그룹 삭제</button>
@@ -58,8 +58,8 @@
                 <b-button v-b-toggle.sidebar-1>소통</b-button>
                 <b-sidebar id="sidebar-1" title="소통" right shadow>
                 <div class="px-3 py-2" style="border: 1px solid black; width: 300px; height:700px; margin-left: 10px; display:flex;flex-direction: column-reverse;overflow-y:auto;">
-                    <ul style="list-style-type: none;">
-                        <li class="mb-4" v-for="index in comments" :key="index.commentNo"><span style="font-weight: bold;">{{ index.userId }}</span> : {{ index.comment }} <br><span style="font-size: small;">{{ index.memoTime }}</span> </li>
+                    <ul style="list-style-type: none; padding-left:0px">
+                        <li class="mb-4" v-for="index in comments" :key="index.commentNo"><div :style="index.userId===userInfo.userId ? 'margin-left:120px;':'margin-right:120px; padding-right:20px;'"><span style="font-weight: bold;">{{ index.userId }}</span> : {{ index.comment }} <br><span style="font-size: small;">{{ index.memoTime }}</span></div></li>
                     </ul>
                 </div>
                 <div class="fixed-bottom mb-3">

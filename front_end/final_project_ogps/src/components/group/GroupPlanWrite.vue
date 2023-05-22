@@ -4,9 +4,9 @@
                 <h1 class="mt-2"><mark class="highlight-bottom">계획 작성하기</mark></h1>
         </div>
         <div class="d-flex justify-content-center animate__animated animate__backInDown">
-            <div class="form-group mb-3" style="margin: auto; width: 30%;">
+            <div class="form-group mb-3" style="margin: auto; width: 15%;">
                 <label for="exampleInputEmail1">계획명</label>
-                <input type="text" class="form-control" ref="subject" aria-describedby="emailHelp">
+                <input type="text" style="border-radius:10px" class="form-control" ref="subject" aria-describedby="emailHelp">
             </div>
         </div>
         <div class="row mr-0 ml-0">
@@ -14,29 +14,32 @@
                 <div class="mt-3 mb-3 roundlist animate__animated animate__backInUp overflow-auto" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; padding-right:5px; margin-left:130px">
                     <div class="row">
                         <div class="input-group mb-3 ml-4 mr-4">
-                        <input type="text" ref="searchword" class="form-control" placeholder="검색할 지역을 입력하시오..." aria-label="Recipient's username" aria-describedby="button-addon2" @keydown.enter="searchattraction">
+                        <input type="text" ref="searchword" class="form-control" style="border-radius:10px" placeholder="검색할 지역을 입력하시오..." aria-label="Recipient's username" aria-describedby="button-addon2" @keydown.enter="searchattraction">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="searchattraction">검색</button>
+                            <button class="btn btn-secondary border-0" type="button" style="border-radius:10px" id="button-addon2" @click="searchattraction">검색</button>
                         </div>
                         </div>
                     </div>
                     <div class="row">
                         <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
-                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in attractions" :key="index.content_id"><div class="d-flex justify-content-center"><div>{{ index.title }}</div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4" type="button" @click="pushdata(index)">추가</button></div></div> </li>
+                        <li class="list-group-item mb-1 mt-1 pt-4 roundlist" v-for="index in attractions" :key="index.content_id"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}</div><div class="ml-auto"><button class="btn btn-success mb-3 mr-2 mt-4" type="button" @click="pushdata(index)">추가</button></div></div> </li>
                         </ul>
                     </div>
 
                 </div>
             </div>    
-            <div class="col-3 pt-2 pb-2 bbc animate__animated animate__backInUp">
+            <div class="col-4 pt-2 pb-2 bbc animate__animated animate__backInUp">
                 <div class="mr-0 ml-0">
                     <div id="map" class="roundmap" style="width: 100%; height: 900px"></div>
                 </div>
             </div>
-            <div class="col-5 abc animate__animated animate__backInUp ">
+            <div class="col-4 abc animate__animated animate__backInUp ">
                 <div class="mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; margin-right:130px">
+                    <div class="d-flex justify-content-center">
+                        <h2>경로</h2>
+                    </div>
                     <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
-                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in paths" :key="index.contentId"><div class="d-flex justify-content-center"><div>{{ index.title }}<br><textarea name="" v-model="index.memo" id="" cols="20" rows="1"></textarea></div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4 mt-4" type="button" @click="removedata(index)">삭제</button></div></div>
+                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in paths" :key="index.contentId"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}<textarea class="form-control" name="" v-model="index.memo" id="" cols="20" rows="1"></textarea></div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4 mt-4" type="button" @click="removedata(index)">삭제</button></div></div>
                         </li>
                         </ul>
                 </div>
@@ -168,6 +171,7 @@ export default {
                 contentId:`${index.content_id}`,
                 title:index.title,
                 addr1:index.addr1,
+                first_image:index.first_image,
                 memo:"",
             })
         },
@@ -185,6 +189,7 @@ export default {
             }
         },
         writeplan(){
+            if(this.$refs.subject.value!==""){
             http.post(`/api/groupplan/${this.groupNo}`,{
                 subject : this.$refs.subject.value,
                 userId: this.userInfo.userId,
@@ -196,6 +201,9 @@ export default {
             .then(()=>{
                 this.$router.push({name : 'groupview' ,params:{groupNo:this.groupNo}});
             })
+            }else{
+                alert("계획명을 작성하세요")
+            }
         }
     },
     mounted(){

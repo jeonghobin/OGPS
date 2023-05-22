@@ -15,7 +15,7 @@
                     <div class="p-2 bd-highlight">
                     <h3 class="mt-3 ml-2 mr-2">{{ currentPage }}페이지</h3>
                     </div>
-                    <div class="p-2 bd-highlight">
+                    <div class="p-2 bd-highlight bg-white ml-3 mr-3 roundlist pl-3 pr-3">
                     <b-table
                     id="my-table"
                     :items="items"
