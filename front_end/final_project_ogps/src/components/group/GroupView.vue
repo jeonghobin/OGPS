@@ -10,7 +10,7 @@
                 <div class="test" style="border: 1px solid black; width: 150px; height:70px; border-radius:10px; background-color:white;">
                     <ol>
                         <li v-for="member in members" :key="member.userId">
-                            {{ member.userId }}<button v-if="member.grade===0&&userInfo.userId===members[0].userId" type="button" style="font-size: 5px; width: 20px; height: 20px;" @click="deletemember(member.userId)">X</button></li>
+                            {{ member.userId }}<button v-if="member.grade===0&&userInfo.userId===members[0].userId" type="button" class="btn btn-danger" style="font-size: 10px; width:15px; height:15px; padding:0px" @click="deletemember(member.userId)">X</button></li>
                     </ol>
                 </div>
             </div>
