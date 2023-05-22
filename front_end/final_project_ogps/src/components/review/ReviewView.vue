@@ -1,45 +1,103 @@
 <template>
   <div>
   {{ articleNo }}
-      <img :src="fileObjectUrl" width="100px" height="100px" alt="이미지">
-      <!-- <div  class="col-1" v-for="image in images" :key="image.imageUrl">
-        <img :src="image.imageUrl" width="100px" height="100px" alt="이미지">
-      </div> -->
+   <!-- <div v-for="(imageData, index) in images" :key="index"  >
+    <img :src="fileObjectUrl" alt="Image" :key="index" />
+  </div>  -->
+      <img :src="fileObjectUrl1" width="100px" height="100px" alt="이미지"> 
+      <img :src="fileObjectUrl2" width="100px" height="100px" alt="이미지"> 
+      <img :src="fileObjectUrl3" width="100px" height="100px" alt="이미지"> 
+      <img :src="fileObjectUrl4" width="100px" height="100px" alt="이미지"> 
+      <img :src="fileObjectUrl5" width="100px" height="100px" alt="이미지"> 
+      <!-- <img v-for="(imageData, index) in fileInfo" :src="getImageUrl(imageData)" alt="Image" :key="index" />  -->
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import http from '@/api/http'
 export default {
   name: 'ReviewView',
   data() {
     return {
       articleNo: 0,
+      fileObjectUrl1: '',
+      fileObjectUrl2: '',
+      fileObjectUrl3: '',
+      fileObjectUrl4: '',
+      fileObjectUrl5: '',
       images: [],
-      fileObjectUrl: '',
+      fileInfo: [],
+      size:0,
     };
   },
   methods: {
 
   },
   created() {
+    //getBoard
     this.articleNo = this.$route.params.articleNo;
-    axios.get(`http://localhost:9001/api/review/${this.articleNo}`, {
-      responseType: "blob"
-    })
+    http.get(`/api/review/${this.articleNo}`)
       .then(response => {
         console.log(response.data);
-         // 다운로드(서버에서 전달 받은 데이터) 받은 바이너리 데이터를 blob으로 변환합니다.
-        const blob = new Blob([response.data]);
-        // 특정 타입을 정의해야 경우에는 옵션을 사용해 MIME 유형을 정의 할 수 있습니다.
-        // const blob = new Blob([this.content], {type: 'text/plain'})
-
-        // blob을 사용해 객체 URL을 생성합니다.
-        this.fileObjectUrl = window.URL.createObjectURL(blob);
       })
       .catch(error => {
         console.error(error);
       });
+    
+      //get file
+      http.get(`/api/rfile/${this.articleNo}`)
+        .then(response => {
+          this.fileInfo = response.data.fileInfo;
+          // console.log(this.fileInfo.length);
+
+          for (let i = 0; i < this.fileInfo.length; i++) {
+
+            http.get(`/api/rfile/detail/${this.fileInfo[i].idx}`, {
+                responseType: "blob"
+            }).then(response => {
+                console.log(response.data.size);
+            
+                if (response.data.size > 0) {
+                    const blob = new Blob([response.data]);
+                    if(i==0)
+                    this.fileObjectUrl1 = window.URL.createObjectURL(blob);
+                    if(i==1)
+                    this.fileObjectUrl2 = window.URL.createObjectURL(blob);
+                    if(i==2)
+                    this.fileObjectUrl3 = window.URL.createObjectURL(blob);
+                    if(i==3)
+                    this.fileObjectUrl4 = window.URL.createObjectURL(blob);
+                    if(i==4)
+                    this.fileObjectUrl5 = window.URL.createObjectURL(blob);
+                } else {
+                    if(i==0)
+                    this.fileObjectUrl1 = '@/assets/img/main_1.png';
+                    if(i==1)
+                    this.fileObjectUrl2 = '@/assets/img/main_1.png';
+                    if(i==2)
+                    this.fileObjectUrl3 = '@/assets/img/main_1.png';
+                    if(i==3)
+                    this.fileObjectUrl4 = '@/assets/img/main_1.png';
+                    if(i==4)
+                    this.fileObjectUrl5 = '@/assets/img/main_1.png';
+                }
+                this.images[i] = this.fileObjectUrl1;
+            })
+            
+          }
+        
+
+        })
+        .catch(error => {
+          console.error(error);
+      });
+
+
+  
+
+
+
+  
   }
 };
 </script>

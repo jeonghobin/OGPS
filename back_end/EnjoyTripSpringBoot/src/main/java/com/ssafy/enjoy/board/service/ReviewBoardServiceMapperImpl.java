@@ -183,7 +183,12 @@ public class ReviewBoardServiceMapperImpl implements ReviewBoardService{
 		// TODO Auto-generated method stub
 		return session.getMapper(ReviewBoardRepository.class).getFile(articleNo);
 	}
-
+	
+	@Override
+	public FileInfoDto oneFile(int idx) throws Exception {
+		// TODO Auto-generated method stub
+		return session.getMapper(ReviewBoardRepository.class).oneFile(idx);
+	}
 
 	
 }
