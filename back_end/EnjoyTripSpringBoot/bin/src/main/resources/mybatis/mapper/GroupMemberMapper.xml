@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.ssafy.enjoy.group.repository.GroupMemberRepository">
+	
+	<resultMap type="NoticeDto" id="noticedto">
+		<result column="groupNo" property="groupNo"/>
+		<result column="userId" property="userId"/>
+		<result column="targetId" property="targetId"/>
+	</resultMap>
+	
+	
+	
+	<select id="getOwner" parameterType="int" resultType="string">
+		select userId from group_members where groupNo=#{groupNo} and grade=1
+	</select>
+	
+	<insert id="submitJoin" parameterType="string">
+		insert into notice values(#{userId},#{groupNo},#{owner});
+	</insert>
+	
+	<select id="getNotice" parameterType="string" resultMap="noticedto">
+		select * from notice where targetId=#{userId}
+	</select>
+  	
+  	<delete id="deleteNotice" parameterType="string">
+  		delete from notice where userId=#{userId} and groupNo=#{groupNo}
+  	</delete>
+  	
+  	<select id="getTotalMember" parameterType="string" resultType="int">
+  		select COUNT(*) from group_members group by groupNo having(groupNo=#{groupNo})
+  	</select>
+  	
+  	<delete id="deleteMember" parameterType="string">
+  		delete from group_members where groupNo=#{groupNo} and userId=#{userId}
+  	</delete>
+  	
+</mapper>

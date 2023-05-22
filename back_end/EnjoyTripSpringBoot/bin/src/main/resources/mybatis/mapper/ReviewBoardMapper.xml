@@ -135,6 +135,10 @@
   	<select id="getFile" resultType="int" resultMap="FileInfoDto">
   		select * from review_file where articleNo=#{articleNo}
   	</select>
+  	
+  	<select id="oneFile" resultType="int" resultMap="FileInfoDto">
+  		select * from review_file where idx=#{idx}
+  	</select>
 	
 	<insert id="savefile" parameterType="FileInfoDto">
 		insert into review_file(articleNo,saveFolder, originalFile,saveFile)

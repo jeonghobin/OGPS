@@ -15,7 +15,7 @@ import GroupView from '@/components/group/GroupView'
 import GroupModify from '@/components/group/GroupModify'
 import GroupPlanView from '@/components/group/GroupPlanView'
 import GroupPlanWrite from '@/components/group/GroupPlanWrite'
-
+import AppWeather from '@/views/AppWeather'
 
 Vue.use(VueRouter)
 
@@ -138,7 +138,12 @@ const routes = [
         component:GroupPlanWrite
       }
     ]
-  }
+  },
+  {
+    path:"/weather",
+    name:"weather",
+    component:AppWeather
+  },
 ]
 
 const router = new VueRouter({

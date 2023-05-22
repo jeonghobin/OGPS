@@ -38,10 +38,14 @@
                     <div class="d-flex justify-content-center">
                         <h2>경로</h2>
                     </div>
-                    <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
-                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in paths" :key="index.contentId"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" @error="replaceImg" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}<textarea class="form-control" name="" v-model="index.memo" id="" cols="20" rows="1"></textarea></div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4 mt-4" type="button" @click="removedata(index)">삭제</button></div></div>
-                        </li>
+                    
+                        <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
+                            <draggable class="roundlist" v-model="paths">
+                            <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in paths" :key="index.contentId"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" @error="replaceImg" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}<textarea class="form-control" name="" v-model="index.memo" id="" cols="20" rows="1"></textarea></div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4 mt-4" type="button" @click="removedata(index)">삭제</button></div></div>
+                            </li>
+                        </draggable>
                         </ul>
+                    
                 </div>
             </div>
         </div>
@@ -56,10 +60,11 @@
 import http from '@/api/http';
 import { mapState } from "vuex";
 const memberStore = "memberStore";
+import draggable from 'vuedraggable'
 
 export default {
     name: 'GroupPlanWrite',
-    components: {},
+    components: { draggable},
     data() {
         return {
             message: '',
