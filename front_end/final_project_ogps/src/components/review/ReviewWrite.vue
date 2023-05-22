@@ -7,7 +7,7 @@
       margin-left: 130px; margin-right: 130px; padding-top: 10px;">
       <!-- <div class="row roundlist d-flex justify-content-center mt-3 row p-4" style="width: 90%; height: 90%; background-color: rgba(255, 255, 255, 0.5);"> -->
         <!-- <h3 class="d-flex justify-content-center" style="color: gray; width: 100%;">Share My Trip</h3> -->
-        <div class="row mt-2" style="width: 90%; height: 95%;">
+        <div class="row mt-5  middle-content " style="width: 85%; height: 90%;">
           <div class="roundlist" style="border-bottom: solid 3px gray; width: 100%; height: 10%; background-color: rgba(255, 255, 255, 0.5);">
             <div class="row middle-content" style="width: 100%; height: 100%;">
               <div class="col-2 middle-content mt-2">
@@ -36,9 +36,6 @@
             </div>
           </div>
           <div class="roundlist" style="border-bottom: solid 3px gray; width: 100%; width: 100%; height: 30%; background-color: rgba(255, 255, 255, 0.5);">
-            <!-- <div>
-              <input type="file" multiple ref="fileInput" @change="handleFileUpload">
-            </div> -->
             <div class="file-input-wrapper">
               <input type="file" multiple ref="fileInput" @change="handleFileUpload" accept="image/*">
               <label for="fileInput" class="file-input-label">
@@ -112,13 +109,17 @@ export default {
     },
 
     uploadImage() {
-      
+      if (this.subject === '') {
+        alert("제목을 입력해주세요..");
+      } else if (this.content === '') {
+        alert("내용을 입력해주세요..");
+      }else{
       axios.post('http://localhost:9001/api/review', {
           userId: this.userInfo.userId,
           subject: this.subject,
           content: this.content
       }).then(response => {
-          console.log(response.data.message);
+          // console.log(response.data.message);
           this.articleNo = response.data.articleNo;
 
         if (this.images) {
@@ -145,7 +146,7 @@ export default {
       }).catch(error => {
             console.error(error);
       });
-
+    }
     }
   }
 };
@@ -202,12 +203,6 @@ transform: translate(0, -50%);
 width: 100%;
 color: gray;
 }
-
-
-
-
-
-
 
 .file-input-wrapper {
 position: relative;

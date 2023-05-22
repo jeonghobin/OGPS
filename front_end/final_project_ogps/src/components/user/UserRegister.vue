@@ -1,14 +1,14 @@
 <template>
   <b-container class="bv-example-row mt-3">
     <b-row>
-      <b-col>
-        <b-alert variant="secondary" show><h3>회원가입</h3></b-alert>
+      <b-col class="d-flex justify-content-center mr-5">
+        <b-alert variant="secondary" show style="width: 70%;"><h3>회원가입</h3></b-alert>
       </b-col>
     </b-row>
     <b-row>
       <b-col></b-col>
       <b-col cols="8">
-        <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
+        <b-card class="text-center mt-3 mb-4 ml-3" style="max-width: 40rem" align="left">
           <b-form class="text-left">
             <b-alert show variant="danger" v-model="isRegisterError.state">{{isRegisterError.info}}</b-alert>
             <b-form-group label="이름:" label-for="userName">
@@ -49,7 +49,7 @@
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
-            <b-button type="button" variant="primary" class="m-1" @click="register">회원가입</b-button>
+            <b-button type="button" variant="primary" class="m-1" @click="register" style="width: 20%;">회원가입</b-button>
           </b-form>
         </b-card>
       </b-col>

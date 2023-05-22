@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-center">
             <h1 class="mt-2"><mark class="highlight-bottom">여행 후기</mark></h1>
         </div>   
-        <div class="d-flex justify-content-center mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
+        <div class="d-flex justify-content-center mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.55);
         margin-left: 130px; margin-right: 130px; padding-top: 10px;">
         <div class="row" style="height: 90%; width: 90%;">
             <div style="width: 100%; color: white;">
@@ -16,7 +16,7 @@
                     <h4 class="d-flex justify-content-start" style="color: white;"> Best Review </h4>
                     <div v-for="item in items" :key="item.articleNo">
                         <div v-if="item.articleNo === bestNo">
-                            <router-link :to="{ name: 'reviewview', params:{articleNo : item.articleNo} }">
+                            <router-link :to="{ name: 'reviewview', params:{article : item} }">
                                 <b-card no-body class="overflow-hidden" style=" border: solid 7px white; border-radius: 20px; color: black;">
                                     <b-row no-gutters>
                                         <b-col>
@@ -25,7 +25,7 @@
                                         <b-col>
                                             <b-card-body ><h2>{{ item.subject }}</h2>
                                             <b-card-text>
-                                                <h4>{{ item.content }}</h4>
+                                                <!-- <h4>{{ item.content }}</h4> -->
                                             </b-card-text>
                                             </b-card-body>
                                         </b-col>
@@ -40,7 +40,7 @@
                 <div class="d-flex flex-column bd-highlight">
                     <div class="p-2 bd-highlight">
                     <h3 class="d-flex justify-content-center ml-3" style="color: white;"> Our's Trip Review </h3> 
-                    <button type="button" class="btn btn-primary d-flex justify-content-end" @click="creategroup">Create Review</button>
+                    <button v-if="userInfo" type="button" class="btn btn-primary d-flex justify-content-end" @click="creategroup">Create Review</button>
                     </div>
                     <div class="p-2 bd-highlight">
                     <b-table 
@@ -52,7 +52,7 @@
                     small
                     >
                         <template #cell(subject)="row">
-                            <router-link :to="{ name: 'reviewview', params:{articleNo : row.item.articleNo} }">{{ row.value }}</router-link>
+                            <router-link style="color: rebeccapurple;" :to="{ name: 'reviewview', params:{article : row.item} }">{{ row.value }}</router-link>
                         </template>
                     </b-table>
                     </div>
@@ -82,7 +82,7 @@ export default {
     components: {},
     data() {
         return {
-        perPage: 6,
+        perPage: 5,
         currentPage: 1,
         bestNo: 0,
         fileObjectUrl: '',
@@ -115,28 +115,17 @@ export default {
         http.get('/api/review')
         .then(response => {
             this.items = response.data.data;
-
-            let MaxHeart = 0
-            for (let i = 0; i < this.items.length; i++) {
-                const cnt = this.items[i].heart;
-                if (cnt >= MaxHeart) {
-                    MaxHeart = cnt;
-                    this.bestNo = this.items[i].articleNo;
-                }
+            this.bestNo = response.data.bestNo;
+            const fileNo = response.data.fileNo;
+            // console.log(response.data.fileNo);
+            if (fileNo) {
+                http.get(`/api/rfile/detail/${fileNo}`, {
+                    responseType: "blob"
+                }).then(response => {
+                        const blob = new Blob([response.data]);
+                        this.fileObjectUrl = window.URL.createObjectURL(blob);
+                })
             }
-
-            http.get(`/api/review/${this.bestNo}`, {
-                responseType: "blob"
-            }).then(response => {
-                console.log(response.data.size);
-                if (response.data.size > 0) {
-                    const blob = new Blob([response.data]);
-                    this.fileObjectUrl = window.URL.createObjectURL(blob);
-                } else {
-                    this.fileObjectUrl = '@/assets/img/main_1.png';
-                    console.log(this.fileObjectUrl);
-                }
-            })
 
         })
     },
@@ -163,10 +152,10 @@ export default {
         },
     },
     computed: {
-      rows() {
+    rows() {
         return this.items.length
-      },
-      ...mapState(memberStore, ["userInfo"]),
+    },
+    ...mapState(memberStore, ["userInfo"]),
     }
 };
 </script>
