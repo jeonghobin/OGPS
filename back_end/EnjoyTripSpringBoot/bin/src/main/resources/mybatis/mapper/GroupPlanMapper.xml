@@ -65,7 +65,7 @@
 		select * from group_comment where groupNo=#{groupNo}
 	</select>
 	<select id="getGroupMember" parameterType="int" resultMap="groupmemberdto">
-		select * from group_members where groupNo=#{groupNo}
+		select * from group_members where groupNo=#{groupNo} order by grade desc
 	</select>
 	
 	<select id="getDetailPlan" parameterType="int" resultMap="groupplandto">
@@ -134,6 +134,19 @@
   	<select id="getHeart" parameterType="string" resultType="int">
   		select COUNT(*) from plan_heart where planNo=#{planNo} and userId=#{userId}
   	</select>
+  	
+  	<update id="downHeart" parameterType="int">
+  		update plan set heart=heart-1 where planNo=#{planNo}
+  	</update>
+  	
+  	<update id="updateHeart" parameterType="int">
+  		update plan set heart=heart+1 where planNo=#{planNo}
+  	</update>
+  	
+  	<insert id="writeGroupComment" parameterType="GroupCommentDto">
+  		insert into group_comment(groupNo,userId,comment)
+  		values(#{groupNo},#{userId},#{comment})
+  	</insert>
   	
 </mapper>
  

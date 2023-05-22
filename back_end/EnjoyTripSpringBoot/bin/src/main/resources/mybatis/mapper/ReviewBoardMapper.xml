@@ -25,6 +25,14 @@
 		<result column="userId" property="userId" />
 		<result column="state" property="state" />
 	</resultMap>  
+	<resultMap type="FileInfoDto" id="FileInfoDto">
+		<result column="idx" property="idx" />
+		<result column="articleNo" property="articleNo" />
+		<result column="saveFolder" property="saveFolder" />
+		<result column="originalFile" property="originalFile" />
+		<result column="saveFile" property="saveFile" />
+	</resultMap>  
+	
 
 	<sql id="search">
 		<if test="word != null and word != ''">
@@ -108,7 +116,7 @@
 	</select>
 	
 	<select id="allHeart" parameterType="int" resultType="int">
-		select count(*) from review_haert where articleNo=#{articleNo} and state=1
+		select count(*) from review_heart where articleNo=#{articleNo} and state=1
 	</select>
 	
 	<insert id="addHeart" parameterType="ReviewHeartDto">
@@ -122,6 +130,10 @@
 	<!-- file -->
 	<select id="getAuto" resultType="int">
   		select last_insert_id()
+  	</select>
+  	
+  	<select id="getFile" resultType="int" resultMap="FileInfoDto">
+  		select * from review_file where articleNo=#{articleNo}
   	</select>
 	
 	<insert id="savefile" parameterType="FileInfoDto">

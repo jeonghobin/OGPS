@@ -3,34 +3,69 @@
         <div class="d-flex justify-content-center animate__animated animate__backInDown">
                 <h1 class="mt-2"><mark class="highlight-bottom">계획 작성하기</mark></h1>
         </div>
+        <div class="d-flex justify-content-center animate__animated animate__backInDown">
+            <div class="form-group mb-3" style="margin: auto; width: 30%;">
+                <label for="exampleInputEmail1">계획명</label>
+                <input type="text" class="form-control" ref="subject" aria-describedby="emailHelp">
+            </div>
+        </div>
         <div class="row mr-0 ml-0">
-            <div class="col-3">
-                <div class="mt-3 mb-3 roundlist animate__animated animate__backInUp" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 100px;"></div>
+            <div class="col-4">
+                <div class="mt-3 mb-3 roundlist animate__animated animate__backInUp overflow-auto" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; padding-right:5px; margin-left:130px">
+                    <div class="row">
+                        <div class="input-group mb-3 ml-4 mr-4">
+                        <input type="text" ref="searchword" class="form-control" placeholder="검색할 지역을 입력하시오..." aria-label="Recipient's username" aria-describedby="button-addon2" @keydown.enter="searchattraction">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="searchattraction">검색</button>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
+                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in attractions" :key="index.content_id"><div class="d-flex justify-content-center"><div>{{ index.title }}</div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4" type="button" @click="pushdata(index)">추가</button></div></div> </li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>    
-            <div class="col-4 pt-2 pb-2 bbc animate__animated animate__backInUp">
-            
+            <div class="col-3 pt-2 pb-2 bbc animate__animated animate__backInUp">
                 <div class="mr-0 ml-0">
                     <div id="map" class="roundmap" style="width: 100%; height: 900px"></div>
                 </div>
             </div>
             <div class="col-5 abc animate__animated animate__backInUp ">
-                <div class="mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 100px;"></div>
+                <div class="mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5); padding-top: 15px; margin-right:130px">
+                    <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
+                        <li class="list-group-item mb-1 mt-1 roundlist" v-for="index in paths" :key="index.contentId"><div class="d-flex justify-content-center"><div>{{ index.title }}<br><textarea name="" v-model="index.memo" id="" cols="20" rows="1"></textarea></div><div class="ml-auto"><button class="btn btn-danger mb-3 mr-4 mt-4" type="button" @click="removedata(index)">삭제</button></div></div>
+                        </li>
+                        </ul>
+                </div>
             </div>
         </div>
         <div class="d-flex justify-content-end animate__animated animate__backInRight">
-            <button class="btn btn-primary mb-3 mr-3" type="button">작성</button>
-            <button class="btn btn-success mb-3 mr-3" type="button">목록으로</button>
+            <button class="btn btn-primary mb-3 mr-4" type="button" @click="writeplan">작성</button>
+            <button class="btn btn-success mb-3" style="margin-right:130px" type="button" @click="movegroup">목록으로</button>
         </div>
     </div>
 </template>
 
 <script>
+import http from '@/api/http';
+import { mapState } from "vuex";
+const memberStore = "memberStore";
+
 export default {
     name: 'GroupPlanWrite',
     components: {},
     data() {
         return {
             message: '',
+            groupNo : this.$route.params.groupNo,
+            attractions:[],
+            memos:[],
+            paths:[],
+            positions:[],
+            markers:[],
         };
     },
     created() {},
@@ -54,6 +89,114 @@ export default {
 
             this.map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
 		},
+        movegroup(){
+            this.$router.push({name : 'groupview' ,params:{groupNo:this.groupNo}});
+        },
+        searchattraction(){
+            this.attractions=[];
+            let word = this.$refs.searchword.value;
+            http.get(`/attraction/search/${word}`)
+            .then(response => {
+                console.log(response.data);
+                this.attractions = response.data.attractions;
+                this.makeMarkers();
+            })
+        },
+        makeMarkers(){
+            this.positions=[];
+            this.attractions.forEach((area)=>{
+                let markerInfo = {
+                    img: area.first_image,
+                    title : area.title,
+                    addr1 : area.addr1,
+                    latlng : new window.kakao.maps.LatLng(area.latitude, area.longitude),
+                };
+                this.positions.push(markerInfo);
+            });
+            for(var i=0;i<this.markers.length;i++){
+                this.markers[i].setMap(null);
+            }
+            this.markers =[];
+            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            for(i=0;i<this.positions.length;i++){
+                var imageSize = new window.kakao.maps.Size(24,35);
+                var markerImage = new window.kakao.maps.MarkerImage(imageSrc,imageSize);
+
+                var marker = new window.kakao.maps.Marker({
+                    // map: this.map,
+                    position:this.positions[i].latlng,
+                    title:this.positions[i].title,
+                    image: markerImage,
+                });
+                marker.setMap(this.map);
+                this.markers[i] = marker;
+                console.log(this.positions[i].img);
+                var iwContent = 
+                `<div style="padding:5px; display:flex;">
+                    <div style="width: 80px;
+                    height: 80px; 
+                    border-radius: 70%;
+                    overflow: hidden;">
+                        <img style="width: 100%;
+                        height: 100%;
+                        object-fit: cover;" src="${this.positions[i].img}" width=55px height=55px/>
+                    </div>
+                    <div>
+                        <div>
+                            <h4>${this.positions[i].title}</h4>
+                        </div>
+                        <div>
+                            ${this.positions[i].addr1}
+                        </div>    
+                    </div>
+                </div>`;
+
+
+                
+                this.infowindow = new window.kakao.maps.InfoWindow({
+                    content : iwContent
+                });
+
+
+                window.kakao.maps.event.addListener(marker,"mouseover",this.makeOverListener(this.map,marker,this.infowindow));
+                window.kakao.maps.event.addListener(marker,'mouseout',this.makeOutListener(this.infowindow))
+            }
+            this.map.setCenter(this.positions[0].latlng);
+        },
+        pushdata(index){
+            this.paths.push({
+                contentId:`${index.content_id}`,
+                title:index.title,
+                addr1:index.addr1,
+                memo:"",
+            })
+        },
+        removedata(index){
+            this.paths=this.paths.filter((element)=>element.contentId!==index.contentId);
+        },
+        makeOverListener(map,marker,infowindow){
+            return function(){
+                infowindow.open(map,marker);
+            }
+        },
+        makeOutListener(infowindow){
+            return function(){
+                infowindow.close();
+            }
+        },
+        writeplan(){
+            http.post(`/api/groupplan/${this.groupNo}`,{
+                subject : this.$refs.subject.value,
+                userId: this.userInfo.userId,
+                paths:this.paths,
+            })
+            .then(response=>{
+                alert(response.data.rsmsg);
+            })
+            .then(()=>{
+                this.$router.push({name : 'groupview' ,params:{groupNo:this.groupNo}});
+            })
+        }
     },
     mounted(){
         if (window.kakao && window.kakao.maps) {
@@ -63,6 +206,9 @@ export default {
         // 없다면 카카오 스크립트 추가 후 맵 실행
         this.loadScript();
         }
+    },
+    computed:{
+        ...mapState(memberStore, ["userInfo"]),
     }
 };
 </script>

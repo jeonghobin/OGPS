@@ -21,6 +21,7 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
 
 .background{
   height: 100%;
@@ -34,7 +35,8 @@ export default {
   background-position: center;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 25px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

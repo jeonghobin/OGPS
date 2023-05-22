@@ -14,7 +14,7 @@
             
             <div class="d-flex justify-content-center">
                 <div class="card mt-3 mb-5 ml-3" v-for="(index,i) in paths" :key="i" style="width: 250px; height: 300px;">
-                    <img :src="index.first_image" class="card-img-top" alt="...">
+                    <img :src="index.first_image" class="card-img-top" alt="..." width="100px" height="100px">
                     <div class="card-body">
                         <h5 class="card-title">{{ index.title }}</h5>
                         <p class="card-text">{{ index.addr1 }}</p>

@@ -72,7 +72,7 @@
                 </div>
                 </b-sidebar>
             </div>
-            <div class="d-flex justify-content-center" style="margin-top: 100px;">
+            <div class="d-flex justify-content-center" style="margin-top: 70px;">
                 <button class="btn btn-success" type="button" @click="movegrouplist">목록으로</button>
             </div>
 
