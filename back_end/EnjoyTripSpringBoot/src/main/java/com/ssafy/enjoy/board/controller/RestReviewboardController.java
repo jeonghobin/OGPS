@@ -52,13 +52,12 @@ public class RestReviewboardController {
 
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	
+
 	private final Logger logger = LoggerFactory.getLogger(RestReviewboardController.class);
-	
+
 	@Autowired
 	private ServletContext servletContext;
-	
-	
+
 	/**
 	 * 게시판
 	 **/
@@ -86,13 +85,18 @@ public class RestReviewboardController {
 	}
 
 	@PostMapping("/review")
-	public ResponseEntity<Map<String, Object>> write(ReviewDto rdto) {
+	public ResponseEntity<Map<String, Object>> write(@RequestBody Map<String, String> reqmap) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		HttpStatus status = null;
 
 		try {
+			ReviewDto rdto = new ReviewDto();
+			rdto.setContent(reqmap.get("content"));
+			rdto.setSubject(reqmap.get("subject"));
+			rdto.setUserId(reqmap.get("userId"));
+			System.out.println(rdto);
 			int articleNo = service.write(rdto);
-			
+
 			map.put("message", SUCCESS);
 			map.put("articleNo", articleNo);
 			status = HttpStatus.ACCEPTED;
@@ -135,7 +139,7 @@ public class RestReviewboardController {
 			rdto.setSubject(reqmap.get("subject"));
 			rdto.setContent(reqmap.get("content"));
 
-			service.modify(rdto); 
+			service.modify(rdto);
 
 			map.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
@@ -150,52 +154,34 @@ public class RestReviewboardController {
 
 	/**
 	 * 댓글
+	 * 
+	 * @return
 	 **/
 	@GetMapping("/review/{articleNo}")
-	public void view(HttpServletResponse response, @PathVariable("articleNo") int articleNo) {
+	public ResponseEntity<Map<String, Object>> view(HttpServletResponse response,
+			@PathVariable("articleNo") int articleNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		HttpStatus status = null;
-
 		try {
-			FileInfoDto[] files = service.getFile(articleNo);
-			for (FileInfoDto fIDto : files) {
-				String realPath = servletContext.getRealPath("/upload");
-				
-				// db에서 폴더명 조회 
-				String folderName = fIDto.getSaveFolder();
-				String imageName = fIDto.getSaveFile();
-				String imagePath = realPath + File.separator + folderName  + File.separator + imageName;
-//				File imagefile = new File(imagePath);
-				
-			    byte[] fileByte = FileUtils.readFileToByteArray(new File(imagePath));
-			    response.setContentType("application/octet-stream");
-			    response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode("tistory.png", "UTF-8")+"\";");
-			    response.setHeader("Content-Transfer-Encoding", "binary");
+			ReviewDto rdto = service.getnotice(articleNo);
+			List<ReviewComDto> rcom = service.comList(articleNo);
 
-			    response.getOutputStream().write(fileByte);
-			    response.getOutputStream().flush();
-			    response.getOutputStream().close();
-			}
-			
-//			ReviewDto rdto = service.getnotice(articleNo);
-//			List<ReviewComDto> rcom = service.comList(articleNo);
-//			
-//			service.allHeart(rdto.getArticleNo());
-//
-//			map.put("review", rdto);
-//			map.put("comment", rcom);
-//			map.put("csize", rcom.size());
-//			map.put("message", SUCCESS);
-//			status = HttpStatus.ACCEPTED;
+			service.allHeart(rdto.getArticleNo());
+
+			map.put("review", rdto);
+			map.put("comment", rcom);
+			map.put("csize", rcom.size());
+			map.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
-//			map.put("message", FAIL);
-//			status = HttpStatus.INTERNAL_SERVER_ERROR;
-//			e.printStackTrace();
+			map.put("message", FAIL);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
 		}
-//		return new ResponseEntity<Map<String, Object>>(map, status);
+
+		return new ResponseEntity<Map<String, Object>>(map, status);
 	}
-	
-	
+
 	@PostMapping("/rcomment")
 	public ResponseEntity<Map<String, Object>> comwrite(@RequestBody Map<String, String> reqmap) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -271,7 +257,7 @@ public class RestReviewboardController {
 	 * 파일
 	 **/
 	@PostMapping("/rfile")
-	public ResponseEntity<Map<String, Object>> filesave(@RequestParam("upfile") MultipartFile[] files, int articleNo) {
+	public ResponseEntity<Map<String, Object>> fileSave(@RequestParam("upfile") MultipartFile[] files, int articleNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		HttpStatus status = null;
 
@@ -306,7 +292,6 @@ public class RestReviewboardController {
 				map.put("imageUrl", fileInfos);
 			}
 
-			
 			map.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
@@ -317,6 +302,97 @@ public class RestReviewboardController {
 
 		return new ResponseEntity<Map<String, Object>>(map, status);
 	}
+
+
+	//파일 수 리턴
+	@GetMapping("/rfile/{articleNo}")
+	public ResponseEntity<Map<String, Object>> fileFind(@PathVariable("articleNo") int articleNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		HttpStatus status = null;
+
+		try {
+			FileInfoDto[] files = service.getFile(articleNo);
+			
+			List<SendFile> list = new ArrayList<SendFile>();
+			for (int i = 0; i < files.length; i++) {
+				list.add(new SendFile(i, files[i].getIdx()));
+			}
+		
+			map.put("fileInfo", list);
+			map.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			map.put("message", FAIL);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, status);
+	}
+
+//	//파일 리턴
+//	@GetMapping("/rfile/detail/{idx}")
+//	public void getfile(HttpServletResponse response, @PathVariable("idx") int idx) {
+//
+//		try {
+//			FileInfoDto fIDto = service.oneFile(idx);
+//			
+//				String realPath = servletContext.getRealPath("/upload");
+//
+//				// db에서 폴더명 조회
+//				String folderName = fIDto.getSaveFolder();
+//				String imageName = fIDto.getSaveFile();
+//				String imagePath = realPath + File.separator + folderName + File.separator + imageName;
+////				File imagefile = new File(imagePath);
+//
+//				byte[] fileByte = FileUtils.readFileToByteArray(new File(imagePath));
+//				response.setContentType("application/octet-stream");
+//				response.setHeader("Content-Disposition",
+//						"attachment; fileName=\"" + URLEncoder.encode("tistory.png", "UTF-8") + "\";");
+//				response.setHeader("Content-Transfer-Encoding", "binary");
+//
+//				response.getOutputStream().write(fileByte);
+//				response.getOutputStream().flush();
+//				response.getOutputStream().close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		}
+//	}
+	
+	
+	 /**
+     * 댓글
+     **/
+	@GetMapping("/rfile/detail/{idx}")
+	public void getfile(HttpServletResponse response, @PathVariable("idx") int idx) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        HttpStatus status = null;
+
+        try {
+            FileInfoDto files = service.oneFile(idx);
+                String realPath = servletContext.getRealPath("/upload");
+                
+                // db에서 폴더명 조회 
+                String folderName = files.getSaveFolder();
+                String imageName = files.getSaveFile();
+                String imagePath = realPath + File.separator + folderName  + File.separator + imageName;
+//                File imagefile = new File(imagePath);
+                System.out.println(imagePath);
+                
+                byte[] fileByte = FileUtils.readFileToByteArray(new File(imagePath));
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode("tistory.png", "UTF-8")+"\";");
+                response.setHeader("Content-Transfer-Encoding", "binary");
+
+                response.getOutputStream().write(fileByte);
+                response.getOutputStream().flush();
+                response.getOutputStream().close();
+            
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+    }
 	
 	@DeleteMapping("/rfile/{idx}")
 	public ResponseEntity<Map<String, Object>> filedelete(@PathVariable("idx") int idx) {
@@ -336,6 +412,31 @@ public class RestReviewboardController {
 
 		return new ResponseEntity<Map<String, Object>>(map, status);
 	}
-	
-	
+
+	static class SendFile{
+		int i, idx;
+
+		public SendFile(int i, int idx) {
+
+			this.i = i;
+			this.idx = idx;
+		}
+
+		public int getI() {
+			return i;
+		}
+
+		public void setI(int i) {
+			this.i = i;
+		}
+
+		public int getIdx() {
+			return idx;
+		}
+
+		public void setIdx(int idx) {
+			this.idx = idx;
+		}
+		
+	}
 }

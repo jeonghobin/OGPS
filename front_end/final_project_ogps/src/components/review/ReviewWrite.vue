@@ -5,7 +5,7 @@
     </div>   
     <div class="d-flex justify-content-center mt-3 mb-3 p-4 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
       margin-left: 130px; margin-right: 130px; padding-top: 10px;">
-      <div class="row roundlist d-flex justify-content-center mt-3 row p-4" style="width: 90%; height: 90%; background-color: rgba(255, 255, 255, 0.5);">
+      <!-- <div class="row roundlist d-flex justify-content-center mt-3 row p-4" style="width: 90%; height: 90%; background-color: rgba(255, 255, 255, 0.5);"> -->
         <!-- <h3 class="d-flex justify-content-center" style="color: gray; width: 100%;">Share My Trip</h3> -->
         <div class="row mt-2" style="width: 90%; height: 95%;">
           <div class="roundlist" style="border-bottom: solid 3px gray; width: 100%; height: 10%; background-color: rgba(255, 255, 255, 0.5);">
@@ -14,7 +14,7 @@
                   <h3>제목</h3>
               </div>
               <div class="col-8">
-                <input class="transparent-input" v-model="content" placeholder="제목을 입력해주세요..." style="width: 100%;">
+                <input class="transparent-input" v-model="subject" placeholder="제목을 입력해주세요..." style="width: 100%;">
               </div>
             </div>
           </div>
@@ -26,6 +26,7 @@
               <div class="col-8">
                 <div class="textarea-wrapper">
                   <textarea class="transparent-textarea"
+                    v-model="content"
                     id="textarea-rows"
                     placeholder="내용을 입력해주세요..."
                     rows="8"
@@ -57,7 +58,7 @@
               <b-button variant="outline-primary" @click="uploadImage">글 등록</b-button>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
   
   </div>
@@ -65,6 +66,8 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from "vuex";
+const memberStore = "memberStore";
 
 export default {
   name: 'ReviewWrite',
@@ -73,9 +76,13 @@ export default {
       articleNo: 0,
       imageUrl: '',
       images: [],
+      subject: '',
       content: '',
       selectedFiles: [],
     };
+  },
+  computed:{
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     handleFileUpload(event) {
@@ -105,10 +112,11 @@ export default {
     },
 
     uploadImage() {
+      
       axios.post('http://localhost:9001/api/review', {
-          userId: 123,
-          subject: '테스트',
-          content: '중임'
+          userId: this.userInfo.userId,
+          subject: this.subject,
+          content: this.content
       }).then(response => {
           console.log(response.data.message);
           this.articleNo = response.data.articleNo;
@@ -132,6 +140,8 @@ export default {
                 });
             }
           }
+
+          this.$router.push('/review');
       }).catch(error => {
             console.error(error);
       });

@@ -44,6 +44,7 @@ public interface ReviewBoardService {
 	int getAuto() throws Exception;
 	void savefile(FileInfoDto rfDto) throws Exception;
 	FileInfoDto[] getFile(int ArticleNo) throws Exception;
+	FileInfoDto oneFile(int idx) throws Exception;
 	void deletefile(int idx) throws Exception;
 	
 }
