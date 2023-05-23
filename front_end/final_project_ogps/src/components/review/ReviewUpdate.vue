@@ -93,7 +93,7 @@ export default {
       subject: '',
       content: '',
       selectedFiles: [],
-      showImage: [true, true, true, true, true],
+      deleteIdx : [],
     };
   },
   computed:{
@@ -171,7 +171,8 @@ export default {
     },
 
     getdeleteImage(i) {
-      this.fileInfo.splice(i, 1); // 이미지 삭제
+      this.deleteIdx.push(this.fileInfo[i].idx);
+
       if(i==0)
       this.fileObjectUrl1 = '';
       if(i==1)
@@ -181,7 +182,9 @@ export default {
       if(i==3)
       this.fileObjectUrl4 = '';
       if(i==4)
-      this.fileObjectUrl4 = '';
+      this.fileObjectUrl5 = '';
+      
+      this.fileInfo.splice(i, 1); // 이미지 삭제
     },
 
     movelist(){
@@ -204,23 +207,44 @@ export default {
         }).then(response => {
             console.log(response.data.message);
 
-          //파일 삭제 
-          http.delete(`/api/rfile/all/${this.articleNo}`)
-          .then(response => {
-            console.log(response.data);
+            console.log(this.deleteIdx);
+          //파일 선택시
+          if (this.images.length>0) {
 
-          //파일 저장
-          if(this.images){
-          for (var j = 0; j < this.images.length; j++) {
-              const formData = new FormData();
-              formData.append('upfile', this.images[j]);
-              formData.append('articleNo', this.articleNo);
+            http.delete(`/api/rfile/all/${this.articleNo}`)
+                .then(response => {
+                  console.log(response.data.message);
 
-              axios.post('http://localhost:9001/api/rfile', formData, {
-                header: {
-                  'Content-Type': 'multipart/form-data'
-                }
+                for (var j = 0; j < this.images.length; j++) {
+                    const formData = new FormData();
+                    formData.append('upfile', this.images[j]);
+                    formData.append('articleNo', this.articleNo);
+
+                    axios.post('http://localhost:9001/api/rfile', formData, {
+                      header: {
+                        'Content-Type': 'multipart/form-data'
+                      }
+                      })
+                      .then(response => {
+                        console.log(response.data.message);
+                      })
+                      .catch(error => {
+                        console.error(error);
+                      });
+                  }
+
+
                 })
+                .catch(error => {
+                  console.error(error);
+                });
+
+          }else{
+          //기존 파일 수정
+
+            for (let i = 0; i < this.deleteIdx.length; i++) {
+              console.log(this.deleteIdx[i]);
+                http.delete(`/api/rfile/${this.deleteIdx[i]}`)
                 .then(response => {
                   console.log(response.data.message);
                 })
@@ -228,29 +252,8 @@ export default {
                   console.error(error);
                 });
             }
-        }else if(this.fileInfo){
-            for (var i = 0; i < this.fileInfo.length; i++) {
-              const formData = new FormData();
-              formData.append('upfile', this.fileInfo[i]);
-              formData.append('articleNo', this.articleNo);
+          }
 
-              axios.post(`http://localhost:8080/api/rfile`, formData, {
-                header: {
-                  'Content-Type': 'multipart/form-data'
-                }
-                })
-                .then(response => {
-                  console.log(response.data.message);
-                })
-                .catch(error => {
-                  console.error(error);
-                });
-            }
-        }
-
-      }).catch(error => {
-            console.error(error);
-          });
         }).catch(error => {
               console.error(error);
         });
