@@ -91,12 +91,12 @@ const routes = [
         component: ReviewWrite
       },
       {
-        path:"view",
+        path:"view/:articleNo",
         name:"reviewview",
         component: ReviewView
       },
       {
-        path:"update",
+        path:"update/:articleNo",
         name:"reviewupdate",
         component: ReviewUpdate
       },

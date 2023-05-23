@@ -3,8 +3,7 @@
         <div class="d-flex justify-content-center animate__animated animate__backInDown">
             <h1 class="mt-2"><mark class="highlight-bottom">여행 후기</mark></h1>
         </div>   
-        <div class="d-flex justify-content-center mt-3 mb-3 roundlist animate__animated animate__backInLeft anidelay" style="height: 900px; background-color: rgba(255, 255, 255, 0.55);
-        margin-left: 130px; margin-right: 130px; padding-top: 10px;">
+        <div class="d-flex justify-content-center mt-3 mb-3 roundlist animate__animated animate__backInLeft anidelay" style="height: 900px; background-color: rgba(255, 255, 255, 0.55); margin-left: 130px; margin-right: 130px; padding-top: 10px;">
         <div class="row" style="height: 90%; width: 90%;">
             <div style="width: 100%; color: white;">
                 <hr style="border: solid 1px white; ">
@@ -16,7 +15,7 @@
                     <h4 class="d-flex justify-content-start" style="color: white;"> Best Review </h4>
                     <div v-for="item in items" :key="item.articleNo">
                         <div v-if="item.articleNo === bestNo">
-                            <router-link :to="{ name: 'reviewview', params:{article : item} }">
+                            <router-link :to="{ name: 'reviewview', params:{articleNo : item.articleNo} }">
                                 <b-card no-body class="overflow-hidden" style=" border: solid 7px white; border-radius: 20px; color: black;">
                                     <b-row no-gutters>
                                         <b-col>
@@ -36,23 +35,24 @@
                     </div>
                 </div>
             </div>
-            <div class="overflow-auto mt-4" style="width: 100%; height: 50%;">
+            <div class="overflow-auto mt-4 test " style="width: 100%; height: 53%;  ">
                 <div class="d-flex flex-column bd-highlight">
                     <div class="p-2 bd-highlight">
                     <h3 class="d-flex justify-content-center ml-3" style="color: white;"> Our's Trip Review </h3> 
-                    <button v-if="userInfo" type="button" class="btn btn-primary d-flex justify-content-end" @click="creategroup">Create Review</button>
+                    <button v-if="userInfo" type="button" class="btn btn-primary d-flex justify-content-end" @click="createReview">Create Review</button>
                     </div>
-                    <div class="p-2 bd-highlight">
+                    <div class="p-2 bd-highlight roundlist d-flex justify-content-center" style="background-color: rgba(255, 255, 255, 0.5); width: 100%;">
                     <b-table 
                     id="my-table"
                     :items="items"
                     :fields="fields"
                     :per-page="perPage"
                     :current-page="currentPage"
+                    style="width: 95%;"
                     small
                     >
                         <template #cell(subject)="row">
-                            <router-link style="color: rebeccapurple;" :to="{ name: 'reviewview', params:{article : row.item} }">{{ row.value }}</router-link>
+                            <router-link style="color: rebeccapurple;" :to="{ name: 'reviewview', params:{articleNo : row.item.articleNo} }">{{ row.value }}</router-link>
                         </template>
                     </b-table>
                     </div>
@@ -145,7 +145,7 @@ export default {
             this.items = response.data.data;
             })
         },
-        creategroup(){
+        createReview(){
             this.$router.push("/review/write");
         },
         replaceImg(e) {
@@ -171,5 +171,22 @@ export default {
 }
 .anidelay{
     animation-delay: 0.5s;
+}
+.test{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.test::-webkit-scrollbar{
+    width: 20px;
+}
+.test::-webkit-scrollbar-thumb{
+    background-color: rgb(169, 248, 244); /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 30px;
+}
+.test::-webkit-scrollbar-track{
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
 }
 </style>

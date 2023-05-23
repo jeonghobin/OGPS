@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="d-flex justify-content-center">
-          <h1 class="mt-2"><mark class="highlight-bottom">여행 후기</mark></h1>
+    <div class="d-flex justify-content-center animate__animated animate__backInDown">
+          <h1 class="mt-2"><mark class="highlight-bottom">여행 후기 수정</mark></h1>
     </div>   
-    <div class="d-flex justify-content-center mt-3 mb-3 p-4 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
+    <div class="d-flex justify-content-center mt-3 mb-3 p-4 roundlist animate__animated animate__backInLeft anidelay" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
       margin-left: 130px; margin-right: 130px; padding-top: 10px;">
       <!-- <div class="row roundlist d-flex justify-content-center mt-3 row p-4" style="width: 90%; height: 90%; background-color: rgba(255, 255, 255, 0.5);"> -->
         <!-- <h3 class="d-flex justify-content-center" style="color: gray; width: 100%;">Share My Trip</h3> -->
@@ -52,7 +52,8 @@
             </div> 
           </div>
           <div class="d-flex justify-content-end" style="width: 100%;">
-              <b-button variant="outline-primary" @click="uploadImage">글 등록</b-button>
+              <b-button style="width: 80px;" variant="primary" @click="uploadImage">글 등록</b-button>
+              <b-button style="width: 80px; margin-left: 10px;" variant="success" @click="movelist">목록</b-button>
           </div>
         </div>
       <!-- </div> -->
@@ -62,16 +63,22 @@
 </template>
 
 <script>
-import axios from 'axios';
+import http from '@/api/http'
 import { mapState } from "vuex";
 const memberStore = "memberStore";
 
 export default {
-  name: 'ReviewWrite',
+  name: 'ReviewUpdate',
   data() {
     return {
       articleNo: 0,
+      fileObjectUrl1: '',
+      fileObjectUrl2: '',
+      fileObjectUrl3: '',
+      fileObjectUrl4: '',
+      fileObjectUrl5: '',
       imageUrl: '',
+      article: '',
       images: [],
       subject: '',
       content: '',
@@ -80,6 +87,50 @@ export default {
   },
   computed:{
     ...mapState(memberStore, ["userInfo"]),
+  },
+  create(){
+    this.articleNo = this.$route.params.articleNo;
+    console.log(this.articleNo);
+    http.get(`/api/review/${this.articleNo}`)
+      .then(response => {
+        console.log(response.data);
+        this.article = response.data.review;
+        
+        this.comments = response.data.comment;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      
+     //get file
+     http.get(`/api/rfile/${this.articleNo}`)
+        .then(response => {
+          this.images = response.data.images;
+          // console.log(this.fileInfo.length);
+
+          for (let i = 0; i < this.images.length; i++) {
+            http.get(`/api/rfile/detail/${this.images[i].idx}`, {
+                responseType: "blob"
+            }).then(response => {
+                console.log(response.data.size);
+                    const blob = new Blob([response.data]);
+                    if(i==0)
+                    this.fileObjectUrl1 = window.URL.createObjectURL(blob);
+                    if(i==1)
+                    this.fileObjectUrl2 = window.URL.createObjectURL(blob);
+                    if(i==2)
+                    this.fileObjectUrl3 = window.URL.createObjectURL(blob);
+                    if(i==3)
+                    this.fileObjectUrl4 = window.URL.createObjectURL(blob);
+                    if(i==4)
+                    this.fileObjectUrl5 = window.URL.createObjectURL(blob);
+            }) 
+          }
+
+        })
+        .catch(error => {
+          console.error(error);
+      });
   },
   methods: {
     handleFileUpload(event) {
@@ -108,13 +159,19 @@ export default {
       this.images.splice(index, 1); // 이미지 삭제
     },
 
+    movelist(){
+      this.$router.push("/review");
+    },
+
     uploadImage() {
+
+
       if (this.subject === '') {
         alert("제목을 입력해주세요..");
       } else if (this.content === '') {
         alert("내용을 입력해주세요..");
       }else{
-      axios.post('http://localhost:9001/api/review', {
+        http.post(`/api/review`, {
           userId: this.userInfo.userId,
           subject: this.subject,
           content: this.content
@@ -128,7 +185,7 @@ export default {
               formData.append('upfile', this.images[i]);
               formData.append('articleNo', this.articleNo);
 
-              axios.post('http://localhost:9001/api/rfile', formData, {
+              http.post(`/api/rfile`, formData, {
                 header: {
                   'Content-Type': 'multipart/form-data'
                 }
@@ -149,6 +206,7 @@ export default {
     }
     }
   }
+
 };
 </script>
 
@@ -237,5 +295,7 @@ font-size: 12px;
 color: #777;
 margin-top: 4px;
 }
-
+.anidelay{
+    animation-delay: 0.5s;
+}
 </style>

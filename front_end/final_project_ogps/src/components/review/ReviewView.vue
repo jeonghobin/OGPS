@@ -3,8 +3,7 @@
     <div class="d-flex justify-content-center">
         <h1 class="mt-2"><mark class="highlight-bottom">{{ article.subject }}</mark></h1>
     </div>
-    <div class="d-flex justify-content-center mt-3 mb-3" style="height: 900px; 
-        margin-left: 130px; margin-right: 130px; padding-top: 10px;">
+    <div class="d-flex justify-content-center mt-3 mb-3" style="height: 900px; margin-left: 130px; margin-right: 130px; padding-top: 10px;">
         <!-- 카드 -->
           <div class="middle-content" style="height: 92%; width: 700px; background-color: white;">
             <b-card style="width: 100%; height: 100%;">
@@ -204,7 +203,9 @@ export default {
       this.$router.push("/review");
     },
     moveUpdate(){
-      this.$router.push("/reviewupdate");
+      this.$router.push({name:'reviewupdate',params:{
+          articleNo: this.articleNo
+      }})
     },
     deleteReview() {
 
@@ -226,12 +227,12 @@ export default {
   },
   created() {
     //getBoard,getComment
-    this.article = this.$route.params.article;
-    console.log(this.article);
-    this.articleNo = this.article.articleNo;
+    this.articleNo = this.$route.params.articleNo;
+    console.log(this.articleNo);
     http.get(`/api/review/${this.articleNo}`)
       .then(response => {
         console.log(response.data);
+        this.article = response.data.review;
         
         this.comments = response.data.comment;
       })
