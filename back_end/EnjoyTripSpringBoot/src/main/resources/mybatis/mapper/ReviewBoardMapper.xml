@@ -53,6 +53,14 @@
 		order by b.articleNo desc
 		limit #{start}, #{listsize}
 	</select>
+	
+	<select id="bestlist" resultMap="ReviewDto">
+		SELECT b.articleNo, b.userId, b.subject, b.content, b.hit, b.registerTime,
+		(SELECT COUNT(*) FROM review_heart WHERE articleNo = b.articleNo AND state = 1) AS heart
+		FROM review_board b where 1
+		order by heart desc
+		limit 0, 5;
+	</select>
 
 	<select id="getTotalArticleCount" parameterType="map"
 		resultType="int">

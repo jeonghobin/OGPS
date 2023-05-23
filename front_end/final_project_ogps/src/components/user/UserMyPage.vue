@@ -43,7 +43,7 @@
           </b-container>
           <hr class="my-4" />
 
-          <b-button variant="primary" class="mr-1" :to="{ name: 'join' }">정보수정</b-button>
+          <b-button variant="primary" class="mr-1" :to="{ name: 'modify' }">정보수정</b-button>
           <b-button variant="danger" @click="mDelete">회원탈퇴</b-button>
         </b-jumbotron>
       </b-col>

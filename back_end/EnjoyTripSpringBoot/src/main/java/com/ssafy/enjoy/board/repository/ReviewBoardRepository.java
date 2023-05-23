@@ -14,6 +14,7 @@ public interface ReviewBoardRepository {
 	/** 게시판 **/
 	int write(ReviewDto rDto) throws Exception;
 	List<ReviewDto> list(Map<String, Object> map) throws Exception;
+	List<ReviewDto> bestlist() throws Exception;
 	int getTotalArticleCount(Map<String, Object> param) throws Exception;
 	ReviewDto getnotice(int articleNo) throws Exception;
 	void updateHit(int articleNo) throws Exception;

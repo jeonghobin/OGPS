@@ -108,48 +108,37 @@
           </div>
           <div class="middle-content" style="height: 92%; width: 500px; background-color: white;">
           <!-- 댓글  -->
-	<div class="col-lg-8 col-md-10 col-sm-12">
-		<h5>댓글: {{ comments.length }}</h5>
-		<hr>
-		<form v-if="userInfo" class="form-comment" id="form-comment" action="" method="post">
-			<div class="d-flex">
-				<textarea class="form-control mb-3" id="comment"
-					rows="3" placeholder="댓글을 입력해 주세요"
-					style="overflow-y: scroll; resize: none"></textarea>
-				<button type="button" id="btn-comment"
-					class="btn btn-outline-primary mb-3 ms-3">등록</button>
-			</div>
-		</form>
-
-		<div>
-			<c:forEach var="cpost" items="${cposts}">
-				<div class="row-md-5">
-					<form action="" method="post" class="form-manager">
-						<div class="row">
-						<hr>
-							<div class="col-1 ">
-								<img class="user-img mr=3 justify-content-end"
-									src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
-									width="50px" height="50px" style="border-radius: 100%" />
-							</div>
-							<div class="col-9">
-								<div class="row">
-									<h5 class="col-1" style="display: inline">{{ comments.userId }}</h5>
-									{{ comments.comment }}
-									<div v-if="userInfo.userId==article.userId">
-										<a class="col-1"
-											href="${root}/free/comdelete?article_no=${post.article_no}&comment_no=${cpost.comment_no}">삭제</a>
-									</div>
-								</div>
-								<h6>{{ comments.comment }}</h6>
-								<h6>{{ comments.memoTime }}</h6>
-							</div>
-						</div>
-					</form>
-				</div>
-			</c:forEach>
-		</div>
-	</div>
+          <div class="col-lg-8 col-md-10 col-sm-12">
+            <h5>댓글: {{ comments.length }}</h5>
+            <hr>
+            <form v-if="userInfo" class="form-comment" id="form-comment" action="" method="post">
+              <div class="d-flex">
+                <textarea class="form-control mb-3" id="comment"
+                  rows="3" placeholder="댓글을 입력해 주세요"
+                  style="overflow-y: scroll; resize: none" @keyup.enter="submitcomment" ></textarea>
+                <button type="button" id="btn-comment" class="btn btn-outline-primary mb-3 ms-3"  @click="submitcomment">등록</button>
+              </div>
+            </form>
+            <div>
+                <ul style="list-style-type: none; padding-left:0px">
+                    <li class="mb-4" v-for="index in comments" :key="index.commentNo">
+                      <div class="col-1 ">
+                        <img class="user-img mr=3 justify-content-end"
+                          src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                          width="50px" height="50px" style="border-radius: 100%" />
+                      </div>
+                      <div :style="index.userId===userInfo.userId ? 'margin-left:120px;':'margin-right:120px; padding-right:20px;'">
+                      <span style="font-weight: bold;">{{ index.userId }}</span>
+                        : {{ index.comment }} <br>
+                      <span style="font-size: small;">{{ index.memoTime }}</span>
+                      <div v-if="userInfo.userId==index.userId">
+                        <a class="col-1">삭제</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+            </div> 
+          </div>
           </div>
     </div>
   </div>

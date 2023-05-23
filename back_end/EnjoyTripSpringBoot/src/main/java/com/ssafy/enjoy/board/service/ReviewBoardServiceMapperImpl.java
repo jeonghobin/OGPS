@@ -46,6 +46,13 @@ public class ReviewBoardServiceMapperImpl implements ReviewBoardService{
 
 		return session.getMapper(ReviewBoardRepository.class).list(param);
 	}
+	
+
+	@Override
+	public List<ReviewDto> bestlist() throws Exception {
+		// TODO Auto-generated method stub
+		return session.getMapper(ReviewBoardRepository.class).bestlist();
+	}
 
 	@Override
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
@@ -195,6 +202,7 @@ public class ReviewBoardServiceMapperImpl implements ReviewBoardService{
 		// TODO Auto-generated method stub
 		session.getMapper(ReviewBoardRepository.class).deleteAll(articleNo);
 	}
+
 
 	
 }

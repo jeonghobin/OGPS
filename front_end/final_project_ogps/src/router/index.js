@@ -67,6 +67,12 @@ const routes = [
         beforeEnter: onlyAuthUser,
         component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserMyPage"),
       },
+      {
+        path: "modify",
+        name: "modify",
+        beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserModify"),
+      },
     ],
   },
   {

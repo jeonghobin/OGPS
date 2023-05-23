@@ -15,6 +15,7 @@ public interface ReviewBoardService {
 	/** 게시판 **/
 	int write(ReviewDto rDto) throws Exception;
 	List<ReviewDto> list(Map<String, String> map) throws Exception;
+	List<ReviewDto> bestlist() throws Exception;
 	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 	ReviewDto getnotice(int articleNo) throws Exception;
 	void updateHit(int articleNo) throws Exception;

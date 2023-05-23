@@ -97,6 +97,26 @@ public class RestReviewboardController {
 
 		return new ResponseEntity<Map<String, Object>>(map, status);
 	}
+	
+	@GetMapping("/review/best")
+	public ResponseEntity<Map<String, Object>> bestlist(@RequestParam Map<String, String> reqmap) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		HttpStatus status = null;
+
+		try {
+			List<ReviewDto> bestlist = service.bestlist();
+			
+			map.put("data", bestlist);
+			map.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			map.put("message", FAIL);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, status);
+	}
 
 	@PostMapping("/review")
 	public ResponseEntity<Map<String, Object>> write(@RequestBody Map<String, String> reqmap) {

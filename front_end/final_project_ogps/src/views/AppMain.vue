@@ -9,39 +9,42 @@
       <div class="d-flex justify-content-center mb-3 mt-1 animate__animated animate__fadeIn aaa">
         <div class="col-4 pt-2 pb-2">
             <!-- 로그인 후 -->
-            <div class="transparent-background" v-if="userInfo" style="height: 95%; width: 90%;">
-              <div class="d-flex justify-content-center">
+            <div class="transparent-background" v-if="userInfo" style="height: 100%; width: 100%;">
+              <div class="mb-3 d-flex justify-content-center">
                 <h1>내 정보</h1>
               </div>
-              <div class="d-flex justify-content-center">
-                <div class="mt-4 mr-2">아이콘</div>
-                <div>
-                  <div>
-                    이름 : {{ userInfo.userName }}
+              <div style="height: 100%; width: 100%;">
+                <div class="row">
+                  <div class="col-5 d-flex justify-content-center">
+                    <img src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                    width="90%" height="100%" />
+                  </div> 
+                  <div class="col-7" style="width: 100%;">
+                    <div>
+                      <div class="row d-flex justify-content-start">
+                        <h4>이름 : {{ userInfo.userName }}</h4>
+                        <h4>이메일 : {{ userInfo.userEmail }}</h4>
+                        <h4>등록일 : {{ userInfo.joinDate }}</h4>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    이메일 : {{ userInfo.userEmail }}
+                <div class="row d-flex justify-content-end mb-3" style="width: 100%;">
+                  <div class="col-4">
+                    <b-button variant="primary"  style="width: 100%;" class="mr-1" :to="{ name: 'modify' }">정보수정</b-button>
                   </div>
-                  <div>
-                    등록일 : {{ userInfo.joinDate }}
+                  <div class="col-4">
+                    <b-button variant="danger"  style="width: 100%;" @click="mDelete">회원탈퇴</b-button>
                   </div>
-                </div>
-              </div>
-              <div class="row mt-3" style="width: 100%;">
-                <div class="col-2 ml-auto pl-0 pr-0">
-                  <button type="button" style="border-radius:10px; font-size:18px;" class="btn btn-primary">수정</button>
-                </div>
-                <div class="col-2 pl-0 pr-0">
-                  <button type="button" style="border-radius:10px; font-size:18px;" class="btn btn-danger">삭제</button>
                 </div>
               </div>
             </div>
+          </div>
             <!-- 로그인 전-->
-            <div class="d-flex justify-content-center" v-else>
+            <div class="d-flex justify-content-center transparent-background pt-3 pb-3" v-else>
               <div class="overflow-auto"  style="height: 100%; width: 70%;">
                 <h1 class="mr-2" style="color: #ddd7d7;"><b-icon icon="unlock-fill" variant="primary" width="40px" height="40px"></b-icon> Login</h1>
                       <b-form class="text-left mt-3">
-                        <b-alert show variant="danger" v-if="isLoginError">아이디 또는 비밀번호를 확인하세요.</b-alert>
+                        <b-alert show variant="danger" v-if="isLoginError">아이디 또는 비밀번호를 확인해주세요.</b-alert>
                         <b-form-group label-for="userId">
                           <b-form-input
                             id="userId"
@@ -61,7 +64,6 @@
                             @keyup.enter="confirm"
                           ></b-form-input>
                         </b-form-group>
-                        <b-checkbox style="color:#ede9e9;">아이디 저장</b-checkbox>
                         <b-button type="button" variant="primary" class="m-1" style="width: 97%;" @click="confirm">로그인</b-button>
                         <!-- <b-button type="button" variant="success" class="m-1" @click="movePage">회원가입</b-button> -->
                         <a type="button" class="m-1 d-flex justify-content-end" @click="movePage" style="color: #ede9e9;">회원가입</a>
@@ -137,8 +139,10 @@
         </div>
       </div>
 
-      <h1 class="animate__animated animate__fadeIn bbb">인기 여행지</h1>
-      <div class="d-flex justify-content-around mt-1 animate__animated animate__fadeIn bbb">
+      <h1 class="animate__animated animate__fadeIn bbb">
+        <mark class="highlight-bottom" style="color: white;">인기 여행지</mark>
+      </h1>
+      <div class="d-flex justify-content-around mt-4 animate__animated animate__fadeIn bbb">
         <div class="row">
           <div class="col-4">
             <b-card
@@ -200,12 +204,31 @@
       </div>   
 
 
+      <h1 class="animate__animated animate__fadeIn ccc mt-2">
+        <mark class="highlight-bottom" style="color: white;">인기 후기</mark>
+      </h1>
       <div class="row justify-content-center mb-3 mt-3 animate__animated animate__fadeIn ccc">
-          <div class="overflow-auto transparent-background" style="width: 79%;">
-            <h1>인기 후기</h1>
-          </div>
-          <div class="overflow-auto transparent-background " style="width: 79%;">
-
+          <!-- <div class="overflow-auto transparent-background " style="width: 79%;"> -->
+            <div class="overflow-auto mt-2 mb-2 test " style="width: 100%; height: 53%;  ">
+                <div class="d-flex flex-column bd-highlight">
+                    <div class="p-2 bd-highlight roundlist d-flex justify-content-center" style="background-color: rgba(255, 255, 255, 0.5); width: 100%;">
+                    <b-table 
+                    id="my-table"
+                    :items="items"
+                    :fields="fields"
+                    :per-page="perPage"
+                    :current-page="currentPage"
+                    style="width: 95%;"
+                    small
+                    >
+                        <template #cell(subject)="row">
+                            <router-link style="color: rebeccapurple;" :to="{ name: 'reviewview', params:{articleNo : row.item.articleNo} }">{{ row.value }}</router-link>
+                        </template>
+                    </b-table>
+                    </div>
+        
+                </div>
+            <!-- </div> -->
           </div>
       </div>
 
@@ -222,28 +245,59 @@ export default {
   name: "AppMain",
   data() {
     return {
-      // isLoginError: false,
       user: {
         userId: null,
         userPassword: null,
       },
       slide: 0,
       sliding: null,
-      attractions:[],
+      attractions: [],
+      items: [],
+        fields: [
+            {
+                key:'userId',
+                label:'작성자'
+            },
+            {
+                key:'subject',
+                label:'제목'
+            },
+            {
+                key:'registerTime',
+                label:'등록일'
+            },
+            {
+                key:'hit',
+                label:'조회수'
+            },
+            {
+                key:'heart',
+                label:'좋아요'
+            },
+        ],
     };
   },
-  created(){
+  created() {
+    
     http.get('/attraction/rank')
     .then(response =>{
       console.log(response.data.attractions);
       this.attractions=response.data.attractions;
-    })
+    }),
+
+    http.get('/api/review/best')
+        .then(response => {
+            this.items = response.data.data;
+        })
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo","notice"]),
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm", "getUserInfo", "getNotice"]),
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo", "getNotice","memberUpdate","memberDelete"]),
+    async mDelete() {
+      await this.memberDelete(this.userInfo.userId);
+    },
     async confirm() {
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
