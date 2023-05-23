@@ -40,6 +40,7 @@ public interface ReviewBoardRepository {
 	FileInfoDto[] getFile(int ArticleNo) throws Exception;
 	FileInfoDto oneFile(int idx) throws Exception;
 	void deletefile(int idx) throws Exception;
+	void deleteAll(int articleNo) throws Exception;
 	
 }
 

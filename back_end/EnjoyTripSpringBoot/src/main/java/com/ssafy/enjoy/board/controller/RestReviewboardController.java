@@ -412,6 +412,25 @@ public class RestReviewboardController {
 
 		return new ResponseEntity<Map<String, Object>>(map, status);
 	}
+	
+	@DeleteMapping("/rfile/all/{articleNo}")
+	public ResponseEntity<Map<String, Object>> alldelete(@PathVariable("articleNo") int articleNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		HttpStatus status = null;
+
+		try {
+			service.deleteAll(articleNo);
+
+			map.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			map.put("message", FAIL);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<Map<String, Object>>(map, status);
+	}
 
 	static class SendFile {
 		int i, idx;

@@ -44,11 +44,11 @@
             </div>
             <div >
               <div v-if="images.length===0" class="row ml-4 mr-4">
-                <button v-if="fileInfo.length>=1" v-show="true" @click="getdeleteImage(0)" style="margin-right: 30px;"><img :src="fileObjectUrl1" width="100px" height="100px" alt="이미지"></button>
-                <button v-if="fileInfo.length>=2" @click="getdeleteImage(1)" style="margin-right: 30px;"><img :src="fileObjectUrl2" width="100px" height="100px" alt="이미지"></button>
-                <button v-if="fileInfo.length>=3" @click="getdeleteImage(2)" style="margin-right: 30px;"><img :src="fileObjectUrl3" width="100px" height="100px" alt="이미지"></button>
-                <button v-if="fileInfo.length>=4" @click="getdeleteImage(3)" style="margin-right: 30px;"><img :src="fileObjectUrl4" width="100px" height="100px" alt="이미지"></button>
-                <button v-if="fileInfo.length>=5" @click="getdeleteImage(4)" style="margin-right: 30px;"><img :src="fileObjectUrl5" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileObjectUrl1" @click="getdeleteImage(0)" style="margin-right: 30px;"><img :src="fileObjectUrl1" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileObjectUrl2" @click="getdeleteImage(1)" style="margin-right: 30px;"><img :src="fileObjectUrl2" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileObjectUrl3" @click="getdeleteImage(2)" style="margin-right: 30px;"><img :src="fileObjectUrl3" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileObjectUrl4" @click="getdeleteImage(3)" style="margin-right: 30px;"><img :src="fileObjectUrl4" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileObjectUrl5" @click="getdeleteImage(4)" style="margin-right: 30px;"><img :src="fileObjectUrl5" width="100px" height="100px" alt="이미지"></button>
               </div>
               <div v-else class="row ml-4 mr-4">
                 <div class="col-2" v-for="(image, index) in images" :key="image.imageUrl">
@@ -72,6 +72,7 @@
 
 <script>
 import http from '@/api/http'
+import axios from 'axios';
 import { mapState } from "vuex";
 const memberStore = "memberStore";
 
@@ -92,6 +93,7 @@ export default {
       subject: '',
       content: '',
       selectedFiles: [],
+      showImage: [true, true, true, true, true],
     };
   },
   computed:{
@@ -100,6 +102,7 @@ export default {
   created(){
     this.articleNo = this.$route.params.articleNo;
     console.log(this.articleNo);
+
     http.get(`/api/review/${this.articleNo}`)
       .then(response => {
         console.log(response.data);
@@ -167,8 +170,18 @@ export default {
       this.images.splice(index, 1); // 이미지 삭제
     },
 
-    getdeleteImage(index) {
-      this.fileInfo.splice(index, 1); // 이미지 삭제
+    getdeleteImage(i) {
+      this.fileInfo.splice(i, 1); // 이미지 삭제
+      if(i==0)
+      this.fileObjectUrl1 = '';
+      if(i==1)
+      this.fileObjectUrl2 = '';
+      if(i==2)
+      this.fileObjectUrl3 = '';
+      if(i==3)
+      this.fileObjectUrl4 = '';
+      if(i==4)
+      this.fileObjectUrl4 = '';
     },
 
     movelist(){
@@ -191,19 +204,37 @@ export default {
         }).then(response => {
             console.log(response.data.message);
 
-            this.$router.push('/review');
-        }).catch(error => {
-              console.error(error);
-        });
-      }
+          //파일 삭제 
+          http.delete(`/api/rfile/all/${this.articleNo}`)
+          .then(response => {
+            console.log(response.data);
 
-      if(this.fileInfo){
+          //파일 저장
+          if(this.images){
+          for (var j = 0; j < this.images.length; j++) {
+              const formData = new FormData();
+              formData.append('upfile', this.images[j]);
+              formData.append('articleNo', this.articleNo);
+
+              axios.post('http://localhost:9001/api/rfile', formData, {
+                header: {
+                  'Content-Type': 'multipart/form-data'
+                }
+                })
+                .then(response => {
+                  console.log(response.data.message);
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            }
+        }else if(this.fileInfo){
             for (var i = 0; i < this.fileInfo.length; i++) {
               const formData = new FormData();
               formData.append('upfile', this.fileInfo[i]);
               formData.append('articleNo', this.articleNo);
 
-              http.post(`/api/rfile`, formData, {
+              axios.post(`http://localhost:8080/api/rfile`, formData, {
                 header: {
                   'Content-Type': 'multipart/form-data'
                 }
@@ -215,25 +246,15 @@ export default {
                   console.error(error);
                 });
             }
-          }else if(this.images){
-            for (var j = 0; j < this.images.length; j++) {
-              const formData = new FormData();
-              formData.append('upfile', this.images[j]);
-              formData.append('articleNo', this.articleNo);
+        }
 
-              http.post(`/api/rfile`, formData, {
-                header: {
-                  'Content-Type': 'multipart/form-data'
-                }
-                })
-                .then(response => {
-                  console.log(response.data.message);
-                })
-                .catch(error => {
-                  console.error(error);
-                });
-            }
-          }
+      }).catch(error => {
+            console.error(error);
+          });
+        }).catch(error => {
+              console.error(error);
+        });
+      }
 
     }
   }

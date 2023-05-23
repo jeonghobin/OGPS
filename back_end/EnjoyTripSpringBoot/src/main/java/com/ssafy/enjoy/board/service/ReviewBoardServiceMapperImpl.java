@@ -190,5 +190,11 @@ public class ReviewBoardServiceMapperImpl implements ReviewBoardService{
 		return session.getMapper(ReviewBoardRepository.class).oneFile(idx);
 	}
 
+	@Override
+	public void deleteAll(int articleNo) throws Exception {
+		// TODO Auto-generated method stub
+		session.getMapper(ReviewBoardRepository.class).deleteAll(articleNo);
+	}
+
 	
 }
