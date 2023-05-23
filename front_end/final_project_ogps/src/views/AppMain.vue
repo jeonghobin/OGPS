@@ -6,7 +6,7 @@
         <h4 class="mb-2" style="color:#ede9e9;">Our Group Plan's</h4>
       </div>
     </div>    
-      <div class="d-flex justify-content-center mb-3 mt-1 animate__animated animate__fadeIn animate__delay-1s">
+      <div class="d-flex justify-content-center mb-3 mt-1 animate__animated animate__fadeIn aaa">
         <div class="col-4 pt-2 pb-2">
             <!-- 로그인 후 -->
             <div class="transparent-background" v-if="userInfo" style="height: 95%; width: 90%;">
@@ -14,7 +14,7 @@
                 <h1>내 정보</h1>
               </div>
               <div class="d-flex justify-content-center">
-                <div>아이콘</div>
+                <div class="mt-4 mr-2">아이콘</div>
                 <div>
                   <div>
                     이름 : {{ userInfo.userName }}
@@ -137,8 +137,8 @@
         </div>
       </div>
 
-      <h1 class="animate__animated animate__fadeIn animate__delay-2s">인기 여행지</h1>
-      <div class="d-flex justify-content-around mt-1 animate__animated animate__fadeIn animate__delay-2s">
+      <h1 class="animate__animated animate__fadeIn bbb">인기 여행지</h1>
+      <div class="d-flex justify-content-around mt-1 animate__animated animate__fadeIn bbb">
         <div class="row">
           <div class="col-4">
             <b-card
@@ -200,7 +200,7 @@
       </div>   
 
 
-      <div class="row justify-content-center mb-3 mt-3 animate__animated animate__fadeIn animate__delay-3s">
+      <div class="row justify-content-center mb-3 mt-3 animate__animated animate__fadeIn ccc">
           <div class="overflow-auto transparent-background" style="width: 79%;">
             <h1>인기 후기</h1>
           </div>
@@ -292,6 +292,15 @@ export default {
   flex-flow: row;
   justify-content: center;
   align-items: center;
+}
+.aaa{
+  animation-delay: 0.5s;
+}
+.bbb{
+  animation-delay: 1s;
+}
+.ccc{
+  animation-delay: 1.5s;
 }
 
 </style>
