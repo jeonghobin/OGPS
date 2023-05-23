@@ -16,6 +16,7 @@ import GroupModify from '@/components/group/GroupModify'
 import GroupPlanView from '@/components/group/GroupPlanView'
 import GroupPlanWrite from '@/components/group/GroupPlanWrite'
 import AppWeather from '@/views/AppWeather'
+import GroupPlanModify from '@/components/group/GroupPlanModify'
 
 Vue.use(VueRouter)
 
@@ -136,6 +137,11 @@ const routes = [
         path:"planwrite/:groupNo",
         name:"groupplanwrite",
         component:GroupPlanWrite
+      },
+      {
+        path:"planmodify/:groupNo?/:planNo?",
+        name:"groupplanmodify",
+        component:GroupPlanModify
       }
     ]
   },

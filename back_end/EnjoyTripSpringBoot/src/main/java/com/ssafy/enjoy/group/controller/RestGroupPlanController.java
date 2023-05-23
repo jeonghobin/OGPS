@@ -109,7 +109,7 @@ public class RestGroupPlanController {
 			,@PathVariable("groupNo") int groupNo, @PathVariable("planNo") int planNo) throws Exception{
 		ResponseEntity<Map<String,Object>> entity = null;
 		GroupPlanDto gdto = new GroupPlanDto();
-		gdto.setGroupNo(Integer.parseInt((String)map.get("groupNo")));
+		gdto.setGroupNo(groupNo);
 		gdto.setSubject((String)map.get("subject"));
 		gdto.setUserId((String)map.get("userId"));
 		List<Map<String,String>> plist = (List<Map<String,String>>)map.get("paths");		

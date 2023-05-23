@@ -87,7 +87,8 @@ public class GroupPlanServiceMapperImpl implements GroupPlanService {
 		int i=1;
 		session.getMapper(GroupPlanRepository.class).deleteGroupPlanPath(planNostr);
 		for(Map<String,String> path: plist) {
-			String seq = String.valueOf(i); 
+			String seq = String.valueOf(i);
+			System.out.println(planNostr+" "+seq+" "+path.get("contentId")+" "+path.get("memo"));
 			session.getMapper(GroupPlanRepository.class).writeGroupPlanPath(planNostr,path.get("contentId"),path.get("memo"),seq);
 			session.getMapper(GroupPlanRepository.class).updateHit(path.get("contentId"));
 			i++;
