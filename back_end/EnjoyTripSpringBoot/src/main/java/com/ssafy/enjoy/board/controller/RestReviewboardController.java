@@ -145,9 +145,11 @@ public class RestReviewboardController {
 	public ResponseEntity<Map<String, Object>> modify(@RequestBody Map<String, String> reqmap) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		HttpStatus status = null;
+		System.out.println(reqmap);
 
 		try {
 			ReviewDto rdto = new ReviewDto();
+			rdto.setArticleNo(Integer.parseInt(reqmap.get("articleNo")));
 			rdto.setUserId(reqmap.get("userId"));
 			rdto.setSubject(reqmap.get("subject"));
 			rdto.setContent(reqmap.get("content"));

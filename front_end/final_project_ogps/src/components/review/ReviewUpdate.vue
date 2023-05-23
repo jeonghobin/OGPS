@@ -40,19 +40,27 @@
               <input type="file" multiple ref="fileInput" @change="handleFileUpload" accept="image/*">
               <label for="fileInput" class="file-input-label">
                 <span>이미지 선택</span>
-                <!-- <span class="selected-files">{{ selectedFiles }}</span> -->
               </label>
             </div>
-            <div class="row ml-4 mr-4">
-              <div class="col-2" v-for="(image, index) in images" :key="image.imageUrl">
-                <button @click="deleteImage(index)">
-                  <img :src="image.imageUrl" width="100px" height="100px" alt="이미지">
-                </button>
+            <div >
+              <div v-if="images.length===0" class="row ml-4 mr-4">
+                <button v-if="fileInfo.length>=1" v-show="true" @click="getdeleteImage(0)" style="margin-right: 30px;"><img :src="fileObjectUrl1" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileInfo.length>=2" @click="getdeleteImage(1)" style="margin-right: 30px;"><img :src="fileObjectUrl2" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileInfo.length>=3" @click="getdeleteImage(2)" style="margin-right: 30px;"><img :src="fileObjectUrl3" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileInfo.length>=4" @click="getdeleteImage(3)" style="margin-right: 30px;"><img :src="fileObjectUrl4" width="100px" height="100px" alt="이미지"></button>
+                <button v-if="fileInfo.length>=5" @click="getdeleteImage(4)" style="margin-right: 30px;"><img :src="fileObjectUrl5" width="100px" height="100px" alt="이미지"></button>
               </div>
+              <div v-else class="row ml-4 mr-4">
+                <div class="col-2" v-for="(image, index) in images" :key="image.imageUrl">
+                  <button @click="deleteImage(index)" style="margin-right: 30px;">
+                    <img :src="image.imageUrl" width="100px" height="100px" alt="이미지">
+                  </button>
+                </div>
+            </div> 
             </div> 
           </div>
           <div class="d-flex justify-content-end" style="width: 100%;">
-              <b-button style="width: 80px;" variant="primary" @click="uploadImage">글 등록</b-button>
+              <b-button style="width: 80px;" variant="primary" @click="uploadImage">글 수정</b-button>
               <b-button style="width: 80px; margin-left: 10px;" variant="success" @click="movelist">목록</b-button>
           </div>
         </div>
@@ -78,8 +86,9 @@ export default {
       fileObjectUrl4: '',
       fileObjectUrl5: '',
       imageUrl: '',
-      article: '',
+      article: {},
       images: [],
+      fileInfo: [],
       subject: '',
       content: '',
       selectedFiles: [],
@@ -88,28 +97,27 @@ export default {
   computed:{
     ...mapState(memberStore, ["userInfo"]),
   },
-  create(){
+  created(){
     this.articleNo = this.$route.params.articleNo;
     console.log(this.articleNo);
     http.get(`/api/review/${this.articleNo}`)
       .then(response => {
         console.log(response.data);
         this.article = response.data.review;
-        
-        this.comments = response.data.comment;
+        this.subject = this.article.subject;
+        this.content = this.article.content;
       })
       .catch(error => {
         console.error(error);
       });
       
      //get file
-     http.get(`/api/rfile/${this.articleNo}`)
+    http.get(`/api/rfile/${this.articleNo}`)
         .then(response => {
-          this.images = response.data.images;
-          // console.log(this.fileInfo.length);
+          this.fileInfo = response.data.fileInfo;
 
-          for (let i = 0; i < this.images.length; i++) {
-            http.get(`/api/rfile/detail/${this.images[i].idx}`, {
+          for (let i = 0; i < this.fileInfo.length; i++) {
+            http.get(`/api/rfile/detail/${this.fileInfo[i].idx}`, {
                 responseType: "blob"
             }).then(response => {
                 console.log(response.data.size);
@@ -159,30 +167,58 @@ export default {
       this.images.splice(index, 1); // 이미지 삭제
     },
 
+    getdeleteImage(index) {
+      this.fileInfo.splice(index, 1); // 이미지 삭제
+    },
+
     movelist(){
       this.$router.push("/review");
     },
 
     uploadImage() {
 
-
       if (this.subject === '') {
-        alert("제목을 입력해주세요..");
-      } else if (this.content === '') {
-        alert("내용을 입력해주세요..");
-      }else{
-        http.post(`/api/review`, {
-          userId: this.userInfo.userId,
-          subject: this.subject,
-          content: this.content
-      }).then(response => {
-          // console.log(response.data.message);
-          this.articleNo = response.data.articleNo;
+          alert("제목을 입력해주세요..");
+        } else if (this.content === '') {
+          alert("내용을 입력해주세요..");
+        }else{
+          //게시글 수정
+          http.put(`/api/review`, {
+            userId: this.userInfo.userId,
+            subject: this.subject,
+            content: this.content,
+            articleNo: this.articleNo,
+        }).then(response => {
+            console.log(response.data.message);
 
-        if (this.images) {
-            for (var i = 0; i < this.images.length; i++) {
+            this.$router.push('/review');
+        }).catch(error => {
+              console.error(error);
+        });
+      }
+
+      if(this.fileInfo){
+            for (var i = 0; i < this.fileInfo.length; i++) {
               const formData = new FormData();
-              formData.append('upfile', this.images[i]);
+              formData.append('upfile', this.fileInfo[i]);
+              formData.append('articleNo', this.articleNo);
+
+              http.post(`/api/rfile`, formData, {
+                header: {
+                  'Content-Type': 'multipart/form-data'
+                }
+                })
+                .then(response => {
+                  console.log(response.data.message);
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            }
+          }else if(this.images){
+            for (var j = 0; j < this.images.length; j++) {
+              const formData = new FormData();
+              formData.append('upfile', this.images[j]);
               formData.append('articleNo', this.articleNo);
 
               http.post(`/api/rfile`, formData, {
@@ -199,11 +235,6 @@ export default {
             }
           }
 
-          this.$router.push('/review');
-      }).catch(error => {
-            console.error(error);
-      });
-    }
     }
   }
 

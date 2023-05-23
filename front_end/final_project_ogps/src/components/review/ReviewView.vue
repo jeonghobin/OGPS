@@ -208,7 +208,6 @@ export default {
       }})
     },
     deleteReview() {
-
       http.delete(`/api/review/${this.articleNo}`)
       .then(response => {
         console.log(response.data);
