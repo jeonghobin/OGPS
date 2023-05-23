@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex justify-content-center animate__animated animate__backInDown">
-            <h1 class="mt-2"><mark class="highlight-bottom">그룹</mark></h1>
+            <h1 class="mt-2"><mark class="highlight-bottom">{{group.subject}}</mark></h1>
         </div> 
         <div class="mt-3 mb-3 roundlist animate__animated animate__backInLeft" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
         margin-left: 200px; margin-right: 200px; padding-top: 10px; ">

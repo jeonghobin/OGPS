@@ -1,12 +1,12 @@
 <template>
     <div class="margin">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center animate__animated animate__fadeInDown">
       <div>
         <img class="mt-1" src="@/assets/OGPS.png" width="200px" height="175px">
         <h4 class="mb-2" style="color:#ede9e9;">Our Group Plan's</h4>
       </div>
     </div>    
-      <div class="d-flex justify-content-center mb-3 mt-1">
+      <div class="d-flex justify-content-center mb-3 mt-1 animate__animated animate__fadeIn animate__delay-1s">
         <div class="col-4 pt-2 pb-2">
             <!-- 로그인 후 -->
             <div class="transparent-background ml-4 mt-1 pt-3 pr-5" v-if="userInfo" style="height: 95%; width: 90%;">
@@ -136,28 +136,41 @@
         </div>
       </div>
 
-      <h1>인기 여행지</h1>
-      <div class="d-flex justify-content-around mt-1">
+      <h1 class="animate__animated animate__fadeIn animate__delay-2s">인기 여행지</h1>
+      <div class="d-flex justify-content-around mt-1 animate__animated animate__fadeIn animate__delay-2s">
         <div class="row">
-          <div class="col-4">
-            <b-card
+          <div class="col-4" style="background-color:rgba(255,255,255,0.8); border-radius:30px">
+            <div class="mt-3">
+              <img :src="attractions[0].first_image||require('@/assets/img/jeju2.jpeg')" alt="123" width="200" height="150" style="border-radius:30px">
+            </div>
+            <div class="mt-3" style="background-color:white; border-radius:30px">
+              <div>
+                {{attractions[0].title}}
+              </div>
+              <div>
+                {{attractions[0].addr1}}
+              </div>
+            </div>
+            <!-- <b-card
               :title="attractions[0].title"
               :img-src="attractions[0].first_image || require('@/assets/img/jeju2.jpeg')"
               img-alt="대체 이미지"
               img-top
               tag="article"
-              style="max-width: 24rem;"
+              style="max-width: 24rem; border-radius:30px"
               class="mb-2"
             >
             <template #img="{src,alt}">
-              <img :src="src" :alt="alt" @error="handleImage">
+              
+                <img :src="src" :alt="alt" @error="handleImage" >
+              
             </template>
               <b-card-text>
                 {{attractions[0].addr1}}
               </b-card-text>
 
               <b-button href="#" variant="primary">Go somewhere</b-button>
-            </b-card>
+            </b-card> -->
           </div>
           <div class="col-4">
             <b-card
@@ -197,7 +210,7 @@
       </div>  
 
 
-      <div class="row justify-content-center mb-3 mt-3">
+      <div class="row justify-content-center mb-3 mt-3 animate__animated animate__fadeIn animate__delay-3s">
           <div class="overflow-auto transparent-background" style="width: 79%;">
             <h1>인기 후기</h1>
           </div>
@@ -210,6 +223,7 @@
 </template>
 
 <script>
+import "animate.css";
 import { mapState, mapActions } from "vuex";
 import http from "@/api/http";
 const memberStore = "memberStore";
