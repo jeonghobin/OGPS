@@ -35,7 +35,7 @@ export default {
   background-position: center;
 }
 #app {
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: 'NanumYeBbeunMinGyeongCe';
   font-size: 25px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

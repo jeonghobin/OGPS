@@ -26,6 +26,7 @@
                 <button type="button" class="btn btn-success mr-2" style="border-radius:10px; font-size:25px;" @click="updateheart">좋아요</button>
             </div>
             <div class="d-flex justify-content-center mt-5 mb-3">
+                <button v-if="this.userInfo.userId===this.plan.userId" type="button" class="btn btn-info mr-2" style="border-radius:10px; font-size:25px;" @click="deleteplan">계획 수정</button>
                 <button type="button"  class="btn btn-primary mr-2" style="border-radius:10px; font-size:25px;" @click="movegroup">목록으로</button>
                 <button v-if="this.userInfo.userId===this.plan.userId" type="button" class="btn btn-danger mr-2" style="border-radius:10px; font-size:25px;" @click="deleteplan">계획 삭제</button>
             </div>

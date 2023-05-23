@@ -7,7 +7,7 @@
         margin-left: 200px; margin-right: 200px; padding-top: 10px; ">
             맴버( {{members.length}} / {{ group.memberCnt }} )<span v-if="memberOk!=='NO'"><button v-if="userInfo.userId!==members[0].userId" type="button" style="border-radius:10px; font-size:15px;" class="btn btn-danger ml-2" @click="exitmember">그룹나가기</button></span>
             <div class="d-flex justify-content-center">
-                <div class="test" style=" width: 150px; height:70px; border-radius:10px; background-color:white;">
+                <div class="test" style=" width: 150px; height:70px; border-radius:10px; background-color:rgba(255,255,255,0.8);">
                     <ol>
                         <li v-for="member in members" :key="member.userId">
                             {{ member.userId }}<button v-if="member.grade===0&&userInfo.userId===members[0].userId" type="button" class="btn btn-danger" style="font-size: 10px; width:15px; height:15px; padding:0px" @click="deletemember(member.userId)">X</button></li>
@@ -24,7 +24,7 @@
             </div>
             <div class="overflow-auto">
                 <div class="d-flex flex-column bd-highlight">
-                    <div class="p-2 bd-highlight bg-white ml-3 mr-3 roundlist pl-3 pr-3">
+                    <div class="p-2 bd-highlight ml-3 mr-3 roundlist pl-3 pr-3">
                     <b-table
                     id="my-table"
                     :items="items"
@@ -236,6 +236,7 @@ export default {
 <style scoped>
 .roundlist{
     border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 .highlight-bottom {
     background: linear-gradient(to top, rgb(207, 250, 219) 18%, transparent 40%);

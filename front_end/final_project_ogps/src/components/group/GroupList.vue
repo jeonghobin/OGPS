@@ -15,7 +15,7 @@
                     <div class="p-2 bd-highlight">
                     <h3 class="mt-3 ml-2 mr-2">{{ currentPage }}페이지</h3>
                     </div>
-                    <div class="p-2 bd-highlight bg-white ml-3 mr-3 roundlist pl-3 pr-3">
+                    <div class="p-2 bd-highlight ml-3 mr-3 roundlist pl-3 pr-3">
                     <b-table
                     id="my-table"
                     :items="items"
@@ -128,6 +128,7 @@ export default {
 <style scoped>
 .roundlist{
     border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 .highlight-bottom {
     background: linear-gradient(to top, rgb(207, 250, 219) 18%, transparent 40%);
