@@ -85,8 +85,7 @@
 	</delete>
 	
 	<update id="modify" parameterType="ReviewDto">
-		update review_board set
-		subject=#{subject},content=#{content} where articleNo=#{articleNo}
+		UPDATE review_board SET subject = #{subject}, content = #{content} WHERE articleNo = #{articleNo};
 	</update>
 	
 	

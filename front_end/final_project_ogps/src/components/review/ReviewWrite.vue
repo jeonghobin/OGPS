@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import http from '@/api/http'
+import axios from 'axios';
 import { mapState } from "vuex";
 const memberStore = "memberStore";
 
@@ -119,7 +119,7 @@ export default {
       } else if (this.content === '') {
         alert("내용을 입력해주세요..");
       }else{
-        http.post(`/api/review`, {
+        axios.post('http://localhost:9001/api/review', {
           userId: this.userInfo.userId,
           subject: this.subject,
           content: this.content
@@ -133,7 +133,7 @@ export default {
               formData.append('upfile', this.images[i]);
               formData.append('articleNo', this.articleNo);
 
-              http.post(`/api/rfile`, formData, {
+              axios.post('http://localhost:9001/api/rfile', formData, {
                 header: {
                   'Content-Type': 'multipart/form-data'
                 }
