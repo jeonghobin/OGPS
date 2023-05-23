@@ -38,13 +38,14 @@
                     <h3 class="mt-3 ml-2 mr-2">{{ currentPage }}페이지</h3>
                     </div>
                     <div class="p-2 bd-highlight">
-                    <b-table
+                    <b-table 
                     id="my-table"
                     :items="items"
                     :fields="fields"
                     :per-page="perPage"
                     :current-page="currentPage"
                     small
+                    @row-clicked="handleRowClick"
                     >
                     <template #cell(first_image)="row">
                         <span v-html="row.value"></span>
@@ -240,6 +241,15 @@ export default {
         replaceImg(e) {
             e.target.src = require(`@/assets/main/main2.jpg`);
         },
+        handleRowClick(item, index, event) {
+            // 클릭된 행의 데이터 사용
+            console.log(item); // 행의 데이터 출력
+            console.log(index,event);
+            this.map.setCenter(new window.kakao.maps.LatLng(item.latitude, item.longitude));
+            // 필요한 로직 수행
+            // ...
+        },
+
     },
     computed: {
       rows() {

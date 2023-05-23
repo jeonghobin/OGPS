@@ -33,4 +33,8 @@ async function mDelete(userId, success, fail) {
   await api.delete(`/member/${userId}`).then(success).catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout, mRegister, mUpdate, mDelete };
+async function notice(userId,success,fail){
+  await api.get(`/groupmember/${userId}`).then(success).catch(fail);
+}
+
+export { notice,login, findById, tokenRegeneration, logout, mRegister, mUpdate, mDelete };

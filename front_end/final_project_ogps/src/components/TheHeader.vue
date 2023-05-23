@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions,mapMutations } from "vuex";
 import http from "@/api/http";
 import "animate.css";
 const memberStore = "memberStore";
@@ -58,24 +58,18 @@ export default {
   data() {
     return {
       notices:[],
-      condition:false,
     };
   },
   computed: {
-    ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapState(memberStore, ["isLogin", "userInfo","notice","condition"]),
     ...mapGetters(["checkUserInfo"]),
   },
   created(){
-    http.get(`/api/groupmember/${this.userInfo.userId}`)
-      .then(response => {
-        this.notices = response.data.notices;
-        if(this.notices.length>0){
-          this.condition=true;
-        }
-      })
+    this.notices = this.notice;
   },
   methods: {
-    ...mapActions(memberStore, ["userLogout"]),
+    ...mapActions(memberStore, ["userLogout","getNotice"]),
+    ...mapMutations(memberStore,["SET_CONDITION"]),
     // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     onClickLogout() {
       // this.SET_IS_LOGIN(false);
@@ -87,8 +81,10 @@ export default {
       //+ satate에 isLogin, userInfo 정보 변경)
       // this.$store.dispatch("userLogout", this.userInfo.userId);
       this.userLogout(this.userInfo.userId);
+      this.$store.commit("SET_CONDITION",false);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+      this.condition=false;
       if (this.$route.path != "/") this.$router.push({ name: "AppMain" });
     },
     noticeview(){
@@ -96,11 +92,12 @@ export default {
       .then(response => {
         this.notices = response.data.notices;
         if(this.notices.length>0){
-          this.condition=true;
+          this.SET_CONDITION(true);
         }
       })
     },
     joinmember(userId1,groupNo1){
+      let token = sessionStorage.getItem("access-token");
       if(confirm("참가 승인하시겠습니까?")){
         http.post('/api/groupmember',{
           userId : `${userId1}`,
@@ -112,13 +109,15 @@ export default {
           .then(response => {
             this.notices = response.data.notices;
             if(this.notices.length==0){
-              this.condition=false;
+              this.SET_CONDITION(false);
             }
+            this.getNotice(token);
           })
         })
       }
     },
     deletenotice(userId1,groupNo1){
+      let token = sessionStorage.getItem("access-token");
       if(confirm("거절하시겠습니까?")){
         http.delete('/api/groupmember',{
           data:{
@@ -132,8 +131,9 @@ export default {
           .then(response => {
             this.notices = response.data.notices;
             if(this.notices.length==0){
-              this.condition=false;
+              this.SET_CONDITION(false);
             }
+            this.getNotice(token);
           })
         })
       }

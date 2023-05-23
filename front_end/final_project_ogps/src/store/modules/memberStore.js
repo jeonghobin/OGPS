@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout, mRegister, mUpdate, mDelete } from "@/api/member";
+import { notice,login, findById, tokenRegeneration, logout, mRegister, mUpdate, mDelete } from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -11,6 +11,8 @@ const memberStore = {
     isValidToken: false,
     duplicate: false,
     user: null,
+    notice:null,
+    condition:false,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -21,6 +23,9 @@ const memberStore = {
     },
   },
   mutations: {
+    SET_CONDITION:(state, condition)=>{
+      state.condition = condition;
+    },
     SET_IS_LOGIN: (state, isLogin) => {
       state.isLogin = isLogin;
     },
@@ -40,6 +45,9 @@ const memberStore = {
     SET_USER_UPDATE:(state, user) => {
       state.user = user;
     },
+    SET_NOTICE:(state, notice)=>{
+      state.notice = notice;
+    }
   },
   actions: {
     async userConfirm({ commit }, user) {
@@ -65,6 +73,25 @@ const memberStore = {
           console.log(error);
         }
       );
+    },
+    async getNotice({commit},token){
+      let decodeToken = jwtDecode(token);
+      console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+      console.log("2. getUserInfo() userId :: ", decodeToken.userId);
+      await notice(
+        decodeToken.userId,
+        ({data})=>{
+          console.log(data);
+          if(data.notices.length>0){
+            commit("SET_NOTICE",data.notices);
+            commit("SET_CONDITION", true);
+            console.log("34. getNotice data >> ", data);
+          }else{
+            console.log("노티스정보 없음");
+            commit("SET_CONDITION",false);
+          }
+        }
+      )
     },
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
@@ -136,6 +163,8 @@ const memberStore = {
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
+            commit("SET_NOTICE",null);
+            commit("SET_CONDITION",false);
           } else {
             console.log("유저 정보 없음!!!!");
           }

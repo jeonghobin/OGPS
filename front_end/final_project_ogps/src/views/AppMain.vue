@@ -236,16 +236,17 @@ export default {
     })
   },
   computed: {
-    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
+    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo","notice"]),
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo", "getNotice"]),
     async confirm() {
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
       // console.log("1. confirm() token >> " + token);
       if (this.isLogin) {
         await this.getUserInfo(token);
+        await this.getNotice(token);
         // console.log("4. confirm() userInfo :: ", this.userInfo);
         // this.$router.push({ name: "AppMain" });
       }
