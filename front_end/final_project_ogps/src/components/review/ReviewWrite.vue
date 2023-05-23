@@ -52,7 +52,8 @@
             </div> 
           </div>
           <div class="d-flex justify-content-end" style="width: 100%;">
-              <b-button variant="outline-primary" @click="uploadImage">글 등록</b-button>
+              <b-button style="width: 80px;" variant="primary" @click="uploadImage">글 등록</b-button>
+              <b-button style="width: 80px; margin-left: 10px;" variant="success" @click="movelist">목록</b-button>
           </div>
         </div>
       <!-- </div> -->
@@ -106,6 +107,10 @@ export default {
 
     deleteImage(index) {
       this.images.splice(index, 1); // 이미지 삭제
+    },
+
+    movelist(){
+      this.$router.push("/review");
     },
 
     uploadImage() {

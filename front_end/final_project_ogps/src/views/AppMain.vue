@@ -2,15 +2,15 @@
     <div class="margin">
     <div class="d-flex justify-content-center">
       <div>
-        <img src="@/assets/img/main_1.png" width="400px" height="175px">
-        <h4 class="mt-3 mb-2" style="color:#ede9e9;">Our Group Plan's</h4>
+        <img class="mt-1" src="@/assets/OGPS.png" width="200px" height="175px">
+        <h4 class="mb-2" style="color:#ede9e9;">Our Group Plan's</h4>
       </div>
     </div>    
       <div class="d-flex justify-content-center mb-3 mt-1">
         <div class="col-4 pt-2 pb-2">
             <!-- 로그인 후 -->
             <div class="transparent-background ml-4 mt-1 pt-3 pr-5" v-if="userInfo" style="height: 95%; width: 90%;">
-              <div class="overflow-auto"  >
+              <div class="overflow-auto">
                 <!-- <b-icon icon="person-fill"></b-icon> -->
                 <h1>내 정보</h1>
                 <b-container class="mt-2 ">
@@ -162,7 +162,7 @@
           <div class="col-4">
             <b-card
               :title="attractions[1].title"
-              :img-src="attractions[1].first_image"
+              :img-src="attractions[1].first_image || require('@/assets/img/busan1.jpeg')"
               img-alt="Image"
               img-top
               tag="article"
@@ -179,7 +179,7 @@
           <div class="col-4">
             <b-card
               :title="attractions[2].title"
-              :img-src="attractions[2].first_image"
+              :img-src="attractions[2].first_image || require('@/assets/img/busan3.jpeg')"
               img-alt="Image"
               img-top
               tag="article"

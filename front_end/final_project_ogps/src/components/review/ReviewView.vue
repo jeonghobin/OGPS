@@ -95,13 +95,14 @@
                   </div>
                 </div>
 
-                <b-card-text style="padding-left: 2%; padding-right: 3%; text-align: start; width: 100%; height: 18%; overflow: auto;">
+                <b-card-text style="margin-bottom: 5%; padding-left: 2%; padding-right: 3%; text-align: start; width: 100%; height: 18%; overflow: auto;">
                   {{ article.content }}
                 </b-card-text>
 
                 <div class="d-flex justify-content-end">
-                      <b-button class="mr-2" href="#" variant="primary" style="width: 70px;">수정</b-button>
-                      <b-button @click="deleteReview" variant="primary" style="width: 70px;">삭제</b-button>
+                      <b-button class="mr-2" @click="moveUpdate" href="#" variant="primary" style="width: 70px;">수정</b-button>
+                      <b-button class="mr-2" @click="deleteReview" variant="danger" style="width: 70px;">삭제</b-button>
+                      <b-button @click="movelist" variant="success" style="width: 70px;">목록</b-button>
                 </div>
                 
               </b-card>
@@ -199,6 +200,12 @@ export default {
             console.error(error);
           });
     },
+    movelist(){
+      this.$router.push("/review");
+    },
+    moveUpdate(){
+      this.$router.push("/reviewupdate");
+    },
     deleteReview() {
 
       http.delete(`/api/review/${this.articleNo}`)
@@ -209,7 +216,6 @@ export default {
       .catch(error => {
         console.error(error);
       });
-   
     },
   },
   computed: {
