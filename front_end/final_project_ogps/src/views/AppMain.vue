@@ -9,30 +9,31 @@
       <div class="d-flex justify-content-center mb-3 mt-1 animate__animated animate__fadeIn animate__delay-1s">
         <div class="col-4 pt-2 pb-2">
             <!-- 로그인 후 -->
-            <div class="transparent-background ml-4 mt-1 pt-3 pr-5" v-if="userInfo" style="height: 95%; width: 90%;">
-              <div class="overflow-auto">
-                <!-- <b-icon icon="person-fill"></b-icon> -->
+            <div class="transparent-background" v-if="userInfo" style="height: 95%; width: 90%;">
+              <div class="d-flex justify-content-center">
                 <h1>내 정보</h1>
-                <b-container class="mt-2 ">
-                  <b-row>
-                    <b-col cols="3"></b-col>
-                    <b-col cols="3" align-self="end">이름</b-col>
-                    <b-col cols="6" align-self="start">{{ userInfo.userName }}</b-col>
-                    <b-col cols="3"></b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col cols="3"></b-col>
-                    <b-col cols="3" align-self="end">이메일</b-col
-                    ><b-col cols="6" align-self="start">{{ userInfo.userEmail }}</b-col>
-                    <b-col cols="3"></b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col cols="3"></b-col>
-                    <b-col cols="3" align-self="end">가입일</b-col
-                    ><b-col cols="6" align-self="start">{{ userInfo.joinDate }}</b-col>
-                    <b-col cols="3"></b-col>
-                  </b-row>
-                </b-container>
+              </div>
+              <div class="d-flex justify-content-center">
+                <div>아이콘</div>
+                <div>
+                  <div>
+                    이름 : {{ userInfo.userName }}
+                  </div>
+                  <div>
+                    이메일 : {{ userInfo.userEmail }}
+                  </div>
+                  <div>
+                    등록일 : {{ userInfo.joinDate }}
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3" style="width: 100%;">
+                <div class="col-2 ml-auto pl-0 pr-0">
+                  <button type="button" style="border-radius:10px; font-size:18px;" class="btn btn-primary">수정</button>
+                </div>
+                <div class="col-2 pl-0 pr-0">
+                  <button type="button" style="border-radius:10px; font-size:18px;" class="btn btn-danger">삭제</button>
+                </div>
               </div>
             </div>
             <!-- 로그인 전-->
@@ -139,25 +140,14 @@
       <h1 class="animate__animated animate__fadeIn animate__delay-2s">인기 여행지</h1>
       <div class="d-flex justify-content-around mt-1 animate__animated animate__fadeIn animate__delay-2s">
         <div class="row">
-          <div class="col-4" style="background-color:rgba(255,255,255,0.8); border-radius:30px">
-            <div class="mt-3">
-              <img :src="attractions[0].first_image||require('@/assets/img/jeju2.jpeg')" alt="123" width="200" height="150" style="border-radius:30px">
-            </div>
-            <div class="mt-3" style="background-color:white; border-radius:30px">
-              <div>
-                {{attractions[0].title}}
-              </div>
-              <div>
-                {{attractions[0].addr1}}
-              </div>
-            </div>
-            <!-- <b-card
+          <div class="col-4">
+            <b-card
               :title="attractions[0].title"
               :img-src="attractions[0].first_image || require('@/assets/img/jeju2.jpeg')"
               img-alt="대체 이미지"
               img-top
               tag="article"
-              style="max-width: 24rem; border-radius:30px"
+              style="max-width: 24rem;"
               class="mb-2"
             >
             <template #img="{src,alt}">
@@ -170,7 +160,7 @@
               </b-card-text>
 
               <b-button href="#" variant="primary">Go somewhere</b-button>
-            </b-card> -->
+            </b-card>
           </div>
           <div class="col-4">
             <b-card
@@ -207,7 +197,7 @@
             </b-card>
           </div>
         </div>
-      </div>  
+      </div>   
 
 
       <div class="row justify-content-center mb-3 mt-3 animate__animated animate__fadeIn animate__delay-3s">

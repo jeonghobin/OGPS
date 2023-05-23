@@ -147,4 +147,8 @@
 	<delete id="deletefile" parameterType="int">
 		delete from review_file where idx=#{idx}
 	</delete>
+	
+	<delete id="deleteAll" parameterType="int">
+		delete from review_file where articleNo=#{articleNo}
+	</delete>
 </mapper>
