@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center animate__animated animate__backInDown">
           <h1 class="mt-2"><mark class="highlight-bottom">여행 후기</mark></h1>
     </div>   
-    <div class="d-flex justify-content-center mt-3 mb-3 p-4 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
+    <div class="d-flex justify-content-center mt-3 mb-3 p-4 roundlist animate__animated animate__backInLeft anidelay" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
       margin-left: 130px; margin-right: 130px; padding-top: 10px;">
       <!-- <div class="row roundlist d-flex justify-content-center mt-3 row p-4" style="width: 90%; height: 90%; background-color: rgba(255, 255, 255, 0.5);"> -->
         <!-- <h3 class="d-flex justify-content-center" style="color: gray; width: 100%;">Share My Trip</h3> -->
@@ -237,5 +237,7 @@ font-size: 12px;
 color: #777;
 margin-top: 4px;
 }
-
+.anidelay{
+    animation-delay: 0.5s;
+}
 </style>

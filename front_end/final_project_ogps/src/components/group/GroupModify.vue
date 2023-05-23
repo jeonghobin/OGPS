@@ -26,8 +26,8 @@
                     <input type="number" class="form-control" ref="memberCnt" v-model="group.memberCnt" min="2" max="8" step="1">
                 </div>
                 
-                <button type="button" class="btn btn-primary mr-2" @click="modifygroup">수정</button>
-                <button type="button" class="btn btn-danger mr-2" @click="movegroup">취소</button>
+                <button type="button" class="btn btn-primary mr-2" style="border-radius:10px; font-size:25px;" @click="modifygroup">수정</button>
+                <button type="button" class="btn btn-danger mr-2" style="border-radius:10px; font-size:25px;" @click="movegroup">취소</button>
                 
             </form>
         </div>

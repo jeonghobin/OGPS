@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center animate__animated animate__backInDown">
             <h1 class="mt-2"><mark class="highlight-bottom">여행 후기</mark></h1>
         </div>   
-        <div class="d-flex justify-content-center mt-3 mb-3 roundlist" style="height: 900px; background-color: rgba(255, 255, 255, 0.55);
+        <div class="d-flex justify-content-center mt-3 mb-3 roundlist animate__animated animate__backInLeft anidelay" style="height: 900px; background-color: rgba(255, 255, 255, 0.55);
         margin-left: 130px; margin-right: 130px; padding-top: 10px;">
         <div class="row" style="height: 90%; width: 90%;">
             <div style="width: 100%; color: white;">
@@ -62,6 +62,7 @@
             <div class="p-2 bd-highlight d-flex justify-content-center" style="width: 100%;">
                     <b-pagination class=""
                     v-model="currentPage"
+                    pills
                     :total-rows="rows"
                     :per-page="perPage"
                     aria-controls="my-table"
@@ -167,5 +168,8 @@ export default {
 .highlight-bottom {
     background: linear-gradient(to top, rgb(207, 250, 219) 18%, transparent 40%);
     color: rgb(218, 247, 223);
+}
+.anidelay{
+    animation-delay: 0.5s;
 }
 </style>

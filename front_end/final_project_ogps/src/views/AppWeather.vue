@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'AppWeather',
     components: {},
@@ -25,12 +27,18 @@ export default {
             map:null,
             message: '',
             positions:[
-            
-            ]
+            ],
+            weathers:[]
         };
     },
     created() {
-        
+        const APIkey="738c7a052467891d557b4a94a3c4e388";
+        let initialLat = 37.5683;
+        let initialLon = 126.9778;
+        axios.get(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${initialLat}&lon=${initialLon}&appid=${APIkey}`)
+        .then(response =>{
+            console.log(response);
+        })
     },
     mounted(){
         if (window.kakao && window.kakao.maps) {
