@@ -22,9 +22,18 @@
                   <div class="col-7" style="width: 100%;">
                     <div>
                       <div class="row d-flex justify-content-start">
-                        <h4>이름 : {{ userInfo.userName }}</h4>
-                        <h4>이메일 : {{ userInfo.userEmail }}</h4>
-                        <h4>등록일 : {{ userInfo.joinDate }}</h4>
+                        <div class="row">
+                          <h4>이름 :&nbsp; </h4>
+                          <h4>{{ userInfo.userName }}</h4>
+                        </div>
+                        <div class="row" style="width: 100%;">
+                          <h4>이메일 :&nbsp;</h4>
+                          <h4 >{{ userInfo.userEmail }}</h4>
+                        </div>
+                        <div class="row">
+                          <h4>등록일 :&nbsp;</h4>
+                          <h4>{{ userInfo.joinDate }}</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -162,8 +171,6 @@
               <b-card-text>
                 {{attractions[0].addr1}}
               </b-card-text>
-
-              <b-button href="#" variant="primary">Go somewhere</b-button>
             </b-card>
           </div>
           <div class="col-4">
@@ -179,8 +186,6 @@
               <b-card-text>
                 {{attractions[1].addr1}}
               </b-card-text>
-
-              <b-button href="#" variant="primary">Go somewhere</b-button>
             </b-card>
           </div>
           <div class="col-4">
@@ -196,8 +201,6 @@
               <b-card-text>
                 {{attractions[2].addr1}}
               </b-card-text>
-
-              <b-button href="#" variant="primary">Go somewhere</b-button>
             </b-card>
           </div>
         </div>
