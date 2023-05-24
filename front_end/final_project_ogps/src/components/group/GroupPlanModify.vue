@@ -22,7 +22,7 @@
                     </div>
                     <div class="row">
                         <ul class="list-group list-group-flush ml-4 mr-4 mt-2 roundlist">
-                        <li class="list-group-item mb-1 mt-1 pt-4 roundlist" v-for="index in attractions" :key="index.content_id"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" @error="replaceImg" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}</div><div class="ml-auto"><button class="btn btn-success mb-3 mr-2 mt-4" type="button" @click="pushdata(index)">추가</button></div></div> </li>
+                        <li class="list-group-item mb-1 mt-1 pt-4 roundlist" v-for="index in attractions" :key="index.content_id" @click="handleRowClick(index)"><div class="d-flex justify-content-center"><div class="mr-1"><img :src="index.first_image" @error="replaceImg" alt="" width="100px" height="100px" class="roundlist"></div><div><strong>{{ index.title }}</strong><br>{{index.addr1}}</div><div class="ml-auto"><button class="btn btn-success mb-3 mr-2 mt-4" type="button" @click="pushdata(index)">추가</button></div></div> </li>
                         </ul>
                     </div>
 
@@ -240,6 +240,14 @@ export default {
         },
         replaceImg(e) {
             e.target.src = require(`@/assets/main/main2.jpg`);
+        },
+        handleRowClick(item) {
+            // 클릭된 행의 데이터 사용
+            console.log(item); // 행의 데이터 출력
+            
+            this.map.setCenter(new window.kakao.maps.LatLng(item.latitude, item.longitude));
+            // 필요한 로직 수행
+            // ...
         },
     },
     mounted(){
