@@ -26,19 +26,40 @@ export default {
         return {
             map:null,
             message: '',
-            positions:[
+            positions:[],
+            weathers:[],
+            city:[
+                {lat:37.566826,lon:126.9786567,citydata:{}},
+                {lat:37.40864282648822,lon:126.65071862847725,citydata:{}},
+                {lat:37.2911,lon:127.0089,citydata:{}},
+                {lat:36.3519957815787,lon:127.39131469478555,citydata:{}},
+                {lat:37.15818414766273,lon:128.928560966107,citydata:{}},
+                {lat:37.791688035246636,lon:128.82867301427635,citydata:{}},
+                {lat:35.871148697228875,lon:128.61345034272617,citydata:{}},
+                {lat:35.5372,lon:129.3167,citydata:{}},
+                {lat:35.185997613083536,lon:129.0662809358643,citydata:{}},
+                {lat:35.90493196781132,lon:127.17357575637105,citydata:{}},
+                {lat:35.166611792579545,lon:126.84603104436039,citydata:{}},
+                {lat:34.823630139082525,lon:126.39766650967137,citydata:{}},
+                {lat:33.5097,lon:126.5219,citydata:{}},
             ],
-            weathers:[]
+            // Mokpo :[],
         };
     },
     created() {
         const APIkey="738c7a052467891d557b4a94a3c4e388";
-        let initialLat = 37.5683;
-        let initialLon = 126.9778;
-        axios.get(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${initialLat}&lon=${initialLon}&appid=${APIkey}`)
-        .then(response =>{
-            console.log(response);
-        })
+        for(var i=0;i<this.city.length;i++){
+            let lat = this.city[i].lat;
+            let lon = this.city[i].lon;
+            
+            axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=metric`)
+            .then(response =>{
+                // console.log(response.data);
+                console.log(response.data.city.name);
+                
+                // this.city[i].citydata=response.data;
+            })
+        }
     },
     mounted(){
         if (window.kakao && window.kakao.maps) {
@@ -50,6 +71,12 @@ export default {
         }
     },
     methods: {
+        wait(sec) {
+            let start = Date.now(), now = start;
+            while (now - start < sec * 1000) {
+                now = Date.now();
+            }
+        },
         loadScript() {
             const script = document.createElement("script");
             script.src =
@@ -107,7 +134,7 @@ export default {
             },
             {
             // 부산
-            lating: new window.kakao.maps.LatLng(5.185997613083536, 129.0662809358643),
+            lating: new window.kakao.maps.LatLng(35.185997613083536, 129.0662809358643),
             },
             {
             // 전주
