@@ -151,8 +151,8 @@
       <h1 class="animate__animated animate__fadeIn bbb">
         <mark class="highlight-bottom" style="color: white;">인기 여행지</mark>
       </h1>
-      <div class="d-flex justify-content-around mt-4 animate__animated animate__fadeIn bbb">
-        <div class="row">
+      <div class="mt-4 animate__animated animate__fadeIn bbb">
+        <div class="row d-flex" style="width: 100%;">
           <div class="col-4">
             <b-card
               :title="attractions[0].title"
@@ -161,7 +161,7 @@
               img-top
               img-height="230px"
               tag="article"
-              style="max-width: 24rem; height: 24rem;"
+              style="width: 20rem; height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -177,7 +177,7 @@
               img-top
               img-height="230px"
               tag="article"
-              style="max-width: 24rem;  height: 24rem;"
+              style="width: 20rem;  height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -193,7 +193,7 @@
               img-top
               img-height="230px"
               tag="article"
-              style="max-width: 24rem;  height: 24rem;"
+              style="width: 20rem;  height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -202,7 +202,7 @@
             </b-card>
           </div>
         </div>
-      </div>   
+      </div>  
 
       <h1 class="animate__animated animate__fadeIn ccc mt-2">
         <mark class="highlight-bottom" style="color: white;">인기 후기</mark>
@@ -216,8 +216,6 @@
                     id="my-table"
                     :items="items"
                     :fields="fields"
-                    :per-page="perPage"
-                    :current-page="currentPage"
                     style="width: 95%;"
                     small
                     >

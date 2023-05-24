@@ -4,10 +4,10 @@
             <h1 class="mt-2"><mark class="highlight-bottom">날씨!!</mark></h1>
         </div>
         <div class="row ml-0 mr-0 mt-4 mb-4" style="padding-left: 130px; padding-right: 130px;">
-            <div class="col-6">
+            <div class="col-8">
                 <div id="map" class="roundmap" style="width: 100%; height: 900px"></div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <div class="overflow-auto transparent-background roundlist" style="height: 100%;">
                     <!-- http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=738c7a052467891d557b4a94a3c4e388 -->
                 </div>
@@ -29,37 +29,49 @@ export default {
             positions:[],
             weathers:[],
             city:[
-                {lat:37.566826,lon:126.9786567,citydata:{}},
-                {lat:37.40864282648822,lon:126.65071862847725,citydata:{}},
-                {lat:37.2911,lon:127.0089,citydata:{}},
-                {lat:36.3519957815787,lon:127.39131469478555,citydata:{}},
-                {lat:37.15818414766273,lon:128.928560966107,citydata:{}},
-                {lat:37.791688035246636,lon:128.82867301427635,citydata:{}},
-                {lat:35.871148697228875,lon:128.61345034272617,citydata:{}},
-                {lat:35.5372,lon:129.3167,citydata:{}},
-                {lat:35.185997613083536,lon:129.0662809358643,citydata:{}},
-                {lat:35.90493196781132,lon:127.17357575637105,citydata:{}},
-                {lat:35.166611792579545,lon:126.84603104436039,citydata:{}},
-                {lat:34.823630139082525,lon:126.39766650967137,citydata:{}},
-                {lat:33.5097,lon:126.5219,citydata:{}},
+                {cityName:"Seoul",krName:"서울",citydata:{}},
+                {cityName:"Daejeon",krName:"대전",citydata:{}},
+                {cityName:"Daegu",krName:"대구",citydata:{}},
+                {cityName:"Busan",krName:"부산",citydata:{}},
+                {cityName:"Jeju City",krName:"제주",citydata:{}},
+                {cityName:"Jeonju",krName:"전주",citydata:{}},
+                {cityName:"Gwangju",krName:"광주",citydata:{}},
+                {cityName:"Mokpo",krName:"목포",citydata:{}},
+                {cityName:"Gangneung",krName:"강릉",citydata:{}},
+                {cityName:"Yeongju",krName:"영주",citydata:{}},
+                {cityName:"Chungju",krName:"충주",citydata:{}},
             ],
-            // Mokpo :[],
+            markers: [],
         };
     },
     created() {
-        const APIkey="738c7a052467891d557b4a94a3c4e388";
-        for(var i=0;i<this.city.length;i++){
-            let lat = this.city[i].lat;
-            let lon = this.city[i].lon;
-            
-            axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=metric`)
-            .then(response =>{
-                // console.log(response.data);
-                console.log(response.data.city.name);
-                
-                // this.city[i].citydata=response.data;
-            })
-        }
+        // const APIkey="738c7a052467891d557b4a94a3c4e388";//hobin
+        const APIkey = "5c626f0f896eb28affce874e1a543f07"; //somyeong
+
+        // Promise.all()을 사용하여 비동기 호출을 처리
+        const requests = this.city.map((cityItem) => {
+        return axios.get(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${cityItem.cityName}&appid=${APIkey}&units=metric`
+        );
+        });
+
+        Promise.all(requests)
+        .then((responses) => {
+            // 모든 응답 데이터 처리
+            responses.forEach((response, index) => {
+                const cityItem = this.city[index];
+
+                // 응답 데이터를 해당 cityItem에 할당
+                cityItem.citydata = response.data;
+
+                console.log("created get axios: ", cityItem.citydata);
+            });
+        }).then(this.makeMakers)
+        .catch((error) => {
+            console.error(error);
+        });
+
+
     },
     mounted(){
         if (window.kakao && window.kakao.maps) {
@@ -68,15 +80,10 @@ export default {
         } else {
         // 없다면 카카오 스크립트 추가 후 맵 실행
         this.loadScript();
+
         }
     },
     methods: {
-        wait(sec) {
-            let start = Date.now(), now = start;
-            while (now - start < sec * 1000) {
-                now = Date.now();
-            }
-        },
         loadScript() {
             const script = document.createElement("script");
             script.src =
@@ -95,76 +102,91 @@ export default {
             };
 
             this.map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
-            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-            var imageSize = new window.kakao.maps.Size(24,35);
-            var markerImage = new window.kakao.maps.MarkerImage(imageSrc,imageSize);
             
-            var poss = [
-            {
-            // 서울
-            lating: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-            },
-            {
-            // 인천
-            lating: new window.kakao.maps.LatLng(37.40864282648822, 126.65071862847725),
-            },
-            {
-            // 수원
-            lating: new window.kakao.maps.LatLng(37.2911, 127.0089),
-            },
-            {
-            // 대전
-            lating: new window.kakao.maps.LatLng(36.3519957815787, 127.39131469478555),
-            },
-            {
-            // 태백
-            lating: new window.kakao.maps.LatLng(37.15818414766273, 128.928560966107),
-            },
-            {
-            // 강릉
-            lating: new window.kakao.maps.LatLng(37.791688035246636, 128.82867301427635),
-            },
-            {
-            // 대구
-            lating: new window.kakao.maps.LatLng(35.871148697228875, 128.61345034272617),
-            },
-            {
-            // 울산
-            lating: new window.kakao.maps.LatLng(35.5372, 129.3167),
-            },
-            {
-            // 부산
-            lating: new window.kakao.maps.LatLng(35.185997613083536, 129.0662809358643),
-            },
-            {
-            // 전주
-            lating: new window.kakao.maps.LatLng(35.90493196781132, 127.17357575637105),
-            },
-            {
-            // 광주
-            lating: new window.kakao.maps.LatLng(35.166611792579545, 126.84603104436039),
-            },
-            {
-            // 목포
-            lating: new window.kakao.maps.LatLng(34.823630139082525, 126.39766650967137),
-            },
-            {
-            // 제주도
-            lating: new window.kakao.maps.LatLng(33.5097, 126.5219),
-            },
-            ];
+        },
 
-            this.positions = poss;
-            
-            for(var i=0;i<this.positions.length;i++){
+        makeMakers(){
+            this.positions=[];
+            // console.log(this.map);
+            this.city.forEach((area)=>{
+                console.log("created get makeMakers")
+                let markerInfo = {
+                    weather: area.citydata.list[2].weather,
+                    time : area.citydata.list[2].dt_txt,
+                    name : area.cityName,
+                    icon : area.citydata.list[2].weather[0].icon,
+                    temp : area.citydata.list[2].main.temp,
+                    latlng : new window.kakao.maps.LatLng(area.citydata.city.coord.lat, area.citydata.city.coord.lon),
+                };
+                this.positions.push(markerInfo);
+            });
+
+            for(var i=0;i<this.markers.length;i++){
+                this.markers[i].setMap(null);
+            }
+            this.markers =[];
+            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            for(i=0;i<this.positions.length;i++){
+                var imageSize = new window.kakao.maps.Size(24,35);
+                var markerImage = new window.kakao.maps.MarkerImage(imageSrc,imageSize);
+
                 var marker = new window.kakao.maps.Marker({
                     // map: this.map,
-                    position:this.positions[i].lating,
+                    position:this.positions[i].latlng,
+                    title:this.positions[i].name,
                     image: markerImage,
+                    
                 });
                 marker.setMap(this.map);
+                this.markers[i] = marker;
+
+                // console.log(this.positions[i].img);
+                var iwContent = 
+                `<div style="padding:5px; display:flex;">
+                    <div style="width: 80px;
+                    height: 80px; 
+                    border-radius: 70%;
+                    overflow: hidden;">
+                        <img style="width: 100%;
+                        height: 100%;
+                        object-fit: cover;" src="https://openweathermap.org/img/w/${this.positions[i].icon}.png" onerror="this.src='https://via.placeholder.com/55x55'" width=55px height=55px/>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>${this.positions[i].name}</h3>
+                        </div>
+                        <div>
+                            <h4>${this.positions[i].temp}°C</h4>
+                        </div>    
+                    </div>
+                </div>`;
+
+                this.infowindow = new window.kakao.maps.InfoWindow({
+                    content : iwContent
+                });
+
+
+                window.kakao.maps.event.addListener(marker,"mouseover",this.makeOverListener(this.map,marker,this.infowindow));
+                window.kakao.maps.event.addListener(marker,'mouseout',this.makeOutListener(this.infowindow))
+                window.kakao.maps.event.addListener(marker,'click',this.makeclickListener(marker))
+            }
+            this.map.setCenter(this.positions[1].latlng);
+        },
+        makeOverListener(map,marker,infowindow){
+            return function(){
+                infowindow.open(map,marker);
             }
         },
+        makeOutListener(infowindow){
+            return function(){
+                infowindow.close();
+            }
+        },
+        makeclickListener(marker){
+            return function(){
+                console.log(marker.Gb);
+            }
+        }
     },
 };
 </script>
