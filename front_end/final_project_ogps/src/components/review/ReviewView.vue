@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center animate__animated animate__fadeInDown">
         <h1 class="mt-2"><mark class="highlight-bottom">{{ article.subject }}</mark></h1>
     </div>
-    <div class="d-flex justify-content-center mt-3 mb-3" style="height: 900px; margin-left: 130px; margin-right: 130px; padding-top: 10px;">
+    <div class="d-flex justify-content-center mt-3 mb-3 animate__animated animate__fadeIn a" style="height: 900px; margin-left: 130px; margin-right: 130px; padding-top: 10px;">
         <!-- 카드 -->
           <div class="middle-content" style=" height: 92%; width: 700px; background-color: white; border-top-left-radius: 30px; border-bottom-left-radius: 30px;">
             <b-card style="width: 100%; height: 100%; border-top-left-radius: 30px; border-bottom-left-radius: 30px;">
@@ -83,18 +83,14 @@
 
                 <div v-if="userInfo" class="d-flex mt-2 ml-2 justify-content-start">
                   <div class="row">
-                    <button
-                      class="btn btn-lg"
-                      @click="toggleHeart"
-                      style="outline: none;"
-                    >
+                    <button class="btn btn-lg" @click="toggleHeart" style="outline: none;">
                       <i class="fas fa-heart" :class="{ 'text-danger': isHearted }" style="color: gray;"></i>
                     </button>
                     <div class="middle-content" style="height: 100%;">{{ heatCnt }}</div>
                   </div>
                 </div>
 
-                <b-card-text style="margin-bottom: 5%; padding-left: 2%; padding-right: 3%; text-align: start; width: 100%; height: 18%; overflow: auto;">
+                <b-card-text class="test" style="margin-bottom: 5%; padding-left: 2%; padding-right: 3%; text-align: start; width: 100%; height: 18%; overflow: auto;">
                   {{ article.content }}
                 </b-card-text>
 
@@ -109,7 +105,9 @@
           <div class="middle-content" style="height: 92%; width: 500px; background-color: white; border-top-right-radius: 30px; border-bottom-right-radius: 30px;">
           <!-- 댓글  -->
           <div style="height: 83%; width: 80%;">
-            <h5>댓글: {{ comments.length }}</h5>
+            <div class="d-flex justify-content-start ml-2">
+              <h5>댓글: {{ comments.length }}</h5>
+            </div>
             <hr>
             <form v-if="userInfo" style="width: 100%;">
               <div class="d-flex">
@@ -120,8 +118,8 @@
                 <button type="button" id="btn-comment" class="btn btn-outline-primary mb-3 ms-3"  @click="submitcomment">등록</button>
               </div>
             </form>
-            <div style=" overflow-y: scroll; height: 80%; ">
-                <ul style="list-style-type: none; padding-left:0px;" >
+            <div class="test" style=" overflow-y: scroll; height: 80%; ">
+                <ul style="list-style-type: none; padding-left:0px;">
                     <li class="mb-4" v-for="index in comments" :key="index.commentNo">
                       <div class="row" style="width: 100%;">
                         <div class="col-2" style="width: 20%;">
@@ -137,6 +135,7 @@
                             <a class="col-1"  @click="deleteComment(index.commentNo)">삭제</a>
                         </div>
                       </div>
+                      <hr>
                   </li>
                 </ul>
             </div> 
@@ -305,7 +304,7 @@ export default {
 <style scoped>
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
-  .roundlist{
+.roundlist{
       border-radius: 30px;
   }
   .middle-content{
@@ -313,6 +312,27 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.test{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.test::-webkit-scrollbar{
+    width: 20px;
+}
+.test::-webkit-scrollbar-thumb{
+    background-color: rgb(169, 248, 244); /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 30px;
+}
+.test::-webkit-scrollbar-track{
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+}
+.a{
+  animation-delay: 0.5s;
 }
 
 </style>

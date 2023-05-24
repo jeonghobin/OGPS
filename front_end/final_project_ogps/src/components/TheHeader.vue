@@ -8,8 +8,8 @@
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav >
                 <b-nav-item href="#" to="/attraction">전국 관광지</b-nav-item>
-                <b-nav-item to="/group">그룹플랜</b-nav-item>
-                <b-nav-item to="/review">여행후기</b-nav-item>
+                <b-nav-item @click="handleGroupClick">그룹플랜</b-nav-item>
+                <b-nav-item @click="handleReviewClick">여행후기</b-nav-item>
                 <b-nav-item to="/weather">날씨</b-nav-item>
             </b-navbar-nav>
 
@@ -58,10 +58,11 @@ export default {
   data() {
     return {
       notices:[],
+      isClick: false,
     };
   },
   computed: {
-    ...mapState(memberStore, ["isLogin", "userInfo","notice","condition"]),
+    ...mapState(memberStore, ["isLogin", "userInfo","notice","condition","userInfo"]),
     ...mapGetters(["checkUserInfo"]),
   },
   created(){
@@ -138,6 +139,24 @@ export default {
         })
       }
     },
+    handleGroupClick(){
+      if(this.userInfo){
+        if(this.$route.name!=="grouplist"){
+          this.$router.push({ name: "group" });
+        }
+      }else{
+        alert("로그인 후 이용해주세요.");
+      }
+    },
+    handleReviewClick(){
+      if(this.userInfo){
+        if(this.$route.name!=="reviewlist"){
+          this.$router.push({ name: "review" });
+        }
+      }else{
+        alert("로그인 후 이용해주세요.");
+      }
+    }
   },
 };
 </script>

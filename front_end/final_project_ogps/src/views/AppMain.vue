@@ -27,11 +27,11 @@
                           <h4>{{ userInfo.userName }}</h4>
                         </div>
                         <div class="row" style="width: 100%;">
-                          <h4>이메일 :&nbsp;</h4>
+                          <h4>이메일 :&nbsp; </h4>
                           <h4 >{{ userInfo.userEmail }}</h4>
                         </div>
                         <div class="row">
-                          <h4>등록일 :&nbsp;</h4>
+                          <h4>등록일 :&nbsp; </h4>
                           <h4>{{ userInfo.joinDate }}</h4>
                         </div>
                       </div>
@@ -60,7 +60,7 @@
                             v-model="user.userId"
                             required
                             placeholder="아이디 입력...."
-                            @keyup.enter="confirm"
+                            @keyup.enter="loginconfirm"
                           ></b-form-input>
                         </b-form-group>
                         <b-form-group  label-for="userPassword">
@@ -70,10 +70,10 @@
                             v-model="user.userPassword"
                             required
                             placeholder="비밀번호 입력...."
-                            @keyup.enter="confirm"
+                            @keyup.enter="loginconfirm"
                           ></b-form-input>
                         </b-form-group>
-                        <b-button type="button" variant="primary" class="m-1" style="width: 97%;" @click="confirm">로그인</b-button>
+                        <b-button type="button" variant="primary" class="m-1" style="width: 97%;" @click="loginconfirm">로그인</b-button>
                         <!-- <b-button type="button" variant="success" class="m-1" @click="movePage">회원가입</b-button> -->
                         <a type="button" class="m-1 d-flex justify-content-end" @click="movePage" style="color: #ede9e9;">회원가입</a>
                       </b-form>
@@ -159,15 +159,11 @@
               :img-src="attractions[0].first_image || require('@/assets/img/jeju2.jpeg')"
               img-alt="대체 이미지"
               img-top
+              img-height="230px"
               tag="article"
-              style="max-width: 24rem;"
+              style="max-width: 24rem; height: 24rem;"
               class="mb-2"
             >
-            <template #img="{src,alt}">
-              
-                <img :src="src" :alt="alt" @error="handleImage" >
-              
-            </template>
               <b-card-text>
                 {{attractions[0].addr1}}
               </b-card-text>
@@ -179,8 +175,9 @@
               :img-src="attractions[1].first_image || require('@/assets/img/busan1.jpeg')"
               img-alt="Image"
               img-top
+              img-height="230px"
               tag="article"
-              style="max-width: 24rem;"
+              style="max-width: 24rem;  height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -194,8 +191,9 @@
               :img-src="attractions[2].first_image || require('@/assets/img/busan3.jpeg')"
               img-alt="Image"
               img-top
+              img-height="230px"
               tag="article"
-              style="max-width: 24rem;"
+              style="max-width: 24rem;  height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -205,7 +203,6 @@
           </div>
         </div>
       </div>   
-
 
       <h1 class="animate__animated animate__fadeIn ccc mt-2">
         <mark class="highlight-bottom" style="color: white;">인기 후기</mark>
@@ -235,7 +232,7 @@
           </div>
       </div>
 
-    </div> 
+    </div>
 </template>
 
 <script>
@@ -299,9 +296,10 @@ export default {
   methods: {
     ...mapActions(memberStore, ["userConfirm", "getUserInfo", "getNotice","memberUpdate","memberDelete"]),
     async mDelete() {
+      if(confirm("회원 탈퇴 하시겠습니까?"))
       await this.memberDelete(this.userInfo.userId);
     },
-    async confirm() {
+    async loginconfirm() {
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
       // console.log("1. confirm() token >> " + token);
