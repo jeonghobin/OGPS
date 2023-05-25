@@ -42,9 +42,11 @@
             </b-row>
           </b-container>
           <hr class="my-4" />
-
-          <b-button variant="primary" class="mr-1" :to="{ name: 'modify' }">정보수정</b-button>
-          <b-button variant="danger" @click="mDelete">회원탈퇴</b-button>
+          <div style="display: flex; justify-content: end; width: 100%;">
+            <b-button variant="primary" class="mr-2" :to="{ name: 'modify' }">정보수정</b-button>
+            <b-button variant="danger" class="mr-2" @click="mDelete">회원탈퇴</b-button>
+            <b-button variant="success" class="pl-4 pr-4 mr-2" :to="{ name: 'AppMain' }">취소</b-button>
+          </div>
         </b-jumbotron>
       </b-col>
       <b-col></b-col>

@@ -58,7 +58,7 @@
 	
 	
 	<select id="getGroupPlan" parameterType="int" resultMap="groupplandto">
-		select * from plan where groupNo=#{groupNo}
+		select * from plan where groupNo=#{groupNo} order by planNo desc
 	</select>
 	
 	<select id="getGroupComment" parameterType="int" resultMap="groupcommentdto">

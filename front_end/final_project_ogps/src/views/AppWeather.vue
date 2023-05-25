@@ -4,10 +4,10 @@
             <h1 class="mt-2"><mark class="highlight-bottom">날씨!!</mark></h1>
         </div>
         <div class="row ml-0 mr-0 mt-4 mb-4" style="padding-left: 130px; padding-right: 130px;">
-            <div class="col-8">
+            <div class="col-8 animate__animated animate__backInLeft a">
                 <div id="map" class="roundmap" style="width: 100%; height: 900px"></div>
             </div>
-            <div class="col-4">
+            <div class="col-4 animate__animated animate__backInRight b">
                 <div class="overflow-auto transparent-background roundlist d-flex justify-content-center"
                     style="height: 900px;">
                     <div class="pl-5 pr-5 pt-3 pb-2" v-if="clickName" :key="clickName">
@@ -264,4 +264,11 @@ export default {
 
 .roundlist {
     border-radius: 30px;
-}</style>
+}
+.a{
+    animation-delay: 0.5s;
+}
+.b{
+    animation-delay: 1s;
+}
+</style>

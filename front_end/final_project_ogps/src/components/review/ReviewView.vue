@@ -216,14 +216,34 @@ export default {
       })
       .then(response => {
           console.log(response.data.rsmsg);
-          location.reload();
+          // location.reload();
+
+          http.get(`/api/review/${this.articleNo}`)
+          .then(response => {
+            console.log(response.data);
+            this.comments = response.data.comment;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
       });
     },
     deleteComment(commentNo){
       http.delete(`/api/rcomment/${commentNo}`)
       .then(response => {
           console.log(response.data.rsmsg);
-          location.reload();
+          // location.reload();
+
+          http.get(`/api/review/${this.articleNo}`)
+          .then(response => {
+            console.log(response.data);
+            this.comments = response.data.comment;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
       });
     }
   },

@@ -5,7 +5,7 @@
         </div>   
         <div class="mt-3 mb-3 roundlist animate__animated animate__backInLeft" style="height: 900px; background-color: rgba(255, 255, 255, 0.5);
         margin-left: 130px; margin-right: 130px; padding-top: 10px;">
-            <div  class="row ml-2 mr-3">
+            <div  class="row ml-2 mr-3 mt-4">
                 <button type="button" style="border-radius:10px; font-size:25px;" class="col-1 btn btn-light ml-5" @click="showtotal">전체 그룹</button>
                 <button type="button" style="border-radius:10px; font-size:25px;" class="col-1 btn btn-light ml-3" @click="showmy">내 그룹</button>
                 <button type="button" style="border-radius:10px; font-size:25px;" class="col-1 btn btn-primary ml-auto mr-5" @click="creategroup">그룹 생성</button>
@@ -15,28 +15,31 @@
                     <div class="p-2 bd-highlight">
                     <h3 class="mt-3 ml-2 mr-2">{{ currentPage }}페이지</h3>
                     </div>
-                    <div class="p-2 bd-highlight ml-3 mr-3 roundlist pl-3 pr-3">
-                    <b-table
-                    id="my-table"
-                    :items="items"
-                    :fields="fields"
-                    :per-page="perPage"
-                    :current-page="currentPage"
-                    small
-                    >
-                        <template #cell(subject)="row">
-                            <router-link :to="{ name: 'groupview', params:{groupNo : row.item.groupNo} }">{{ row.value }}</router-link>
-                        </template>
-                    </b-table>
-                    </div>
-                    <div class="p-2 bd-highlight d-flex justify-content-center">
-                    <b-pagination
-                    v-model="currentPage"
-                    pills
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    aria-controls="my-table"
-                    ></b-pagination>
+                    
+                    <div class="p-2 bd-highlight ml-3 mr-3 roundlist pl-3 pr-3" style="height: 600px; font-size: 25px;">
+                        <div style="height: 83%;">
+                            <b-table
+                            id="my-table"
+                            :items="items"
+                            :fields="fields"
+                            :per-page="perPage"
+                            :current-page="currentPage"
+                            small
+                            >
+                                <template #cell(subject)="row">
+                                    <router-link :to="{ name: 'groupview', params:{groupNo : row.item.groupNo} }">{{ row.value }}</router-link>
+                                </template>
+                            </b-table>
+                        </div>
+                        <div class="p-2 bd-highlight d-flex justify-content-center">
+                            <b-pagination
+                            v-model="currentPage"
+                            pills
+                            :total-rows="rows"
+                            :per-page="perPage"
+                            aria-controls="my-table"
+                            ></b-pagination>
+                        </div>
                     </div>
                 </div>
             </div>

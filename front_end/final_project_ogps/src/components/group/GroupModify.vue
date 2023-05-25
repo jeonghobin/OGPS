@@ -23,9 +23,8 @@
                 </div>
                 <div class="form-group mb-5" style="margin: auto; width: 30%;">
                     <label for="exampleInputPassword1">모집인원</label>
-                    <input type="number" class="form-control" ref="memberCnt" v-model="group.memberCnt" min="2" max="8" step="1">
+                    <input type="number" class="form-control" ref="memberCnt" min="2" max="8" step="1" onkeydown="return false;">
                 </div>
-                
                 <button type="button" class="btn btn-primary mr-2" style="border-radius:10px; font-size:25px;" @click="modifygroup">수정</button>
                 <button type="button" class="btn btn-danger mr-2" style="border-radius:10px; font-size:25px;" @click="movegroup">취소</button>
                 

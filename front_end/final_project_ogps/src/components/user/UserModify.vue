@@ -1,14 +1,14 @@
 <template>
   <b-container class="bv-example-row mt-3">
     <b-row>
-      <b-col class="d-flex justify-content-center mr-5">
+      <b-col class="d-flex justify-content-center mr-5 mt-5">
         <b-alert variant="secondary" show style="width: 67%;"><h3>회원정보 수정</h3></b-alert>
       </b-col>
     </b-row>
     <b-row>
       <b-col></b-col>
       <b-col cols="8">
-        <b-card class="text-center mt-3 mb-4 ml-3" style="max-width: 40rem" align="left">
+        <b-card class="text-center mt-3 ml-3" style="max-width: 40rem; margin-bottom: 80px;" >
           <b-form class="text-left">
             <b-alert show variant="danger" v-model="isRegisterError.state">{{isRegisterError.info}}</b-alert>
             <b-form-group label="이름:" label-for="userName">
@@ -50,7 +50,10 @@
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
-            <b-button type="button" variant="primary" class="m-1" @click="update" style="width: 20%;">정보수정</b-button>
+            <div style="display: flex; justify-content: end;">
+              <b-button type="button" variant="primary" class="m-1" @click="update" style="width: 20%;">정보수정</b-button>
+              <b-button type="button" variant="danger" class="m-1" @click="cancle" style="width: 20%;">취소</b-button>
+            </div>
           </b-form>
         </b-card>
       </b-col>
@@ -93,6 +96,9 @@ export default {
         this.isRegisterError.state = false;
         await this.memberUpdate(this.userInfo);
       } 
+    },
+    cancle(){
+      this.$router.push({name: "AppMain"});
     },
     movePage() {
       this.$router.push({ name: "login" });
