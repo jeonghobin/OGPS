@@ -217,6 +217,7 @@ export default {
       .then(response => {
           console.log(response.data.rsmsg);
           // location.reload();
+          this.comment = '';
 
           http.get(`/api/review/${this.articleNo}`)
           .then(response => {
