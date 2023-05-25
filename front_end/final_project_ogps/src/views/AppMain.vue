@@ -151,8 +151,8 @@
       <h1 class="animate__animated animate__fadeIn bbb">
         <mark class="highlight-bottom" style="color: white;">인기 여행지</mark>
       </h1>
-      <div class="mt-4 animate__animated animate__fadeIn bbb">
-        <div class="row d-flex" style="width: 100%;">
+      <div class="mt-4 animate__animated animate__fadeIn bbb" style="width: 100%;">
+        <div class="row d-flex" style="width: 90%; margin-left: 8%;">
           <div class="col-4">
             <b-card
               :title="attractions[0].title"
@@ -161,7 +161,7 @@
               img-top
               img-height="230px"
               tag="article"
-              style="width: 20rem; height: 24rem;"
+              style="width: 21rem; height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -177,7 +177,7 @@
               img-top
               img-height="230px"
               tag="article"
-              style="width: 20rem;  height: 24rem;"
+              style="width: 21rem;  height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -193,7 +193,7 @@
               img-top
               img-height="230px"
               tag="article"
-              style="width: 20rem;  height: 24rem;"
+              style="width: 21rem;  height: 24rem;"
               class="mb-2"
             >
               <b-card-text>
@@ -209,7 +209,7 @@
       </h1>
       <div class="row justify-content-center mb-3 mt-3 animate__animated animate__fadeIn ccc">
           <!-- <div class="overflow-auto transparent-background " style="width: 79%;"> -->
-            <div class="overflow-auto mt-2 mb-2 test " style="width: 100%; height: 53%;  ">
+            <div class="overflow-auto mt-2 mb-4 test " style="width: 83%; height: 53%;  ">
                 <div class="d-flex flex-column bd-highlight">
                     <div class="p-2 bd-highlight roundlist d-flex justify-content-center" style="background-color: rgba(255, 255, 255, 0.5); width: 100%;">
                     <b-table 
@@ -333,13 +333,16 @@ export default {
     border-radius: 25px;
      /* 0부터 1까지의 값을 사용하며, 1에 가까울수록 불투명해집니다. */
 }
-
 .margin{
   margin-left: auto;
   margin-right: auto;
   width: 80%;
 }
 
+.highlight-bottom {
+  background: linear-gradient(to top, rgb(181, 211, 232) 18%, transparent 40%);
+  color: rgb(218, 247, 223);
+}
 .flex{
   display: flex;
   flex-flow: row;

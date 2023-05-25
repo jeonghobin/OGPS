@@ -7,10 +7,10 @@
         <!-- 카드 -->
           <div class="middle-content" style=" height: 92%; width: 700px; background-color: white; border-top-left-radius: 30px; border-bottom-left-radius: 30px;">
             <b-card style="width: 100%; height: 100%; border-top-left-radius: 30px; border-bottom-left-radius: 30px;">
-              <div class="row pl-4 pt-1 justify-content-start">
-                <img src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+              <div class="row pt-1 " style="width: 100%;">
+                <img class="col-2" src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
                     width="40px" height="50px" style="border-radius: 100%;" />
-                <h1 class="col-2">{{article.userId}}</h1>
+                    <h1>{{article.userId}}</h1>
               </div>
               <div v-if="fileInfo.length>=1">
                 <b-carousel
@@ -95,8 +95,8 @@
                 </b-card-text>
 
                 <div class="d-flex justify-content-end">
-                      <b-button class="mr-2" @click="moveUpdate" href="#" variant="primary" style="width: 70px;">수정</b-button>
-                      <b-button class="mr-2" @click="deleteReview" variant="danger" style="width: 70px;">삭제</b-button>
+                      <b-button v-if="userInfo.userId==article.userId" class="mr-2" @click="moveUpdate" href="#" variant="primary" style="width: 70px;">수정</b-button>
+                      <b-button v-if="userInfo.userId==article.userId" class="mr-2" @click="deleteReview" variant="danger" style="width: 70px;">삭제</b-button>
                       <b-button @click="movelist" variant="success" style="width: 70px;">목록</b-button>
                 </div>
                 
@@ -122,18 +122,18 @@
                 <ul style="list-style-type: none; padding-left:0px;">
                     <li class="mb-4" v-for="index in comments" :key="index.commentNo">
                       <div class="row" style="width: 100%;">
-                        <div class="col-2" style="width: 20%;">
+                        <div style="width: 20%;">
                           <img class="user-img mr=3 justify-content-end"
                             src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
                             width="50px" height="50px" style="border-radius: 100%" />
                         </div>
-                        <div class="col-6" style="width: 60%;">
-                          <span style="font-weight: bold;">{{ index.userId }}</span>: {{ index.comment }} <br>
-                          <span style="font-size: small;">{{ index.memoTime }}</span>
+                        <div style="width: 80%;" class="row">
+                          <h4 style="font-weight: bold; display: inline-block;">&nbsp;{{ index.userId }}</h4>: {{ index.comment }}
                         </div>
-                        <div class="col-4"  v-if="userInfo.userId==index.userId" style="width: 20%;">
-                            <a class="col-1"  @click="deleteComment(index.commentNo)">삭제</a>
-                        </div>
+                      </div>
+                      <div v-if="userInfo.userId==index.userId" class="d-flex justify-content-end" style="width: 100%;">    
+                        <h5 style=" width: 60%;">{{ index.memoTime }}</h5>    
+                        <a style="color: red;" @click="deleteComment(index.commentNo)">삭제</a>
                       </div>
                       <hr>
                   </li>

@@ -2,7 +2,7 @@
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col class="d-flex justify-content-center mr-5">
-        <b-alert variant="secondary" show style="width: 70%;"><h3>회원정보 수정</h3></b-alert>
+        <b-alert variant="secondary" show style="width: 67%;"><h3>회원정보 수정</h3></b-alert>
       </b-col>
     </b-row>
     <b-row>
