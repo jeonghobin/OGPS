@@ -51,7 +51,7 @@
 
 <script>
 import axios from 'axios';
-
+import { mapkey,weatherkey } from '@/api/key';
 export default {
     name: 'AppWeather',
     components: {},
@@ -82,13 +82,11 @@ export default {
         };
     },
     created() {
-        // const APIkey="738c7a052467891d557b4a94a3c4e388";//hobin
-        const APIkey = "5c626f0f896eb28affce874e1a543f07"; //somyeong
 
         // Promise.all()을 사용하여 비동기 호출을 처리
         const requests = this.city.map((cityItem) => {
             return axios.get(
-                `https://api.openweathermap.org/data/2.5/forecast?q=${cityItem.cityName}&appid=${APIkey}&units=metric`
+                `https://api.openweathermap.org/data/2.5/forecast?q=${cityItem.cityName}&appid=${weatherkey}&units=metric`
             );
         });
 
@@ -123,7 +121,7 @@ export default {
         loadScript() {
             const script = document.createElement("script");
             script.src =
-                "//dapi.kakao.com/v2/maps/sdk.js?appkey=50edb2dcb6a758bf6c0338bb4e845bac&autoload=false"; // &autoload=false api를 로드한 후 맵을 그리는 함수가 실행되도록 구현
+                `//dapi.kakao.com/v2/maps/sdk.js?appkey=${mapkey}&autoload=false`; // &autoload=false api를 로드한 후 맵을 그리는 함수가 실행되도록 구현
             script.onload = () => window.kakao.maps.load(this.loadMap); // 스크립트 로드가 끝나면 지도를 실행될 준비가 되어 있다면 지도가 실행되도록 구현
 
             document.head.appendChild(script); // html>head 안에 스크립트 소스를 추가
