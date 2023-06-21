@@ -14,7 +14,7 @@
 
 # 🛠 기술 스택
 
-**Backend `Java` `SpringBoot` `myBatis` `SpringRestDocs` `Gradle` `JWT`**
+**Backend `Java` `SpringBoot` `myBatis` `SpringRestDocs` `Maven` `JWT`**
 
 **Frontend `Npm` `Node` `Javascript` `Vue.js` `BootStrap`**
 
